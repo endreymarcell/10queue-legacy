@@ -1,42 +1,27 @@
 <script lang="ts">
     import type { Task } from "$lib/task"
+    import TaskDetails from "$lib/TaskDetails.svelte"
+    import TaskPlaceholder from "$lib/TaskPlaceholder.svelte"
 
     export let index: number
     export let task: Task
 </script>
 
 <div class="task-row">
-    <div class="task-description">
-        <div>{index}.</div>
-        <div>{task.title}</div>
-    </div>
-    <div class="task-actions">
-        <div>Edit</div>
-        <div>Delete</div>
-    </div>
+    {#if task !== undefined}
+        <TaskDetails {index} {task} />
+    {:else}
+        <TaskPlaceholder {index} />
+    {/if}
 </div>
 
 <style>
-    .task-row,
-    .task-description,
-    .task-actions {
-        display: flex;
-    }
-
     .task-row {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        --field-spacing: 20px;
-
+        padding: 10px;
         font-size: 30px;
-    }
-
-    .task-description > div {
-        margin-right: var(--field-spacing);
-    }
-
-    .task-actions > div {
-        margin-left: var(--field-spacing);
+        border: 1px solid black;
     }
 </style>
