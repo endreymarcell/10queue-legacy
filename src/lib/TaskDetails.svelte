@@ -11,6 +11,7 @@
         <div>{task.title}</div>
     </div>
     <div class="task-actions">
+        <div>Complete</div>
         <div>Edit</div>
         <div>Delete</div>
     </div>
