@@ -3,18 +3,41 @@
 
     export let index: number
     export let task: Task
+    let isEditing: boolean
+    let currentTitle: string
+
+    function startEditing() {
+        currentTitle = task.title
+        isEditing = true
+    }
+
+    function onInputKeyDown(event) {
+        if (event.key === "Enter") {
+            handleStoppedEditing()
+        }
+    }
+
+    function handleStoppedEditing() {
+        isEditing = false
+    }
 </script>
 
 <div class="task-details">
     <div class="task-description">
         <div>{index}.</div>
-        <div>{task.title}</div>
+        {#if isEditing}
+            <input on:keydown={onInputKeyDown} on:blur={handleStoppedEditing} type="text" value={currentTitle} autofocus />
+        {:else}
+            <div on:click={startEditing}>{task.title}</div>
+        {/if}
     </div>
-    <div class="task-actions">
-        <div>Complete</div>
-        <div>Edit</div>
-        <div>Delete</div>
-    </div>
+    {#if !isEditing}
+        <div class="task-actions">
+            <div>Complete</div>
+            <div on:click={startEditing}>Edit</div>
+            <div>Delete</div>
+        </div>
+    {/if}
 </div>
 
 <style>
