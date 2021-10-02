@@ -29,6 +29,7 @@
     "type": "module",
     "dependencies": {
         "@fontsource/fira-mono": "^4.2.2",
-        "cookie": "^0.4.1"
+        "cookie": "^0.4.1",
+        "immer": "^9.0.6"
     }
 }
