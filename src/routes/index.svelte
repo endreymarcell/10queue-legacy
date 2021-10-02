@@ -1,13 +1,28 @@
 <script lang="ts">
     import TaskRow from "$lib/TaskRow.svelte"
     import type { Task, TaskId } from "$lib/task"
-    let tasks: Task[] = [
+    import {writable} from "svelte/store";
+    const defaultTasks: Task[] = [
         { id: 0 as TaskId, title: "foo" },
         { id: 1 as TaskId, title: "bar" },
         { id: 2 as TaskId, title: "baz" },
     ]
+    const tasks = writable(defaultTasks)
+
     let paddedTasksList = []
-    $: paddedTasksList = [...tasks, ...new Array(10 - tasks.length)]
+    tasks.subscribe(value => {
+        paddedTasksList = [...value, ...new Array(10 - value.length)]
+    })
+
+    function onTaskTitleEdited(event) {
+        tasks.update(value => {
+            const copy = [...value];
+            const copiedTask = copy[event.detail.index];
+            copiedTask.title = event.detail.currentTitle;
+            copy[event.detail.index] = copiedTask;
+            return copy;
+        })
+    }
 </script>
 
 <svelte:head>
@@ -20,7 +35,7 @@
 
 <div class="task-container">
     {#each paddedTasksList as task, index}
-        <TaskRow {task} {index} />
+        <TaskRow {task} {index} on:taskTitleEdited={onTaskTitleEdited} />
     {/each}
 </div>
 

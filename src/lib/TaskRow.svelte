@@ -12,7 +12,7 @@
 
 <div class="task-row">
     {#if task !== undefined}
-        <TaskDetails index={displayIndex} {task} />
+        <TaskDetails index={displayIndex} {task} on:taskTitleEdited />
     {:else}
         <TaskPlaceholder index={displayIndex} />
     {/if}

@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/task"
+    import {createEventDispatcher} from "svelte";
 
     export let index: number
     export let task: Task
@@ -17,8 +18,10 @@
         }
     }
 
+    const dispatch = createEventDispatcher();
     function handleStoppedEditing() {
         isEditing = false
+        dispatch("taskTitleEdited", { currentTitle, index: index - 1 })
     }
 </script>
 
