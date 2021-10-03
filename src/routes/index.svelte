@@ -2,6 +2,8 @@
     import TaskRow from "$lib/TaskRow.svelte"
     import type { Task, TaskId } from "$lib/task"
     import {writable} from "svelte/store";
+    import {produce} from "immer";
+
     const defaultTasks: Task[] = [
         { id: 0 as TaskId, title: "foo" },
         { id: 1 as TaskId, title: "bar" },
@@ -15,13 +17,9 @@
     })
 
     function onTaskTitleEdited(event) {
-        tasks.update(value => {
-            const copy = [...value];
-            const copiedTask = copy[event.detail.index];
-            copiedTask.title = event.detail.currentTitle;
-            copy[event.detail.index] = copiedTask;
-            return copy;
-        })
+        tasks.update(value => produce(value, draft => {
+            draft[event.detail.index].title = event.detail.currentTitle;
+        }))
     }
 </script>
 
