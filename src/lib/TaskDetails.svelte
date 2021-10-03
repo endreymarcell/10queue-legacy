@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/task"
-    import {createEventDispatcher} from "svelte";
+    import { createEventDispatcher } from "svelte"
 
     export let index: number
     export let task: Task
@@ -20,7 +20,7 @@
         }
     }
 
-    const dispatch = createEventDispatcher();
+    const dispatch = createEventDispatcher()
     function handleFinishedEditing() {
         isEditing = false
         dispatch("taskTitleEdited", { currentTitle, index: index - 1 })
@@ -36,7 +36,13 @@
     <div class="task-description">
         <div>{index}.</div>
         {#if isEditing}
-            <input on:keydown={onInputKeyDown} on:blur={handleFinishedEditing} type="text" bind:value={currentTitle} autofocus />
+            <input
+                on:keydown={onInputKeyDown}
+                on:blur={handleFinishedEditing}
+                type="text"
+                bind:value={currentTitle}
+                autofocus
+            />
         {:else}
             <div on:click={startEditing}>{task.title}</div>
         {/if}
