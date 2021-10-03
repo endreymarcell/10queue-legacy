@@ -14,14 +14,21 @@
 
     function onInputKeyDown(event) {
         if (event.key === "Enter") {
-            handleStoppedEditing()
+            handleFinishedEditing()
+        } else if (event.key === "Escape") {
+            handleAbortedEditing()
         }
     }
 
     const dispatch = createEventDispatcher();
-    function handleStoppedEditing() {
+    function handleFinishedEditing() {
         isEditing = false
         dispatch("taskTitleEdited", { currentTitle, index: index - 1 })
+    }
+
+    function handleAbortedEditing() {
+        currentTitle = task.title
+        isEditing = false
     }
 </script>
 
@@ -29,7 +36,7 @@
     <div class="task-description">
         <div>{index}.</div>
         {#if isEditing}
-            <input on:keydown={onInputKeyDown} on:blur={handleStoppedEditing} type="text" bind:value={currentTitle} autofocus />
+            <input on:keydown={onInputKeyDown} on:blur={handleFinishedEditing} type="text" bind:value={currentTitle} autofocus />
         {:else}
             <div on:click={startEditing}>{task.title}</div>
         {/if}
