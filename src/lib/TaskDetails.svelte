@@ -3,6 +3,9 @@
     import { createEventDispatcher } from "svelte"
 
     export let index: number
+    let displayIndex
+    $: displayIndex = index + 1
+
     export let task: Task
     let isEditing: boolean
     let currentTitle: string
@@ -23,7 +26,7 @@
     const dispatch = createEventDispatcher()
     function handleFinishedEditing() {
         isEditing = false
-        dispatch("taskTitleEdited", { currentTitle, index: index - 1 })
+        dispatch("taskTitleEdited", { currentTitle, index })
     }
 
     function handleAbortedEditing() {
@@ -34,7 +37,7 @@
 
 <div class="task-details">
     <div class="task-description">
-        <div>{index}.</div>
+        <div>{displayIndex}.</div>
         {#if isEditing}
             <input
                 on:keydown={onInputKeyDown}

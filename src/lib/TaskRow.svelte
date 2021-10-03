@@ -4,17 +4,15 @@
     import TaskPlaceholder from "$lib/TaskPlaceholder.svelte"
 
     export let index: number
-    let displayIndex: number
-    $: displayIndex = index + 1
 
     export let task: Task
 </script>
 
 <div class="task-row">
     {#if task !== undefined}
-        <TaskDetails index={displayIndex} {task} on:taskTitleEdited />
+        <TaskDetails {index} {task} on:taskTitleEdited />
     {:else}
-        <TaskPlaceholder index={displayIndex} />
+        <TaskPlaceholder {index} />
     {/if}
 </div>
 
