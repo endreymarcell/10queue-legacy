@@ -29,7 +29,7 @@
     <div class="task-description">
         <div>{index}.</div>
         {#if isEditing}
-            <input on:keydown={onInputKeyDown} on:blur={handleStoppedEditing} type="text" value={currentTitle} autofocus />
+            <input on:keydown={onInputKeyDown} on:blur={handleStoppedEditing} type="text" bind:value={currentTitle} autofocus />
         {:else}
             <div on:click={startEditing}>{task.title}</div>
         {/if}
