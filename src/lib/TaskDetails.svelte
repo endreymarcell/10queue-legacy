@@ -84,5 +84,12 @@
 
     .task-actions > div {
         margin-left: var(--field-spacing);
+        cursor: pointer;
+    }
+
+    input[type=text] {
+        font-size: 30px;
+        border: 0;
+        outline: none;
     }
 </style>
