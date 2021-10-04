@@ -52,9 +52,12 @@
     </div>
     {#if !isEditing}
         <div class="task-actions">
-            <div>Complete</div>
-            <div on:click={startEditing}>Edit</div>
-            <div>Delete</div>
+            <div>▶️</div>
+            <div>✅️</div>
+            <div on:click={startEditing}>✏️</div>
+            <div>⬆️</div>
+            <div>⬇️️</div>
+            <div>❌</div>
         </div>
     {/if}
 </div>
