@@ -3,6 +3,7 @@
     import type { Task, TaskId } from "$lib/task"
     import { derived, writable } from "svelte/store"
     import { produce } from "immer"
+    import Header from "./Header.svelte"
 
     const defaultTasks: Task[] = [
         { id: 0 as TaskId, title: "foo" },
@@ -21,10 +22,7 @@
     }
 </script>
 
-<div class="header-container">
-    <h1>Task queue</h1>
-</div>
-
+<Header />
 <div class="task-container">
     {#each $paddedTasksList as task, index}
         <TaskRow {task} {index} on:taskTitleEdited={onTaskTitleEdited} />
@@ -32,15 +30,6 @@
 </div>
 
 <style>
-    .header-container {
-        width: 100%;
-        height: 100px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
     .task-container {
         --padding: 50px;
         width: calc(100% - 2 * var(--padding));
