@@ -22,11 +22,13 @@ function handleAction(action: Action) {
             tasks.update((value) => produce(value, (draft) => {
                 draft[action.taskIndex].title = action.title
             }))
+            break;
         }
         case "deleteTask": {
             tasks.update((value) => produce(value, (draft) => {
                 draft.splice(action.taskIndex, 1)
             }))
+            break;
         }
     }
 }
