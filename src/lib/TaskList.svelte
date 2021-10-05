@@ -3,7 +3,7 @@
     import { derived } from "svelte/store"
     import { state } from "./state"
 
-    const paddedTasksList = derived(state.tasks, ($tasks) => [...$tasks, ...new Array(10 - $tasks.length)])
+    const paddedTasksList = derived(state, ($state) => [...$state.tasks, ...new Array(10 - $state.tasks.length)])
 </script>
 
 <div class="task-container">

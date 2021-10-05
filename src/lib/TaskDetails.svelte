@@ -7,7 +7,6 @@
     $: displayIndex = index + 1
 
     export let task: Task
-    let isRunning = state.isRunning
     let isEditing: boolean
     let currentTitle: string
 
@@ -66,7 +65,7 @@
     {#if !isEditing}
         <div class="task-actions">
             {#if index == 0}
-                {#if $isRunning}
+                {#if $state.isRunning}
                     <div on:click={handlePauseClicked}>⏸️</div>
                 {:else}
                     <div on:click={handleStartClicked}>▶️</div>

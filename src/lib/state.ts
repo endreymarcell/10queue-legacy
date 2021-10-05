@@ -3,10 +3,16 @@ import { writable } from "svelte/store"
 import { defaultTasks } from "./tasks"
 import type { Task } from "./tasks"
 
-export const state = {
-    tasks: writable<Task[]>(defaultTasks),
-    isRunning: writable(false),
+type State = {
+    tasks: Task[];
+    isRunning: boolean;
 }
+const defaultState: State = {
+    tasks: defaultTasks,
+    isRunning: false
+}
+
+export const state = writable<State>(defaultState)
 
 type Action =
     | { type: "taskTitleEdited"; index: number; title: string }
@@ -22,27 +28,35 @@ export function dispatch(action: Action) {
 function handleAction(action: Action) {
     switch (action.type) {
         case "taskTitleEdited": {
-            state.tasks.update((value) =>
+            state.update((value) =>
                 produce(value, (draft) => {
-                    draft[action.index].title = action.title
+                    draft.tasks[action.index].title = action.title
                 }),
             )
             break
         }
         case "deleteTask": {
-            state.tasks.update((value) =>
+            state.update((value) =>
                 produce(value, (draft) => {
-                    draft.splice(action.index, 1)
+                    draft.tasks.splice(action.index, 1)
                 }),
             )
             break
         }
         case "taskStarted": {
-            state.isRunning.set(true)
+            state.update((value) =>
+                produce(value, (draft) => {
+                    draft.isRunning = true
+                }),
+            )
             break
         }
         case "taskPaused": {
-            state.isRunning.set(false)
+            state.update((value) =>
+                produce(value, (draft) => {
+                    draft.isRunning = false
+                }),
+            )
             break
         }
     }
