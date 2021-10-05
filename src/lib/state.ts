@@ -9,7 +9,7 @@ const defaultTasks: Task[] = [
 ]
 export const tasks = writable(defaultTasks)
 
-type Action = { type: "taskTitleEdited"; taskIndex: number; title: string }
+type Action = { type: "taskTitleEdited"; taskIndex: number; title: string } | { type: "deleteTask"; taskIndex: number }
 
 export function dispatch(action: Action) {
     // middleware would come here
@@ -21,6 +21,11 @@ function handleAction(action: Action) {
         case "taskTitleEdited": {
             tasks.update((value) => produce(value, (draft) => {
                 draft[action.taskIndex].title = action.title
+            }))
+        }
+        case "deleteTask": {
+            tasks.update((value) => produce(value, (draft) => {
+                draft.splice(action.taskIndex, 1)
             }))
         }
     }

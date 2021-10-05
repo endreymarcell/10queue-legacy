@@ -32,6 +32,10 @@
         currentTitle = task.title
         isEditing = false
     }
+
+    function handleDeleteClicked() {
+        dispatch({ type: "deleteTask", taskIndex: index })
+    }
 </script>
 
 <div class="task-details">
@@ -57,7 +61,7 @@
             <div on:click={startEditing}>✏️</div>
             <div>⬆️</div>
             <div>⬇️️</div>
-            <div>❌</div>
+            <div on:click={handleDeleteClicked}>❌</div>
         </div>
     {/if}
 </div>
