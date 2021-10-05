@@ -10,7 +10,7 @@
 
 <div class="task-row">
     {#if task !== undefined}
-        <TaskDetails {index} {task} on:taskTitleEdited />
+        <TaskDetails {index} {task} />
     {:else}
         <TaskPlaceholder {index} />
     {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/tasks"
-    import { createEventDispatcher } from "svelte"
+    import { dispatch } from "./state"
 
     export let index: number
     let displayIndex
@@ -23,10 +23,9 @@
         }
     }
 
-    const dispatch = createEventDispatcher()
     function handleFinishedEditing() {
         isEditing = false
-        dispatch("taskTitleEdited", { currentTitle, index })
+        dispatch({ type: "taskTitleEdited", taskIndex: index, title: currentTitle })
     }
 
     function handleAbortedEditing() {
@@ -39,6 +38,7 @@
     <div class="task-description">
         <div>{displayIndex}.</div>
         {#if isEditing}
+            <!-- svelte-ignore a11y-autofocus -->
             <input
                 on:keydown={onInputKeyDown}
                 on:blur={handleFinishedEditing}
