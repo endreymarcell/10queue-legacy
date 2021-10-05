@@ -1,9 +1,11 @@
 <script lang="ts">
     export let index: number
+    let displayIndex
+    $: displayIndex = index + 1
 </script>
 
 <div class="task-placeholder">
-    <div class="task-index">{index}.</div>
+    <div class="task-index">{displayIndex}.</div>
     <div>I am just a placeholder</div>
 </div>
 
