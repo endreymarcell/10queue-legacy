@@ -7,7 +7,10 @@ const defaultTasks: Task[] = [
     { id: 1 as TaskId, title: "bar" },
     { id: 2 as TaskId, title: "baz" },
 ]
-export const tasks = writable(defaultTasks)
+
+export const state = {
+    tasks: writable(defaultTasks),
+}
 
 type Action = { type: "taskTitleEdited"; index: number; title: string } | { type: "deleteTask"; index: number }
 
@@ -19,13 +22,13 @@ export function dispatch(action: Action) {
 function handleAction(action: Action) {
     switch (action.type) {
         case "taskTitleEdited": {
-            tasks.update((value) => produce(value, (draft) => {
+            state.tasks.update((value) => produce(value, (draft) => {
                 draft[action.index].title = action.title
             }))
             break;
         }
         case "deleteTask": {
-            tasks.update((value) => produce(value, (draft) => {
+            state.tasks.update((value) => produce(value, (draft) => {
                 draft.splice(action.index, 1)
             }))
             break;

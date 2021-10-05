@@ -1,9 +1,9 @@
 <script lang="ts">
     import TaskRow from "$lib/TaskRow.svelte"
     import { derived } from "svelte/store"
-    import { tasks } from "./state"
+    import { state } from "./state"
 
-    const paddedTasksList = derived(tasks, ($tasks) => [...$tasks, ...new Array(10 - $tasks.length)])
+    const paddedTasksList = derived(state.tasks, ($tasks) => [...$tasks, ...new Array(10 - $tasks.length)])
 </script>
 
 <div class="task-container">
