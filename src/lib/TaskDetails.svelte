@@ -87,7 +87,7 @@
         cursor: pointer;
     }
 
-    input[type=text] {
+    input[type="text"] {
         font-size: 30px;
         border: 0;
         outline: none;

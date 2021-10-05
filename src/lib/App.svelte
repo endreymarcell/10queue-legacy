@@ -11,7 +11,7 @@
         { id: 2 as TaskId, title: "baz" },
     ]
     const tasks = writable(defaultTasks)
-    const paddedTasksList = derived(tasks, $tasks => [...$tasks, ...new Array(10 - $tasks.length)])
+    const paddedTasksList = derived(tasks, ($tasks) => [...$tasks, ...new Array(10 - $tasks.length)])
 
     function onTaskTitleEdited(event) {
         tasks.update((value) =>
