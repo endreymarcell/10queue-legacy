@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Task } from "$lib/task"
+    import type { Task } from "$lib/tasks"
     import TaskDetails from "$lib/TaskDetails.svelte"
     import TaskPlaceholder from "$lib/TaskPlaceholder.svelte"
 

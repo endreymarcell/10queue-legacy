@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Task } from "$lib/task"
+    import type { Task } from "$lib/tasks"
     import { createEventDispatcher } from "svelte"
 
     export let index: number

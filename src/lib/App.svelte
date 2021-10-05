@@ -1,6 +1,6 @@
 <script lang="ts">
     import TaskRow from "$lib/TaskRow.svelte"
-    import type { Task, TaskId } from "$lib/task"
+    import type { Task, TaskId } from "$lib/tasks"
     import { derived, writable } from "svelte/store"
     import { produce } from "immer"
     import Header from "./Header.svelte"
