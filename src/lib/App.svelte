@@ -1,7 +1,7 @@
 <script lang="ts">
     import TaskRow from "$lib/TaskRow.svelte"
     import type { Task, TaskId } from "$lib/task"
-    import { writable } from "svelte/store"
+    import { derived, writable } from "svelte/store"
     import { produce } from "immer"
 
     const defaultTasks: Task[] = [
@@ -10,11 +10,7 @@
         { id: 2 as TaskId, title: "baz" },
     ]
     const tasks = writable(defaultTasks)
-
-    let paddedTasksList = []
-    tasks.subscribe((value) => {
-        paddedTasksList = [...value, ...new Array(10 - value.length)]
-    })
+    const paddedTasksList = derived(tasks, $tasks => [...$tasks, ...new Array(10 - $tasks.length)])
 
     function onTaskTitleEdited(event) {
         tasks.update((value) =>
@@ -30,7 +26,7 @@
 </div>
 
 <div class="task-container">
-    {#each paddedTasksList as task, index}
+    {#each $paddedTasksList as task, index}
         <TaskRow {task} {index} on:taskTitleEdited={onTaskTitleEdited} />
     {/each}
 </div>
