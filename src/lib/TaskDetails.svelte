@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/tasks"
-    import { dispatch, state } from "./state"
+    import { actions, dispatch, state } from "./state"
 
     export let index: number
     let displayIndex
@@ -25,7 +25,7 @@
 
     function handleFinishedEditing() {
         isEditing = false
-        dispatch({ type: "taskTitleEdited", index, title: currentTitle })
+        dispatch(actions.taskTitleEdited(index, currentTitle))
     }
 
     function handleAbortedEditing() {
@@ -34,15 +34,15 @@
     }
 
     function handleDeleteClicked() {
-        dispatch({ type: "deleteTask", index })
+        dispatch(actions.taskDeleted(index))
     }
 
     function handleStartClicked() {
-        dispatch({ type: "taskStarted" })
+        dispatch(actions.taskStarted())
     }
 
     function handlePauseClicked() {
-        dispatch({ type: "taskPaused" })
+        dispatch(actions.taskPaused())
     }
 </script>
 

@@ -1,8 +1,9 @@
 import produce from "immer"
-import { Writable, writable } from "svelte/store"
+import { writable } from "svelte/store"
 import { defaultTasks } from "./tasks"
 import type { Task } from "./tasks"
 import type { WritableDraft } from "immer/dist/internal"
+import { ActionTypeFromActionCreators, createAction } from "redux-dry-ts-actions"
 
 type State = {
     tasks: Task[];
@@ -15,32 +16,34 @@ const defaultState: State = {
 
 export const state = writable<State>(defaultState)
 
-type Action =
-    | { type: "taskTitleEdited"; index: number; title: string }
-    | { type: "deleteTask"; index: number }
-    | { type: "taskStarted" }
-    | { type: "taskPaused" }
+export const actions = {
+    taskTitleEdited: createAction('taskTitleEdited', (index: number, title: string) => ({ index, title })),
+    taskDeleted: createAction('taskDeleted', (index: number) => ({ index })),
+    taskStarted: createAction('taskStarted'),
+    taskPaused: createAction('taskPaused'),
+}
+type Action = ActionTypeFromActionCreators<typeof actions>
 
 export function dispatch(action: Action) {
     // middleware would come here
     handleAction(action)
 }
 
-const updateTaskTitle = (index: number, title: string) => (draft: WritableDraft<State>) => void (draft.tasks[index].title = title)
+const updateTaskTitle = (payload: { index: number, title: string }) => (draft: WritableDraft<State>) => void (draft.tasks[payload.index].title = payload.title)
 
 function handleAction(action: Action) {
     switch (action.type) {
         case "taskTitleEdited": {
-            const updater = updateTaskTitle(action.index, action.title);
+            const updater = updateTaskTitle(action.payload);
             state.update((value) =>
                 produce(value, updater),
             )
             break
         }
-        case "deleteTask": {
+        case "taskDeleted": {
             state.update((value) =>
                 produce(value, (draft) => {
-                    draft.tasks.splice(action.index, 1)
+                    draft.tasks.splice(action.payload.index, 1)
                 }),
             )
             break
