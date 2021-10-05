@@ -1,7 +1,8 @@
 import produce from "immer"
-import { writable } from "svelte/store"
+import { Writable, writable } from "svelte/store"
 import { defaultTasks } from "./tasks"
 import type { Task } from "./tasks"
+import type { WritableDraft } from "immer/dist/internal"
 
 type State = {
     tasks: Task[];
@@ -25,13 +26,14 @@ export function dispatch(action: Action) {
     handleAction(action)
 }
 
+const updateTaskTitle = (index: number, title: string) => (draft: WritableDraft<State>) => void (draft.tasks[index].title = title)
+
 function handleAction(action: Action) {
     switch (action.type) {
         case "taskTitleEdited": {
+            const updater = updateTaskTitle(action.index, action.title);
             state.update((value) =>
-                produce(value, (draft) => {
-                    draft.tasks[action.index].title = action.title
-                }),
+                produce(value, updater),
             )
             break
         }
