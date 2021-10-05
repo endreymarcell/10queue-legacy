@@ -25,7 +25,7 @@
 
     function handleFinishedEditing() {
         isEditing = false
-        dispatch({ type: "taskTitleEdited", taskIndex: index, title: currentTitle })
+        dispatch({ type: "taskTitleEdited", index, title: currentTitle })
     }
 
     function handleAbortedEditing() {
@@ -34,7 +34,7 @@
     }
 
     function handleDeleteClicked() {
-        dispatch({ type: "deleteTask", taskIndex: index })
+        dispatch({ type: "deleteTask", index })
     }
 </script>
 
