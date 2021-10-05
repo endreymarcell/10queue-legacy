@@ -1,12 +1,6 @@
 import produce from "immer"
 import { writable } from "svelte/store"
-import type { Task, TaskId } from "./tasks"
-
-const defaultTasks: Task[] = [
-    { id: 0 as TaskId, title: "foo" },
-    { id: 1 as TaskId, title: "bar" },
-    { id: 2 as TaskId, title: "baz" },
-]
+import { defaultTasks } from "./tasks"
 
 export const state = {
     tasks: writable(defaultTasks),
