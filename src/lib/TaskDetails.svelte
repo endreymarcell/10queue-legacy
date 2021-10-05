@@ -1,12 +1,13 @@
 <script lang="ts">
     import type { Task } from "$lib/tasks"
-    import { dispatch } from "./state"
+    import { dispatch, state } from "./state"
 
     export let index: number
     let displayIndex
     $: displayIndex = index + 1
 
     export let task: Task
+    let isRunning = state.isRunning
     let isEditing: boolean
     let currentTitle: string
 
@@ -36,6 +37,14 @@
     function handleDeleteClicked() {
         dispatch({ type: "deleteTask", index })
     }
+
+    function handleStartClicked() {
+        dispatch({ type: "taskStarted" })
+    }
+
+    function handlePauseClicked() {
+        dispatch({ type: "taskPaused" })
+    }
 </script>
 
 <div class="task-details">
@@ -56,8 +65,14 @@
     </div>
     {#if !isEditing}
         <div class="task-actions">
-            <div>▶️</div>
-            <div>✅️</div>
+            {#if index == 0}
+                {#if $isRunning}
+                    <div on:click={handlePauseClicked}>⏸️</div>
+                {:else}
+                    <div on:click={handleStartClicked}>▶️</div>
+                {/if}
+                <div>✅️</div>
+            {/if}
             <div on:click={startEditing}>✏️</div>
             <div>⬆️</div>
             <div>⬇️️</div>

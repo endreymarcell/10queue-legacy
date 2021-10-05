@@ -7,8 +7,4 @@ function createTask(title: string) {
 }
 
 // TODO dummy data for the early phase of development
-export const defaultTasks: Task[] = [
-    createTask('foo'),
-    createTask('bar'),
-    createTask('baz'),
-]
+export const defaultTasks: Task[] = [createTask("foo"), createTask("bar"), createTask("baz")]
