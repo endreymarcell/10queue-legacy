@@ -4,7 +4,7 @@
     import { actions, dispatch } from "./eventHelpers"
 
     export let index: number
-    let displayIndex
+    let displayIndex: number
     $: displayIndex = index + 1
 
     export let task: Task
@@ -16,7 +16,7 @@
         isEditing = true
     }
 
-    function onInputKeyDown(event) {
+    function onInputKeyDown(event: KeyboardEvent) {
         if (event.key === "Enter") {
             handleFinishedEditing()
         } else if (event.key === "Escape") {
