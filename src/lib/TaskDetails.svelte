@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { Task } from "$lib/tasks"
-    import { actions, dispatch, state } from "./state"
+    import { state } from "./state"
+    import { actions, dispatch } from "./eventHelpers"
 
     export let index: number
     let displayIndex
