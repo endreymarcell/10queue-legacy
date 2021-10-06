@@ -3,9 +3,8 @@ import type { Logic } from "./eventHelpers"
 
 export type Events = {
     taskTitleEdited: { index: number; title: string }
-    taskDeleted: { index: number }
-    taskStarted: void
-    taskPaused: void
+    taskDeleteRequested: { index: number }
+    taskStartStopRequested: void
 }
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
@@ -16,22 +15,16 @@ export const logic: Logic = {
             state.tasks[payload.index].title = payload.title
         },
     },
-    taskDeleted: {
-        action: createAction("taskDeleted", index => ({ index })),
+    taskDeleteRequested: {
+        action: createAction("taskDeleteRequested", index => ({ index })),
         updater: payload => state => {
             state.tasks.splice(payload.index, 1)
         },
     },
-    taskStarted: {
-        action: createAction("taskStarted"),
+    taskStartStopRequested: {
+        action: createAction("taskStartStopRequested"),
         updater: () => state => {
-            state.isRunning = true
-        },
-    },
-    taskPaused: {
-        action: createAction("taskPaused"),
-        updater: () => state => {
-            state.isRunning = false
+            state.isRunning = !state.isRunning
         },
     },
 }

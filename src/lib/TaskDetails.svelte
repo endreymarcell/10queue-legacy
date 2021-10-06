@@ -1,7 +1,8 @@
 <script lang="ts">
     import type { Task } from "$lib/tasks"
     import { state } from "./state"
-    import { actions, dispatch } from "./eventHelpers"
+    import { dispatch } from "./eventHelpers"
+    import { logic } from "./events"
 
     export let index: number
     let displayIndex: number
@@ -26,7 +27,7 @@
 
     function handleFinishedEditing() {
         isEditing = false
-        dispatch(actions.taskTitleEdited(index, currentTitle))
+        dispatch(logic.taskTitleEdited.action(index, currentTitle))
     }
 
     function handleAbortedEditing() {
@@ -34,9 +35,8 @@
         isEditing = false
     }
 
-    const handleDeleteClicked = () => dispatch(actions.taskDeleted(index))
-    const handleStartClicked = () => dispatch(actions.taskStarted())
-    const handlePauseClicked = () => dispatch(actions.taskPaused())
+    const handleDeleteClicked = () => dispatch(logic.taskDeleteRequested.action(index))
+    const handleStartStopClicked = () => dispatch(logic.taskStartStopRequested.action())
 </script>
 
 <div class="task-details">
@@ -58,11 +58,9 @@
     {#if !isEditing}
         <div class="task-actions">
             {#if index == 0}
-                {#if $state.isRunning}
-                    <div on:click={handlePauseClicked}>⏸️</div>
-                {:else}
-                    <div on:click={handleStartClicked}>▶️</div>
-                {/if}
+                <div on:click={handleStartStopClicked}>
+                    {#if $state.isRunning}⏸️{:else}▶️{/if}
+                </div>
                 <div>✅️</div>
             {/if}
             <div on:click={startEditing}>✏️</div>
