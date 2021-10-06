@@ -34,5 +34,6 @@ function reducer(state: State, action: Action): State {
     // this is a testable, pure function
     const event = logic[action.type]
     const updater = event.updater(action.payload)
-    return produce(state, updater)
+    const newState = produce(state, updater)
+    return newState
 }

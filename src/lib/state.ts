@@ -7,6 +7,7 @@ export type State = {
     tasks: Task[]
     activeTaskIndex: number | undefined
     isRunning: boolean
+    undoPoints: Partial<State>[]
 }
 
 const defaultState: State = {
@@ -14,6 +15,7 @@ const defaultState: State = {
     tasks: defaultTasks,
     activeTaskIndex: 0,
     isRunning: false,
+    undoPoints: [],
 }
 
 export const state = writable<State>(defaultState)
