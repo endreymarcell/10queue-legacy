@@ -4,6 +4,7 @@ import { moveArrayElement } from "./utils"
 
 export type Events = {
     taskTitleEdited: { index: number; title: string }
+    taskClicked: { index: number }
     taskDeleteRequested: { index: number }
     taskStartStopRequested: void
     taskMoveUpRequested: { index: number }
@@ -16,6 +17,12 @@ export const logic: Logic = {
         action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
         updater: payload => state => {
             state.tasks[payload.index].title = payload.title
+        },
+    },
+    taskClicked: {
+        action: createAction("taskClicked", index => ({ index })),
+        updater: payload => state => {
+            state.activeTaskIndex = payload.index
         },
     },
     taskDeleteRequested: {

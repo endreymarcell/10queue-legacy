@@ -39,9 +39,10 @@
     const handleStartStopClicked = () => dispatch(logic.taskStartStopRequested.action())
     const handleMoveUpClicked = () => dispatch(logic.taskMoveUpRequested.action(index))
     const handleMoveDownClicked = () => dispatch(logic.taskMoveDownRequested.action(index))
+    const handleRowClicked = () => dispatch(logic.taskClicked.action(index))
 </script>
 
-<div class="task-details">
+<div class="task-details" class:active={$state.activeTaskIndex === index} on:click={handleRowClicked}>
     <div class="task-description">
         <div>{displayIndex}.</div>
         {#if isEditing}
@@ -85,8 +86,12 @@
         display: flex;
         justify-content: space-between;
         --field-spacing: 20px;
-
         font-size: 30px;
+        cursor: pointer;
+    }
+
+    .active {
+        background-color: gold;
     }
 
     .task-description > div {
