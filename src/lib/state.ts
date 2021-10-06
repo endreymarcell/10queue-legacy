@@ -62,12 +62,17 @@ export const actions = Object.fromEntries(Object.keys(logic).map(eventName => [e
 type Action = ActionTypeFromActionCreators<typeof actions>
 
 export function dispatch(action: Action) {
-    // middleware would come here
+    // this is rather redundant, but it feels weird to update state in a function called `dispatch`
     handleAction(action)
 }
 
 function handleAction(action: Action) {
+    state.update(oldState => reducer(oldState, action))
+}
+
+function reducer(state: State, action: Action): State {
+    // this is a testable, pure function
     const event = logic[action.type]
     const updater = event.updater(action.payload)
-    state.update(value => produce(value, updater))
+    return produce(state, updater)
 }
