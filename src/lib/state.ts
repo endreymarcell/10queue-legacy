@@ -3,7 +3,7 @@ import { writable } from "svelte/store"
 import { defaultTasks } from "./tasks"
 import type { Task } from "./tasks"
 import type { WritableDraft } from "immer/dist/internal"
-import { ActionTypeFromActionCreators, createAction } from "redux-dry-ts-actions"
+import { ActionCreator, ActionCreatorWithPayload, ActionTypeFromActionCreators, createAction } from "redux-dry-ts-actions"
 
 type State = {
     tasks: Task[];
@@ -16,12 +16,43 @@ const defaultState: State = {
 
 export const state = writable<State>(defaultState)
 
-export const actions = {
-    taskTitleEdited: createAction('taskTitleEdited', (index: number, title: string) => ({ index, title })),
-    taskDeleted: createAction('taskDeleted', (index: number) => ({ index })),
-    taskStarted: createAction('taskStarted'),
-    taskPaused: createAction('taskPaused'),
+type Events = {
+    taskTitleEdited: { index: number, title: string },
+    taskDeleted: { index: number },
+    taskStarted: void,
+    taskPaused: void,
 }
+
+type TODO = any;
+
+type Logic = {
+    [eventName in keyof Events]: {
+        action: Events[eventName] extends Object ? ActionCreatorWithPayload<eventName, Events[eventName], TODO> : ActionCreator<eventName>;
+        updater: (payload: Events[eventName]) => (draft: WritableDraft<State>) => void;
+    }
+}
+
+export const logic: Logic = {
+    taskTitleEdited: {
+        action: createAction('taskTitleEdited', (index, title) => ({ index, title })),
+        updater: (payload) => (draft) => void (draft.tasks[payload.index].title = payload.title),
+    },
+    taskDeleted: {
+        action: createAction('taskDeleted', (index) => ({ index })),
+        updater: (payload) => (draft) => void draft.tasks.splice(payload.index, 1)
+    },
+    taskStarted: {
+        action: createAction('taskStarted'),
+        updater: () => (draft) => void (draft.isRunning = true)
+    },
+    taskPaused: {
+        action: createAction('taskPaused'),
+        updater: () => (draft) => void (draft.isRunning = false)
+    }
+}
+
+
+export const actions = Object.fromEntries(Object.keys(logic).map(eventName => [eventName, logic[eventName].action]))
 type Action = ActionTypeFromActionCreators<typeof actions>
 
 export function dispatch(action: Action) {
@@ -29,40 +60,8 @@ export function dispatch(action: Action) {
     handleAction(action)
 }
 
-const updateTaskTitle = (payload: { index: number, title: string }) => (draft: WritableDraft<State>) => void (draft.tasks[payload.index].title = payload.title)
-
 function handleAction(action: Action) {
-    switch (action.type) {
-        case "taskTitleEdited": {
-            const updater = updateTaskTitle(action.payload);
-            state.update((value) =>
-                produce(value, updater),
-            )
-            break
-        }
-        case "taskDeleted": {
-            state.update((value) =>
-                produce(value, (draft) => {
-                    draft.tasks.splice(action.payload.index, 1)
-                }),
-            )
-            break
-        }
-        case "taskStarted": {
-            state.update((value) =>
-                produce(value, (draft) => {
-                    draft.isRunning = true
-                }),
-            )
-            break
-        }
-        case "taskPaused": {
-            state.update((value) =>
-                produce(value, (draft) => {
-                    draft.isRunning = false
-                }),
-            )
-            break
-        }
-    }
+    const event = logic[action.type];
+    const updater = event.updater(action.payload);
+    state.update((value) => produce(value, updater))
 }
