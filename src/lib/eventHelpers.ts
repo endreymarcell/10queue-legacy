@@ -6,6 +6,7 @@ import { state } from "./state"
 import type { Events } from "./events"
 import type { State } from "./state"
 
+// TODO should convert interface to tuple for the ActionCreatorWithPayload interface, no luck so far
 type TODO = any
 
 export type Logic = {

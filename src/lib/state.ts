@@ -6,6 +6,7 @@ export type State = {
     tasks: Task[]
     isRunning: boolean
 }
+
 const defaultState: State = {
     tasks: defaultTasks,
     isRunning: false,
