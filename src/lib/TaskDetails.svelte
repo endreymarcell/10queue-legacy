@@ -37,6 +37,8 @@
 
     const handleDeleteClicked = () => dispatch(logic.taskDeleteRequested.action(index))
     const handleStartStopClicked = () => dispatch(logic.taskStartStopRequested.action())
+    const handleMoveUpClicked = () => dispatch(logic.taskMoveUpRequested.action(index))
+    const handleMoveDownClicked = () => dispatch(logic.taskMoveDownRequested.action(index))
 </script>
 
 <div class="task-details">
@@ -64,8 +66,8 @@
                 <div>✅️</div>
             {/if}
             <div on:click={startEditing}>✏️</div>
-            <div>⬆️</div>
-            <div>⬇️️</div>
+            <div on:click={handleMoveUpClicked}>⬆️</div>
+            <div on:click={handleMoveDownClicked}>⬇️️</div>
             <div on:click={handleDeleteClicked}>❌</div>
         </div>
     {/if}

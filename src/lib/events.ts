@@ -1,10 +1,13 @@
 import { createAction } from "redux-dry-ts-actions"
 import type { Logic } from "./eventHelpers"
+import { moveArrayElement } from "./utils"
 
 export type Events = {
     taskTitleEdited: { index: number; title: string }
     taskDeleteRequested: { index: number }
     taskStartStopRequested: void
+    taskMoveUpRequested: { index: number }
+    taskMoveDownRequested: { index: number }
 }
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
@@ -25,6 +28,22 @@ export const logic: Logic = {
         action: createAction("taskStartStopRequested"),
         updater: () => state => {
             state.isRunning = !state.isRunning
+        },
+    },
+    taskMoveUpRequested: {
+        action: createAction("taskMoveUpRequested", index => ({ index })),
+        updater: payload => state => {
+            if (payload.index !== 0) {
+                state.tasks = moveArrayElement(state.tasks, payload.index, payload.index - 1)
+            }
+        },
+    },
+    taskMoveDownRequested: {
+        action: createAction("taskMoveDownRequested", index => ({ index })),
+        updater: payload => state => {
+            if (payload.index !== 9) {
+                state.tasks = moveArrayElement(state.tasks, payload.index, payload.index + 1)
+            }
         },
     },
 }
