@@ -42,23 +42,23 @@ type Logic = {
 export const logic: Logic = {
     taskTitleEdited: {
         action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
-        updater: (payload) => (draft) => void (draft.tasks[payload.index].title = payload.title),
+        updater: payload => draft => void (draft.tasks[payload.index].title = payload.title),
     },
     taskDeleted: {
-        action: createAction("taskDeleted", (index) => ({ index })),
-        updater: (payload) => (draft) => void draft.tasks.splice(payload.index, 1),
+        action: createAction("taskDeleted", index => ({ index })),
+        updater: payload => draft => void draft.tasks.splice(payload.index, 1),
     },
     taskStarted: {
         action: createAction("taskStarted"),
-        updater: () => (draft) => void (draft.isRunning = true),
+        updater: () => draft => void (draft.isRunning = true),
     },
     taskPaused: {
         action: createAction("taskPaused"),
-        updater: () => (draft) => void (draft.isRunning = false),
+        updater: () => draft => void (draft.isRunning = false),
     },
 }
 
-export const actions = Object.fromEntries(Object.keys(logic).map((eventName) => [eventName, logic[eventName].action]))
+export const actions = Object.fromEntries(Object.keys(logic).map(eventName => [eventName, logic[eventName].action]))
 type Action = ActionTypeFromActionCreators<typeof actions>
 
 export function dispatch(action: Action) {
@@ -69,5 +69,5 @@ export function dispatch(action: Action) {
 function handleAction(action: Action) {
     const event = logic[action.type]
     const updater = event.updater(action.payload)
-    state.update((value) => produce(value, updater))
+    state.update(value => produce(value, updater))
 }
