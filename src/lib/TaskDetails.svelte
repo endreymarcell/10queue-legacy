@@ -15,6 +15,7 @@
     function startEditing() {
         currentTitle = task.title
         isEditing = true
+        dispatch(logic.textInputFocusChanged.action("focus"))
     }
 
     function onInputKeyDown(event: KeyboardEvent) {
@@ -27,12 +28,14 @@
 
     function handleFinishedEditing() {
         isEditing = false
+        dispatch(logic.textInputFocusChanged.action("focus"))
         dispatch(logic.taskTitleEdited.action(index, currentTitle))
     }
 
     function handleAbortedEditing() {
         currentTitle = task.title
         isEditing = false
+        dispatch(logic.textInputFocusChanged.action("focus"))
     }
 
     const handleDeleteClicked = () => dispatch(logic.taskDeleteRequested.action(index))

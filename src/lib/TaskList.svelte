@@ -1,11 +1,17 @@
 <script lang="ts">
     import TaskRow from "$lib/TaskRow.svelte"
+    import { onMount } from "svelte"
     import { derived } from "svelte/store"
+    import { setupKeyboardShortcuts } from "./keyboardShortcuts"
     import { state } from "./state"
 
     const paddedTasksList = derived(state, $state =>
         $state.isRunning ? [$state.tasks[0]] : [...$state.tasks, ...new Array(10 - $state.tasks.length)],
     )
+
+    onMount(() => {
+        setupKeyboardShortcuts()
+    })
 </script>
 
 <div class="task-container">

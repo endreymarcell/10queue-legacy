@@ -3,6 +3,7 @@ import type { Logic } from "./eventHelpers"
 import { moveArrayElement } from "./utils"
 
 export type Events = {
+    textInputFocusChanged: { event: "focus" | "blur" }
     taskTitleEdited: { index: number; title: string }
     taskClicked: { index: number }
     taskDeleteRequested: { index: number }
@@ -13,6 +14,12 @@ export type Events = {
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
 export const logic: Logic = {
+    textInputFocusChanged: {
+        action: createAction("textInputFocusChanged", event => ({ event })),
+        updater: payload => state => {
+            state.isTextInputFocused = payload.event === "focus" ? true : false
+        },
+    },
     taskTitleEdited: {
         action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
         updater: payload => state => {
