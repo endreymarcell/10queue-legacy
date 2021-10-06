@@ -34,17 +34,9 @@
         isEditing = false
     }
 
-    function handleDeleteClicked() {
-        dispatch(actions.taskDeleted(index))
-    }
-
-    function handleStartClicked() {
-        dispatch(actions.taskStarted())
-    }
-
-    function handlePauseClicked() {
-        dispatch(actions.taskPaused())
-    }
+    const handleDeleteClicked = () => dispatch(actions.taskDeleted(index))
+    const handleStartClicked = () => dispatch(actions.taskStarted())
+    const handlePauseClicked = () => dispatch(actions.taskPaused())
 </script>
 
 <div class="task-details">
