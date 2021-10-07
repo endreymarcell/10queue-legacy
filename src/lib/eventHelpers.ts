@@ -5,14 +5,12 @@ import { logic } from "./events"
 import { state } from "./state"
 import type { Events } from "./events"
 import type { State } from "./state"
-
-// TODO should convert interface to tuple for the ActionCreatorWithPayload interface, no luck so far
-type TODO = any
+import type { ObjValueTuple } from "$lib/utils"
 
 export type Logic = {
     [eventName in keyof Events]: {
         action: Events[eventName] extends Record<string, unknown>
-            ? ActionCreatorWithPayload<eventName, Events[eventName], TODO>
+            ? ActionCreatorWithPayload<eventName, Events[eventName], ObjValueTuple<Events[eventName]>>
             : ActionCreator<eventName>
         updater: (payload: Events[eventName]) => (draft: WritableDraft<State>) => void
     }
