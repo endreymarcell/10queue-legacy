@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Task } from "$lib/taskList/tasks"
-    import { state } from "../state"
+    import { appState } from "../state"
     import { dispatch } from "../eventHelpers"
-    import { logic } from "../logic"
+    import { appLogic } from "../logic"
 
     export let index: number
     let displayIndex: number
@@ -15,7 +15,7 @@
     function startEditing() {
         currentTitle = task.title
         isEditing = true
-        dispatch(logic.textInputFocusChanged.action("focus"))
+        dispatch(appLogic.textInputFocusChanged.action("focus"))
     }
 
     function onInputKeyDown(event: KeyboardEvent) {
@@ -28,24 +28,24 @@
 
     function handleFinishedEditing() {
         isEditing = false
-        dispatch(logic.textInputFocusChanged.action("focus"))
-        dispatch(logic.taskTitleEdited.action(index, currentTitle))
+        dispatch(appLogic.textInputFocusChanged.action("focus"))
+        dispatch(appLogic.taskTitleEdited.action(index, currentTitle))
     }
 
     function handleAbortedEditing() {
         currentTitle = task.title
         isEditing = false
-        dispatch(logic.textInputFocusChanged.action("focus"))
+        dispatch(appLogic.textInputFocusChanged.action("focus"))
     }
 
-    const handleDeleteClicked = () => dispatch(logic.taskDeleteRequested.action(index))
-    const handleStartStopClicked = () => dispatch(logic.taskStartStopRequested.action())
-    const handleMoveUpClicked = () => dispatch(logic.taskMoveUpRequested.action(index))
-    const handleMoveDownClicked = () => dispatch(logic.taskMoveDownRequested.action(index))
-    const handleRowClicked = () => dispatch(logic.taskClicked.action(index))
+    const handleDeleteClicked = () => dispatch(appLogic.taskDeleteRequested.action(index))
+    const handleStartStopClicked = () => dispatch(appLogic.taskStartStopRequested.action())
+    const handleMoveUpClicked = () => dispatch(appLogic.taskMoveUpRequested.action(index))
+    const handleMoveDownClicked = () => dispatch(appLogic.taskMoveDownRequested.action(index))
+    const handleRowClicked = () => dispatch(appLogic.taskClicked.action(index))
 </script>
 
-<div class="task-details" class:active={$state.activeTaskIndex === index} on:click={handleRowClicked}>
+<div class="task-details" class:active={$appState.activeTaskIndex === index} on:click={handleRowClicked}>
     <div class="task-description">
         <div>{displayIndex}.</div>
         {#if isEditing}
@@ -65,7 +65,7 @@
         <div class="task-actions">
             {#if index == 0}
                 <div on:click={handleStartStopClicked}>
-                    {#if $state.isRunning}⏸️{:else}▶️{/if}
+                    {#if $appState.isRunning}⏸️{:else}▶️{/if}
                 </div>
                 <div>✅️</div>
             {/if}

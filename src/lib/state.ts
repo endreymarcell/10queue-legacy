@@ -2,15 +2,15 @@ import { writable } from "svelte/store"
 import { defaultTasks } from "./taskList/tasks"
 import type { Task } from "./taskList/tasks"
 
-export type State = {
+export type AppState = {
     isTextInputFocused: boolean
     tasks: Task[]
     activeTaskIndex: number | undefined
     isRunning: boolean
-    undoPoints: Partial<State>[]
+    undoPoints: Partial<AppState>[]
 }
 
-const defaultState: State = {
+const defaultAppState: AppState = {
     isTextInputFocused: false,
     tasks: defaultTasks,
     activeTaskIndex: 0,
@@ -18,4 +18,4 @@ const defaultState: State = {
     undoPoints: [],
 }
 
-export const state = writable<State>(defaultState)
+export const appState = writable<AppState>(defaultAppState)

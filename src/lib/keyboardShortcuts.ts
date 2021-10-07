@@ -1,10 +1,10 @@
 import { dispatch } from "./eventHelpers"
-import { logic } from "./logic"
-import { state } from "./state"
+import { appLogic } from "./logic"
+import { appState } from "./state"
 
 let isTextInputFocused: boolean
 let activeTaskIndex: number | undefined
-state.subscribe(value => {
+appState.subscribe(value => {
     isTextInputFocused = value.isTextInputFocused
     activeTaskIndex = value.activeTaskIndex
 })
@@ -16,37 +16,37 @@ export function setupKeyboardShortcuts() {
             switch (event.key) {
                 case " ": {
                     event.preventDefault()
-                    dispatch(logic.taskStartStopRequested.action())
+                    dispatch(appLogic.taskStartStopRequested.action())
                     break
                 }
                 case "d": {
                     event.preventDefault()
-                    dispatch(logic.taskDeleteRequested.action(activeTaskIndex))
+                    dispatch(appLogic.taskDeleteRequested.action(activeTaskIndex))
                     break
                 }
                 case "j": {
                     event.preventDefault()
-                    dispatch(logic.taskActivateNextRequested.action())
+                    dispatch(appLogic.taskActivateNextRequested.action())
                     break
                 }
                 case "k": {
                     event.preventDefault()
-                    dispatch(logic.taskActivatePreviousRequested.action())
+                    dispatch(appLogic.taskActivatePreviousRequested.action())
                     break
                 }
                 case "J": {
                     event.preventDefault()
-                    dispatch(logic.taskMoveDownRequested.action(activeTaskIndex))
+                    dispatch(appLogic.taskMoveDownRequested.action(activeTaskIndex))
                     break
                 }
                 case "K": {
                     event.preventDefault()
-                    dispatch(logic.taskMoveUpRequested.action(activeTaskIndex))
+                    dispatch(appLogic.taskMoveUpRequested.action(activeTaskIndex))
                     break
                 }
                 case "u": {
                     event.preventDefault()
-                    dispatch(logic.restoreUndoPoint.action())
+                    dispatch(appLogic.restoreUndoPoint.action())
                     break
                 }
             }

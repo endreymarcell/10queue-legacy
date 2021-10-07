@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/taskList/tasks"
-    import TaskDetails from "$lib/TaskDetails.svelte"
+    import TaskDetails from "$lib/taskList/TaskDetails.svelte"
     import TaskPlaceholder from "$lib/taskList/TaskPlaceholder.svelte"
 
     export let index: number

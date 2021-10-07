@@ -1,9 +1,9 @@
 import { createAction } from "redux-dry-ts-actions"
 import type { Logic } from "./eventHelpers"
-import type { State } from "./state"
+import type { AppState } from "./state"
 import { moveArrayElement } from "./utils"
 
-export type Events = {
+export type AppEvents = {
     textInputFocusChanged: { event: "focus" | "blur" }
     taskTitleEdited: { index: number; title: string }
     taskClicked: { index: number }
@@ -19,7 +19,7 @@ export type Events = {
 }
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
-export const logic: Logic = {
+export const appLogic: Logic = {
     textInputFocusChanged: {
         action: createAction("textInputFocusChanged", event => ({ event })),
         updater: payload => state => {
@@ -121,6 +121,6 @@ export const logic: Logic = {
     },
 }
 
-function createUndoPoint(state: State) {
+function createUndoPoint(state: AppState) {
     state.undoPoints.push({ tasks: [...state.tasks], activeTaskIndex: state.activeTaskIndex })
 }

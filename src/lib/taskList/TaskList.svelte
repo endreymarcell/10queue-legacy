@@ -3,10 +3,10 @@
     import { onMount } from "svelte"
     import { derived } from "svelte/store"
     import { setupKeyboardShortcuts } from "../keyboardShortcuts"
-    import { state } from "../state"
+    import { appState } from "../state"
 
-    const paddedTasksList = derived(state, $state =>
-        $state.isRunning ? [$state.tasks[0]] : [...$state.tasks, ...new Array(10 - $state.tasks.length)],
+    const paddedTasksList = derived(appState, $appState =>
+        $appState.isRunning ? [$appState.tasks[0]] : [...$appState.tasks, ...new Array(10 - $appState.tasks.length)],
     )
 
     onMount(() => {
