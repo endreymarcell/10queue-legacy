@@ -1,6 +1,6 @@
 import { writable } from "svelte/store"
-import { defaultTasks } from "./tasks"
-import type { Task } from "./tasks"
+import { defaultTasks } from "./taskList/tasks"
+import type { Task } from "./taskList/tasks"
 
 export type State = {
     isTextInputFocused: boolean

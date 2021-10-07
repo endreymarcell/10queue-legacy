@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Task } from "$lib/tasks"
-    import { state } from "./state"
-    import { dispatch } from "./eventHelpers"
-    import { logic } from "./events"
+    import type { Task } from "$lib/taskList/tasks"
+    import { state } from "../state"
+    import { dispatch } from "../eventHelpers"
+    import { logic } from "../events"
 
     export let index: number
     let displayIndex: number

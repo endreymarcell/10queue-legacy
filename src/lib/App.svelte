@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Header from "./Header.svelte"
-    import TaskList from "./TaskList.svelte"
+    import Header from "./header/Header.svelte"
+    import TaskList from "./taskList/TaskList.svelte"
 </script>
 
 <Header />
