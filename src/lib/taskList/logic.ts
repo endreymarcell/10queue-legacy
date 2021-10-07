@@ -5,19 +5,19 @@ import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/undo"
 import { moveArrayElement } from "$lib/utils"
 
-export type State = {
+type State = {
     tasks: Task[]
     activeTaskIndex: number | undefined
     isRunning: boolean
 }
 
-export const defaultState = {
+const defaultState = {
     tasks: defaultTasks,
     activeTaskIndex: 0,
     isRunning: false,
 }
 
-export type Events = {
+type Events = {
     taskTitleEdited: { index: number; title: string }
     taskClicked: { index: number }
     taskDeleteRequested: { index: number }
@@ -28,7 +28,7 @@ export type Events = {
     taskActivateNextRequested: void
 }
 
-export const logic: Logic<Events> = {
+const logic: Logic<Events> = {
     taskClicked: {
         action: createAction("taskClicked", index => ({ index })),
         updater: () => state => state,
@@ -105,3 +105,6 @@ export const logic: Logic<Events> = {
         },
     },
 }
+
+export type TaskList = { State: State; Events: Events }
+export const taskList = { defaultState, logic }
