@@ -1,6 +1,6 @@
 <script lang="ts">
     export let index: number
-    let displayIndex
+    let displayIndex: number
     $: displayIndex = index + 1
 </script>
 

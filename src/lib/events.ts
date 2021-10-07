@@ -23,7 +23,7 @@ export const logic: Logic = {
     textInputFocusChanged: {
         action: createAction("textInputFocusChanged", event => ({ event })),
         updater: payload => state => {
-            state.isTextInputFocused = payload.event === "focus" ? true : false
+            state.isTextInputFocused = payload.event === "focus"
         },
     },
     taskTitleEdited: {
@@ -35,10 +35,11 @@ export const logic: Logic = {
     },
     taskClicked: {
         action: createAction("taskClicked", index => ({ index })),
-        updater: payload => state => {
-            // TODO this should not fire when clicking on move up/down arrows because it overwrites the effect of those
-            // state.activeTaskIndex = payload.index
-        },
+        updater: () => state => state,
+        // TODO this should not fire when clicking on move up/down arrows because it overwrites the effect of those
+        // updater: payload => state => {
+        // state.activeTaskIndex = payload.index
+        // },
     },
     taskDeleteRequested: {
         action: createAction("taskDeleteRequested", index => ({ index })),

@@ -11,7 +11,7 @@ type TODO = any
 
 export type Logic = {
     [eventName in keyof Events]: {
-        action: Events[eventName] extends Object
+        action: Events[eventName] extends Record<string, unknown>
             ? ActionCreatorWithPayload<eventName, Events[eventName], TODO>
             : ActionCreator<eventName>
         updater: (payload: Events[eventName]) => (draft: WritableDraft<State>) => void

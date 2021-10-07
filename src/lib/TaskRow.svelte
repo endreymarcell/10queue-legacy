@@ -4,7 +4,6 @@
     import TaskPlaceholder from "$lib/TaskPlaceholder.svelte"
 
     export let index: number
-
     export let task: Task
 </script>
 
