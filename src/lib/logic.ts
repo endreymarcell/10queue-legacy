@@ -1,7 +1,8 @@
 import { createAction } from "redux-dry-ts-actions"
 import type { Logic } from "./eventHelpers"
-import type { AppState } from "./state"
+import { createUndoPoint } from "./undo"
 import { moveArrayElement } from "./utils"
+import * as undo from "./undo"
 
 export type AppEvents = {
     textInputFocusChanged: { event: "focus" | "blur" }
@@ -13,10 +14,7 @@ export type AppEvents = {
     taskMoveDownRequested: { index: number }
     taskActivatePreviousRequested: void
     taskActivateNextRequested: void
-
-    createUndoPoint: void
-    restoreUndoPoint: void
-}
+} & undo.Events
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
 export const appLogic: Logic<AppEvents> = {
@@ -26,13 +24,6 @@ export const appLogic: Logic<AppEvents> = {
             state.isTextInputFocused = payload.event === "focus"
         },
     },
-    taskTitleEdited: {
-        action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
-        updater: payload => state => {
-            createUndoPoint(state)
-            state.tasks[payload.index].title = payload.title
-        },
-    },
     taskClicked: {
         action: createAction("taskClicked", index => ({ index })),
         updater: () => state => state,
@@ -40,6 +31,13 @@ export const appLogic: Logic<AppEvents> = {
         // updater: payload => state => {
         // state.activeTaskIndex = payload.index
         // },
+    },
+    taskTitleEdited: {
+        action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
+        updater: payload => state => {
+            createUndoPoint(state)
+            state.tasks[payload.index].title = payload.title
+        },
     },
     taskDeleteRequested: {
         action: createAction("taskDeleteRequested", index => ({ index })),
@@ -101,26 +99,5 @@ export const appLogic: Logic<AppEvents> = {
             }
         },
     },
-
-    createUndoPoint: {
-        action: createAction("createUndoPoint"),
-        updater: () => createUndoPoint,
-    },
-    restoreUndoPoint: {
-        action: createAction("restoreUndoPoint"),
-        updater: () => state => {
-            if (state.undoPoints.length > 0) {
-                const lastUndoPoint = state.undoPoints.pop()
-                for (const key of Object.keys(lastUndoPoint)) {
-                    state[key] = lastUndoPoint[key]
-                }
-            } else {
-                console.log("No more steps to undo")
-            }
-        },
-    },
-}
-
-function createUndoPoint(state: AppState) {
-    state.undoPoints.push({ tasks: [...state.tasks], activeTaskIndex: state.activeTaskIndex })
+    ...undo.logic,
 }
