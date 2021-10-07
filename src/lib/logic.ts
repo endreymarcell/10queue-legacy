@@ -19,7 +19,7 @@ export type AppEvents = {
 }
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
-export const appLogic: Logic = {
+export const appLogic: Logic<AppEvents> = {
     textInputFocusChanged: {
         action: createAction("textInputFocusChanged", event => ({ event })),
         updater: payload => state => {

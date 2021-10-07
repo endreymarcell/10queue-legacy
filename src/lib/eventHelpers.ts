@@ -3,16 +3,20 @@ import type { WritableDraft } from "immer/dist/internal"
 import type { ActionCreator, ActionCreatorWithPayload, ActionTypeFromActionCreators } from "redux-dry-ts-actions"
 import { appLogic } from "./logic"
 import { appState } from "./state"
-import type { AppEvents } from "./logic"
 import type { AppState } from "./state"
 import type { ObjValueTuple } from "$lib/utils"
 
-export type Logic = {
-    [eventName in keyof AppEvents]: {
-        action: AppEvents[eventName] extends Record<string, unknown>
-            ? ActionCreatorWithPayload<eventName, AppEvents[eventName], ObjValueTuple<AppEvents[eventName]>>
+type EventPayloadType = { [key: string]: unknown }
+export type EventListType = { [eventName: string]: EventPayloadType | void }
+// helper type because the built-in keyof returns string | number even though I only use strings
+type KeyOf<T extends Record<string, unknown>> = Extract<keyof T, string>
+
+export type Logic<EventList extends EventListType> = {
+    [eventName in KeyOf<EventList>]: {
+        action: EventList[eventName] extends Record<string, unknown>
+            ? ActionCreatorWithPayload<eventName, EventList[eventName], ObjValueTuple<EventList[eventName]>>
             : ActionCreator<eventName>
-        updater: (payload: AppEvents[eventName]) => (draft: WritableDraft<AppState>) => void
+        updater: (payload: EventList[eventName]) => (draft: WritableDraft<AppState>) => void
     }
 }
 
