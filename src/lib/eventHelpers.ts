@@ -1,9 +1,9 @@
 import produce from "immer"
 import type { WritableDraft } from "immer/dist/internal"
 import type { ActionCreator, ActionCreatorWithPayload, ActionTypeFromActionCreators } from "redux-dry-ts-actions"
-import { logic } from "./events"
+import { logic } from "./logic"
 import { state } from "./state"
-import type { Events } from "./events"
+import type { Events } from "./logic"
 import type { State } from "./state"
 import type { ObjValueTuple } from "$lib/utils"
 

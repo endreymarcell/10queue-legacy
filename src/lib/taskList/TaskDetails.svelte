@@ -2,7 +2,7 @@
     import type { Task } from "$lib/taskList/tasks"
     import { state } from "../state"
     import { dispatch } from "../eventHelpers"
-    import { logic } from "../events"
+    import { logic } from "../logic"
 
     export let index: number
     let displayIndex: number

@@ -1,5 +1,5 @@
 import { dispatch } from "./eventHelpers"
-import { logic } from "./events"
+import { logic } from "./logic"
 import { state } from "./state"
 
 let isTextInputFocused: boolean
