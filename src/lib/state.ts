@@ -1,20 +1,15 @@
 import { writable } from "svelte/store"
-import { defaultTasks } from "./taskList/tasks"
-import type { Task } from "./taskList/tasks"
+import * as tasks from "./taskList/logic"
 import * as undo from "./undo"
 
 export type AppState = {
     isTextInputFocused: boolean
-    tasks: Task[]
-    activeTaskIndex: number | undefined
-    isRunning: boolean
-} & undo.State
+} & tasks.State &
+    undo.State
 
 const defaultAppState: AppState = {
     isTextInputFocused: false,
-    tasks: defaultTasks,
-    activeTaskIndex: 0,
-    isRunning: false,
+    ...tasks.defaultState,
     ...undo.defaultState,
 }
 
