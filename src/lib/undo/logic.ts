@@ -1,5 +1,5 @@
 import type { AppState } from "$lib/logic"
-import type { Logic } from "$lib/eventHelpers"
+import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 
 type UndoableState = Pick<AppState, "tasks" | "activeTaskIndex">

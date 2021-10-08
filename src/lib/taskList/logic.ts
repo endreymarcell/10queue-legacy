@@ -1,6 +1,6 @@
 import type { Task } from "$lib/taskList/tasks"
 import { defaultTasks } from "$lib/taskList/tasks"
-import type { Logic } from "$lib/eventHelpers"
+import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/undo/logic"
 import { moveArrayElement } from "$lib/utils"

@@ -1,5 +1,5 @@
 import { createAction } from "redux-dry-ts-actions"
-import type { Logic } from "./eventHelpers"
+import type { Logic } from "./logicHelpers"
 import type { TaskList } from "$lib/taskList/logic"
 import { taskList } from "$lib/taskList/logic"
 import type { Undo } from "$lib/undo/logic"

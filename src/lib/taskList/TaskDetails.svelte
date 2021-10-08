@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/taskList/tasks"
-    import { dispatch } from "../eventHelpers"
+    import { dispatch } from "../logicHelpers"
     import { appState, appLogic } from "../logic"
 
     export let index: number
