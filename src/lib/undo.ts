@@ -2,8 +2,10 @@ import type { AppState } from "$lib/state"
 import type { Logic } from "$lib/eventHelpers"
 import { createAction } from "redux-dry-ts-actions"
 
+type UndoableState = Pick<AppState, "tasks" | "activeTaskIndex">
+
 type State = {
-    undoPoints: Partial<AppState>[]
+    undoPoints: UndoableState[]
 }
 
 const defaultState: State = {
@@ -36,7 +38,11 @@ const logic: Logic<Events> = {
 }
 
 export function createUndoPoint(state: AppState) {
-    state.undoPoints.push({ tasks: [...state.tasks], activeTaskIndex: state.activeTaskIndex })
+    const undoableState: UndoableState = {
+        tasks: [...state.tasks],
+        activeTaskIndex: state.activeTaskIndex,
+    }
+    state.undoPoints.push(undoableState)
 }
 
 export type Undo = { State: State; Events: Events }
