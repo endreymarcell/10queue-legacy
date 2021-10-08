@@ -23,15 +23,15 @@ export type Logic<EventList extends EventListType> = {
 export const appActions = Object.fromEntries(
     Object.keys(appLogic).map(eventName => [eventName, appLogic[eventName].action]),
 )
-type AppActions = ActionTypeFromActionCreators<typeof appActions>
+type AppAction = ActionTypeFromActionCreators<typeof appActions>
 
-export function dispatch(action: AppActions) {
+export function dispatch(action: AppAction) {
     // this is rather redundant, but it feels weird to update state in a function called `dispatch`
     console.log("ACTION", action.type)
     handleAction(action)
 }
 
-function handleAction(action: AppActions) {
+function handleAction(action: AppAction) {
     appState.update(oldState => {
         // console.log("STATE before:", JSON.stringify({ stack: oldState.undoStack, pointer: oldState.undoPointer }))
         const newState = reducer(oldState, action)
@@ -40,7 +40,7 @@ function handleAction(action: AppActions) {
     })
 }
 
-function reducer(state: AppState, action: AppActions): AppState {
+function reducer(state: AppState, action: AppAction): AppState {
     // this is a testable, pure function
     const event = appLogic[action.type]
     const updater = event.updater(action.payload)
