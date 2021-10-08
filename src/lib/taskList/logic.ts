@@ -46,12 +46,13 @@ const logic: Logic<Events> = {
         action: createAction("taskDeleteRequested"),
         updater: () => state => {
             createUndoPoint(state)
-            state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = undefined
-            } else if (state.activeTaskIndex > 0) {
+            } else if (state.activeTaskIndex === state.tasks.length - 1) {
+                console.log("yes")
                 state.activeTaskIndex--
             }
+            state.tasks.splice(state.activeTaskIndex, 1)
         },
     },
     taskStartStopRequested: {
