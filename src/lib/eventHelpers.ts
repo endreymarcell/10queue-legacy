@@ -23,7 +23,7 @@ export type Logic<EventList extends EventListType> = {
 export const appActions = Object.fromEntries(
     Object.keys(appLogic).map(eventName => [eventName, appLogic[eventName].action]),
 )
-type AppAction = ActionTypeFromActionCreators<typeof appActions>
+export type AppAction = ActionTypeFromActionCreators<typeof appActions>
 
 export function dispatch(action: AppAction) {
     // this is rather redundant, but it feels weird to update state in a function called `dispatch`

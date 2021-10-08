@@ -4,11 +4,14 @@ import type { TaskList } from "$lib/taskList/logic"
 import { taskList } from "$lib/taskList/logic"
 import type { Undo } from "$lib/undo"
 import { undo } from "$lib/undo"
+import type { KeyboardShortcuts } from "./keyboardShortcuts"
+import { keyboardShortcuts } from "./keyboardShortcuts"
 
 export type AppEvents = {
     textInputFocusChanged: { event: "focus" | "blur" }
 } & TaskList["Events"] &
-    Undo["Events"]
+    Undo["Events"] &
+    KeyboardShortcuts["Events"]
 
 // It is safe to modify the state in the updaters because these functions are fed to immer
 export const appLogic: Logic<AppEvents> = {
@@ -20,4 +23,5 @@ export const appLogic: Logic<AppEvents> = {
     },
     ...taskList.logic,
     ...undo.logic,
+    ...keyboardShortcuts.logic,
 }
