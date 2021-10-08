@@ -2,7 +2,7 @@
     import TaskRow from "$lib/taskList/TaskRow.svelte"
     import { onMount } from "svelte"
     import { derived } from "svelte/store"
-    import { appState } from "../state"
+    import { appState } from "$lib/logic"
     import { setupKeyboardShortcuts } from "./keyboardShortcuts"
 
     const paddedTasksList = derived(appState, $appState =>

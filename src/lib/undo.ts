@@ -1,4 +1,4 @@
-import type { AppState } from "$lib/state"
+import type { AppState } from "$lib/logic"
 import type { Logic } from "$lib/eventHelpers"
 import { createAction } from "redux-dry-ts-actions"
 

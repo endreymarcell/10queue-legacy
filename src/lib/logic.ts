@@ -6,6 +6,20 @@ import type { Undo } from "$lib/undo"
 import { undo } from "$lib/undo"
 import type { KeyboardShortcuts } from "./keyboardShortcuts"
 import { keyboardShortcuts } from "./keyboardShortcuts"
+import { writable } from "svelte/store"
+
+export type AppState = {
+    isTextInputFocused: boolean
+} & TaskList["State"] &
+    Undo["State"]
+
+const defaultAppState: AppState = {
+    isTextInputFocused: false,
+    ...taskList.defaultState,
+    ...undo.defaultState,
+}
+
+export const appState = writable<AppState>(defaultAppState)
 
 export type AppEvents = {
     textInputFocusChanged: { event: "focus" | "blur" }
