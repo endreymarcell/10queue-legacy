@@ -32,7 +32,12 @@ export function dispatch(action: AppActions) {
 }
 
 function handleAction(action: AppActions) {
-    appState.update(oldState => reducer(oldState, action))
+    appState.update(oldState => {
+        // console.log("STATE before:", JSON.stringify({ stack: oldState.undoStack, pointer: oldState.undoPointer }))
+        const newState = reducer(oldState, action)
+        // console.log("STATE after:", JSON.stringify({ stack: newState.undoStack, pointer: newState.undoPointer }))
+        return newState
+    })
 }
 
 function reducer(state: AppState, action: AppActions): AppState {

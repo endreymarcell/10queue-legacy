@@ -5,16 +5,20 @@ import { createAction } from "redux-dry-ts-actions"
 type UndoableState = Pick<AppState, "tasks" | "activeTaskIndex">
 
 type State = {
-    undoPoints: UndoableState[]
+    undoStack: UndoableState[]
+    // The index of the currently active item in the imaginary array of [...undoStack, currentState]
+    undoPointer: number
 }
 
 const defaultState: State = {
-    undoPoints: [],
+    undoStack: [],
+    undoPointer: 0,
 }
 
 type Events = {
     createUndoPoint: void
-    restoreUndoPoint: void
+    undo: void
+    redo: void
 }
 
 const logic: Logic<Events> = {
@@ -22,27 +26,48 @@ const logic: Logic<Events> = {
         action: createAction("createUndoPoint"),
         updater: () => createUndoPoint,
     },
-    restoreUndoPoint: {
-        action: createAction("restoreUndoPoint"),
+    undo: {
+        action: createAction("undo"),
         updater: () => state => {
-            if (state.undoPoints.length > 0) {
-                const lastUndoPoint = state.undoPoints.pop()
-                for (const key of Object.keys(lastUndoPoint)) {
-                    state[key] = lastUndoPoint[key]
-                }
+            if (state.undoStack.length > 0 && state.undoPointer > -1) {
+                state.undoPointer--
+                restoreState(state)
             } else {
-                console.log("No more steps to undo")
+                console.log("Cannot undo")
+            }
+        },
+    },
+    redo: {
+        action: createAction("redo"),
+        updater: () => state => {
+            // TODO off-by-one errors are my favorite
+            if (state.undoPointer < state.undoStack.length - 1) {
+                restoreState(state)
+                state.undoPointer++
+            } else {
+                console.log("Cannot redo")
             }
         },
     },
 }
 
 export function createUndoPoint(state: AppState) {
+    // TODO do this with a proper deep copy
     const undoableState: UndoableState = {
         tasks: [...state.tasks],
         activeTaskIndex: state.activeTaskIndex,
     }
-    state.undoPoints.push(undoableState)
+    state.undoStack.splice(state.undoPointer + 1)
+    state.undoStack.push(undoableState)
+    state.undoPointer = state.undoStack.length
+}
+
+function restoreState(state: AppState) {
+    const undoPoint = state.undoStack[state.undoPointer]
+    console.log("I am restoring this undoPoint:", undoPoint)
+    for (const key of Object.keys(undoPoint)) {
+        state[key] = undoPoint[key]
+    }
 }
 
 export type Undo = { State: State; Events: Events }

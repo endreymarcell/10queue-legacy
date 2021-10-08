@@ -44,7 +44,12 @@ export function setupKeyboardShortcuts() {
                 }
                 case "u": {
                     event.preventDefault()
-                    dispatch(appLogic.restoreUndoPoint.action())
+                    dispatch(appLogic.undo.action())
+                    break
+                }
+                case "U": {
+                    event.preventDefault()
+                    dispatch(appLogic.redo.action())
                     break
                 }
             }
