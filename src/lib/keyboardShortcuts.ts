@@ -3,10 +3,8 @@ import { appLogic } from "./logic"
 import { appState } from "./state"
 
 let isTextInputFocused: boolean
-let activeTaskIndex: number | undefined
 appState.subscribe(value => {
     isTextInputFocused = value.isTextInputFocused
-    activeTaskIndex = value.activeTaskIndex
 })
 
 // TODO do this more elegantly
@@ -21,7 +19,7 @@ export function setupKeyboardShortcuts() {
                 }
                 case "d": {
                     event.preventDefault()
-                    dispatch(appLogic.taskDeleteRequested.action(activeTaskIndex))
+                    dispatch(appLogic.taskDeleteRequested.action())
                     break
                 }
                 case "j": {
@@ -36,12 +34,12 @@ export function setupKeyboardShortcuts() {
                 }
                 case "J": {
                     event.preventDefault()
-                    dispatch(appLogic.taskMoveDownRequested.action(activeTaskIndex))
+                    dispatch(appLogic.taskMoveDownRequested.action())
                     break
                 }
                 case "K": {
                     event.preventDefault()
-                    dispatch(appLogic.taskMoveUpRequested.action(activeTaskIndex))
+                    dispatch(appLogic.taskMoveUpRequested.action())
                     break
                 }
                 case "u": {

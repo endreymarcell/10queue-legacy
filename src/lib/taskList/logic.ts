@@ -18,12 +18,12 @@ const defaultState = {
 }
 
 type Events = {
-    taskTitleEdited: { index: number; title: string }
+    taskTitleEdited: { title: string }
     taskClicked: { index: number }
-    taskDeleteRequested: { index: number }
+    taskDeleteRequested: void
     taskStartStopRequested: void
-    taskMoveUpRequested: { index: number }
-    taskMoveDownRequested: { index: number }
+    taskMoveUpRequested: void
+    taskMoveDownRequested: void
     taskActivatePreviousRequested: void
     taskActivateNextRequested: void
 }
@@ -36,18 +36,20 @@ const logic: Logic<Events> = {
         },
     },
     taskTitleEdited: {
-        action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
+        action: createAction("taskTitleEdited", title => ({ title })),
         updater: payload => state => {
             createUndoPoint(state)
-            state.tasks[payload.index].title = payload.title
+            state.tasks[state.activeTaskIndex].title = payload.title
         },
     },
     taskDeleteRequested: {
-        action: createAction("taskDeleteRequested", index => ({ index })),
-        updater: payload => state => {
+        action: createAction("taskDeleteRequested"),
+        updater: () => state => {
             createUndoPoint(state)
-            state.tasks.splice(payload.index, 1)
-            if (state.activeTaskIndex > payload.index) {
+            state.tasks.splice(state.activeTaskIndex, 1)
+            if (state.tasks.length === 0) {
+                state.activeTaskIndex = undefined
+            } else if (state.activeTaskIndex > 0) {
                 state.activeTaskIndex--
             }
         },
@@ -59,30 +61,22 @@ const logic: Logic<Events> = {
         },
     },
     taskMoveUpRequested: {
-        action: createAction("taskMoveUpRequested", index => ({ index })),
-        updater: payload => state => {
+        action: createAction("taskMoveUpRequested"),
+        updater: () => state => {
             createUndoPoint(state)
-            if (payload.index !== 0) {
-                state.tasks = moveArrayElement(state.tasks, payload.index, payload.index - 1)
-                if (state.activeTaskIndex === payload.index) {
-                    state.activeTaskIndex--
-                } else if (state.activeTaskIndex === payload.index - 1) {
-                    state.activeTaskIndex++
-                }
+            if (state.activeTaskIndex !== 0) {
+                state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex - 1)
+                state.activeTaskIndex--
             }
         },
     },
     taskMoveDownRequested: {
-        action: createAction("taskMoveDownRequested", index => ({ index })),
-        updater: payload => state => {
+        action: createAction("taskMoveDownRequested"),
+        updater: () => state => {
             createUndoPoint(state)
-            if (payload.index !== state.tasks.length - 1) {
-                state.tasks = moveArrayElement(state.tasks, payload.index, payload.index + 1)
-                if (state.activeTaskIndex === payload.index) {
-                    state.activeTaskIndex++
-                } else if (state.activeTaskIndex === payload.index - 1) {
-                    state.activeTaskIndex--
-                }
+            if (state.activeTaskIndex !== state.tasks.length - 1) {
+                state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex + 1)
+                state.activeTaskIndex++
             }
         },
     },

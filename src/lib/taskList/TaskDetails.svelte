@@ -29,7 +29,7 @@
     function handleFinishedEditing() {
         isEditing = false
         dispatch(appLogic.textInputFocusChanged.action("focus"))
-        dispatch(appLogic.taskTitleEdited.action(index, currentTitle))
+        dispatch(appLogic.taskTitleEdited.action(currentTitle))
     }
 
     function handleAbortedEditing() {
@@ -38,10 +38,10 @@
         dispatch(appLogic.textInputFocusChanged.action("focus"))
     }
 
-    const handleDeleteClicked = () => dispatch(appLogic.taskDeleteRequested.action(index))
+    const handleDeleteClicked = () => dispatch(appLogic.taskDeleteRequested.action())
     const handleStartStopClicked = () => dispatch(appLogic.taskStartStopRequested.action())
-    const handleMoveUpClicked = () => dispatch(appLogic.taskMoveUpRequested.action(index))
-    const handleMoveDownClicked = () => dispatch(appLogic.taskMoveDownRequested.action(index))
+    const handleMoveUpClicked = () => dispatch(appLogic.taskMoveUpRequested.action())
+    const handleMoveDownClicked = () => dispatch(appLogic.taskMoveDownRequested.action())
     const handleRowClicked = () => dispatch(appLogic.taskClicked.action(index))
 </script>
 
