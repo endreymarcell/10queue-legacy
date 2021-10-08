@@ -4,8 +4,8 @@ import type { TaskList } from "$lib/taskList/logic"
 import { taskList } from "$lib/taskList/logic"
 import type { Undo } from "$lib/undo/logic"
 import { undo } from "$lib/undo/logic"
-import type { KeyboardShortcuts } from "./keyboardShortcuts"
-import { keyboardShortcuts } from "./keyboardShortcuts"
+import type { KeyboardShortcuts } from "./keyboardShortcuts/logic"
+import { keyboardShortcuts } from "./keyboardShortcuts/logic"
 import { writable } from "svelte/store"
 
 export type AppState = {

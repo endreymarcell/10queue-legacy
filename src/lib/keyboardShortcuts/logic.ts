@@ -1,8 +1,8 @@
 import { createAction } from "redux-dry-ts-actions"
-import type { AppAction } from "./eventHelpers"
-import { dispatch } from "./eventHelpers"
-import type { Logic } from "./eventHelpers"
-import { appLogic } from "./logic"
+import type { AppAction } from "../eventHelpers"
+import { dispatch } from "../eventHelpers"
+import type { Logic } from "../eventHelpers"
+import { appLogic } from "../logic"
 
 type Events = {
     keyPressed: { key: string }

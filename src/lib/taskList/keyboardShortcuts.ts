@@ -1,4 +1,4 @@
-import { registerShortcuts } from "$lib/keyboardShortcuts"
+import { registerShortcuts } from "$lib/keyboardShortcuts/logic"
 import { appLogic } from "$lib/logic"
 
 export function setupKeyboardShortcuts() {
