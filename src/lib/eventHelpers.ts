@@ -27,17 +27,19 @@ export type AppAction = ActionTypeFromActionCreators<typeof appActions>
 
 export function dispatch(action: AppAction) {
     // this is rather redundant, but it feels weird to update state in a function called `dispatch`
-    console.log("ACTION", action.type)
+    console.log("got ACTION", action.type)
     handleAction(action)
 }
 
 function handleAction(action: AppAction) {
+    console.log("handling action", action.type)
     appState.update(oldState => {
-        // console.log("STATE before:", JSON.stringify({ stack: oldState.undoStack, pointer: oldState.undoPointer }))
+        console.log("STATE before handling", action.type, "is:", oldState)
         const newState = reducer(oldState, action)
-        // console.log("STATE after:", JSON.stringify({ stack: newState.undoStack, pointer: newState.undoPointer }))
+        console.log("STATE after handling", action.type, "is", newState)
         return newState
     })
+    console.log("finished handling action", action.type)
 }
 
 function reducer(state: AppState, action: AppAction): AppState {
