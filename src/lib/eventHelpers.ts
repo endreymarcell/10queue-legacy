@@ -27,6 +27,7 @@ type AppActions = ActionTypeFromActionCreators<typeof appActions>
 
 export function dispatch(action: AppActions) {
     // this is rather redundant, but it feels weird to update state in a function called `dispatch`
+    console.log("ACTION", action.type)
     handleAction(action)
 }
 
