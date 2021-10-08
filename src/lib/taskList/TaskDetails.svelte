@@ -45,7 +45,13 @@
     const handleRowClicked = () => dispatch(appLogic.taskClicked.action(index))
 </script>
 
-<div class="task-details" class:active={$appState.activeTaskIndex === index} on:click={handleRowClicked}>
+<!--
+    Handling on:click in the capture phase so that it comes before other handlers.
+    This is to prevent bugs when eg. clicking on a reordering arrow first reorders and then selects.
+    With moving the row's on:click handler to the capture phase, selection runs before the arrow's on:click handler.
+    Dodgy and brittle.
+-->
+<div class="task-details" class:active={$appState.activeTaskIndex === index} on:click|capture={handleRowClicked}>
     <div class="task-description">
         <div>{displayIndex}.</div>
         {#if isEditing}

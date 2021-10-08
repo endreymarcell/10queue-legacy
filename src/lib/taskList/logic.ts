@@ -31,11 +31,9 @@ type Events = {
 const logic: Logic<Events> = {
     taskClicked: {
         action: createAction("taskClicked", index => ({ index })),
-        updater: () => state => state,
-        // TODO this should not fire when clicking on move up/down arrows because it overwrites the effect of those
-        // updater: payload => state => {
-        // state.activeTaskIndex = payload.index
-        // },
+        updater: payload => state => {
+            state.activeTaskIndex = payload.index
+        },
     },
     taskTitleEdited: {
         action: createAction("taskTitleEdited", (index, title) => ({ index, title })),
