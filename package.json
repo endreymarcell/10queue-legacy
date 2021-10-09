@@ -31,6 +31,7 @@
         "@fontsource/fira-mono": "^4.2.2",
         "cookie": "^0.4.1",
         "immer": "^9.0.6",
+        "just-clone": "^3.2.1",
         "redux-dry-ts-actions": "^1.3.0"
     }
 }
