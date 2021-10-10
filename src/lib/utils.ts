@@ -22,3 +22,8 @@ export type ObjValueTuple<T, KS extends any[] = TuplifyUnion<keyof T>, R extends
 ]
     ? ObjValueTuple<T, KT, [...R, T[K & keyof T]]>
     : R
+
+export function pick<Obj extends Record<string, unknown>, Keys extends readonly (keyof Obj)[]>(obj: Obj, keys: Keys) {
+    const newObject = Object.fromEntries(keys.map(key => [[key], obj[key]]))
+    return newObject as Pick<Obj, Keys[number]>
+}

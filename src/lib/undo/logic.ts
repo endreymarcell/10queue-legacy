@@ -1,8 +1,12 @@
 import type { AppState } from "$lib/logic"
 import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
+import clone from "just-clone"
+import { pick } from "$lib/utils"
 
-type UndoableState = Pick<AppState, "tasks" | "activeTaskIndex">
+const undoableAttributes = ["tasks", "activeTaskIndex"] as const
+type UndoableAttributesUnion = typeof undoableAttributes[number]
+type UndoableState = Pick<AppState, UndoableAttributesUnion>
 
 type State = {
     undoStack: UndoableState[]
@@ -52,11 +56,7 @@ const logic: Logic<Events> = {
 }
 
 export function createUndoPoint(state: AppState) {
-    // TODO do this with a proper deep copy
-    const undoableState: UndoableState = {
-        tasks: [...state.tasks],
-        activeTaskIndex: state.activeTaskIndex,
-    }
+    const undoableState: UndoableState = pick(clone(state), undoableAttributes)
     state.undoStack.splice(state.undoPointer + 1)
     state.undoStack.push(undoableState)
     state.undoPointer = state.undoStack.length
