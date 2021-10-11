@@ -8,16 +8,19 @@ import { moveArrayElement } from "$lib/utils"
 type State = {
     tasks: Task[]
     activeTaskIndex: number | undefined
+    isEditingTaskTitle: boolean
     isRunning: boolean
 }
 
-const defaultState = {
+const defaultState: State = {
     tasks: defaultTasks,
     activeTaskIndex: 0,
+    isEditingTaskTitle: false,
     isRunning: false,
 }
 
 type Events = {
+    startedEditingTaskTitle: void
     taskTitleEdited: { title: string }
     taskClicked: { index: number }
     taskDeleteRequested: void
@@ -35,11 +38,19 @@ const logic: Logic<Events> = {
             state.activeTaskIndex = payload.index
         },
     },
+    startedEditingTaskTitle: {
+        action: createAction("startedEditingTaskTitle"),
+        updater: () => state => {
+            state.isEditingTaskTitle = true
+            state.isTextInputFocused = true
+        },
+    },
     taskTitleEdited: {
         action: createAction("taskTitleEdited", title => ({ title })),
         updater: payload => state => {
             createUndoPoint(state)
             state.tasks[state.activeTaskIndex].title = payload.title
+            state.isEditingTaskTitle = false
         },
     },
     taskDeleteRequested: {

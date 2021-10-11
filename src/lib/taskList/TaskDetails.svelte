@@ -11,10 +11,11 @@
     let isEditing: boolean
     let currentTitle: string
 
+    appState.subscribe(value => (isEditing = value.isEditingTaskTitle && value.activeTaskIndex === index))
+
     function startEditing() {
         currentTitle = task.title
-        isEditing = true
-        dispatch(appLogic.textInputFocusChanged.action("focus"))
+        dispatch(appLogic.startedEditingTaskTitle.action())
     }
 
     function onInputKeyDown(event: KeyboardEvent) {
@@ -26,14 +27,12 @@
     }
 
     function handleFinishedEditing() {
-        isEditing = false
         dispatch(appLogic.textInputFocusChanged.action("focus"))
         dispatch(appLogic.taskTitleEdited.action(currentTitle))
     }
 
     function handleAbortedEditing() {
         currentTitle = task.title
-        isEditing = false
         dispatch(appLogic.textInputFocusChanged.action("focus"))
     }
 
