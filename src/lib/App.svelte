@@ -4,9 +4,11 @@
     import TaskList from "./taskList/TaskList.svelte"
     import { setupKeyboardShortcutListener } from "./keyboardShortcuts/logic"
     import { logger } from "$lib/logger"
+    import { setupKeyboardShortcuts } from "$lib/undo/keyboardShortcuts"
 
     onMount(() => {
         setupKeyboardShortcutListener()
+        setupKeyboardShortcuts()
         logger.autoSetLevel()
     })
 </script>
