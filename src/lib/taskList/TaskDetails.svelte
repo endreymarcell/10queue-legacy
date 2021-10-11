@@ -27,13 +27,12 @@
     }
 
     function handleFinishedEditing() {
-        dispatch(appLogic.textInputFocusChanged.action("focus"))
-        dispatch(appLogic.taskTitleEdited.action(currentTitle))
+        dispatch(appLogic.stoppedEditingTaskTitle.action(currentTitle))
     }
 
     function handleAbortedEditing() {
         currentTitle = task.title
-        dispatch(appLogic.textInputFocusChanged.action("focus"))
+        dispatch(appLogic.stoppedEditingTaskTitle.action(undefined))
     }
 
     const handleDeleteClicked = () => dispatch(appLogic.taskDeleteRequested.action())

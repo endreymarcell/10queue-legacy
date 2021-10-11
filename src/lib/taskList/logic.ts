@@ -21,7 +21,7 @@ const defaultState: State = {
 
 type Events = {
     startedEditingTaskTitle: void
-    taskTitleEdited: { title: string }
+    stoppedEditingTaskTitle: { newTitle: string | undefined }
     taskClicked: { index: number }
     taskDeleteRequested: void
     taskStartStopRequested: void
@@ -45,12 +45,14 @@ const logic: Logic<Events> = {
             state.isTextInputFocused = true
         },
     },
-    taskTitleEdited: {
-        action: createAction("taskTitleEdited", title => ({ title })),
+    stoppedEditingTaskTitle: {
+        action: createAction("stoppedEditingTaskTitle", newTitle => ({ newTitle })),
         updater: payload => state => {
-            createUndoPoint(state)
-            state.tasks[state.activeTaskIndex].title = payload.title
             state.isEditingTaskTitle = false
+            if (payload.newTitle !== undefined) {
+                createUndoPoint(state)
+                state.tasks[state.activeTaskIndex].title = payload.newTitle
+            }
         },
     },
     taskDeleteRequested: {
