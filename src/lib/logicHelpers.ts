@@ -4,6 +4,7 @@ import type { ActionCreator, ActionCreatorWithPayload, ActionTypeFromActionCreat
 import { appState, appLogic } from "./logic"
 import type { AppState } from "./logic"
 import type { ObjValueTuple } from "$lib/utils"
+import { logger } from "./logger"
 
 type EventPayloadType = { [key: string]: unknown }
 export type EventListType = { [eventName: string]: EventPayloadType | void }
@@ -25,21 +26,21 @@ export const appActions = Object.fromEntries(
 export type AppAction = ActionTypeFromActionCreators<typeof appActions>
 
 export function dispatch(action: AppAction) {
-    console.log("got ACTION", action.type)
+    logger.silly("got ACTION", action.type)
     // Another piece of bad engineering: work around Cmd.action()s cutting in front of the originating action
     // by breaking up synchronous execution. This won't get me out of having to implement effects soon.
     setTimeout(() => handleAction(action))
 }
 
 function handleAction(action: AppAction) {
-    console.log("handling ACTION", action.type)
+    logger.debug("handling ACTION", action.type)
     appState.update(oldState => {
-        console.log("STATE before handling", action.type, "is:", oldState)
+        logger.silly("STATE before handling", action.type, "is:", oldState)
         const newState = reducer(oldState, action)
-        console.log("STATE after handling", action.type, "is", newState)
+        logger.silly("STATE after handling", action.type, "is", newState)
         return newState
     })
-    console.log("finished handling action", action.type)
+    logger.silly("finished handling action", action.type)
 }
 
 function reducer(state: AppState, action: AppAction): AppState {

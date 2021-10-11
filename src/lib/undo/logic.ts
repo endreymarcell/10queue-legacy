@@ -3,6 +3,7 @@ import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import clone from "just-clone"
 import { pick } from "$lib/utils"
+import { logger } from "$lib/logger"
 
 const undoableAttributes = ["tasks", "activeTaskIndex"] as const
 type UndoableAttributesUnion = typeof undoableAttributes[number]
@@ -37,7 +38,7 @@ const logic: Logic<Events> = {
                 state.undoPointer--
                 restoreState(state)
             } else {
-                console.log("Cannot undo")
+                logger.debug("Cannot undo")
             }
         },
     },
@@ -49,7 +50,7 @@ const logic: Logic<Events> = {
                 restoreState(state)
                 state.undoPointer++
             } else {
-                console.log("Cannot redo")
+                logger.debug("Cannot redo")
             }
         },
     },
@@ -64,7 +65,7 @@ export function createUndoPoint(state: AppState) {
 
 function restoreState(state: AppState) {
     const undoPoint = state.undoStack[state.undoPointer]
-    console.log("I am restoring this undoPoint:", undoPoint)
+    logger.silly("I am restoring this undoPoint:", undoPoint)
     for (const key of Object.keys(undoPoint)) {
         state[key] = undoPoint[key]
     }

@@ -62,7 +62,6 @@ const logic: Logic<Events> = {
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = undefined
             } else if (state.activeTaskIndex === state.tasks.length - 1) {
-                console.log("yes")
                 state.activeTaskIndex--
             }
             state.tasks.splice(state.activeTaskIndex, 1)
