@@ -25,9 +25,10 @@ export const appActions = Object.fromEntries(
 export type AppAction = ActionTypeFromActionCreators<typeof appActions>
 
 export function dispatch(action: AppAction) {
-    // this is rather redundant, but it feels weird to update state in a function called `dispatch`
     console.log("got ACTION", action.type)
-    handleAction(action)
+    // Another piece of bad engineering: work around Cmd.action()s cutting in front of the originating action
+    // by breaking up synchronous execution. This won't get me out of having to implement effects soon.
+    setTimeout(() => handleAction(action))
 }
 
 function handleAction(action: AppAction) {
