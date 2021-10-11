@@ -33,7 +33,9 @@ export function dispatch(action: AppAction) {
 }
 
 function handleAction(action: AppAction) {
-    logger.debug("handling ACTION", action.type)
+    logger.debug(
+        `handling ACTION ${action.type}(${action.payload === undefined ? "" : JSON.stringify(action.payload)})`,
+    )
     appState.update(oldState => {
         logger.silly("STATE before handling", action.type, "is:", oldState)
         const newState = reducer(oldState, action)
