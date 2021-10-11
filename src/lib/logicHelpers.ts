@@ -31,7 +31,7 @@ export function dispatch(action: AppAction) {
 }
 
 function handleAction(action: AppAction) {
-    console.log("handling action", action.type)
+    console.log("handling ACTION", action.type)
     appState.update(oldState => {
         console.log("STATE before handling", action.type, "is:", oldState)
         const newState = reducer(oldState, action)
