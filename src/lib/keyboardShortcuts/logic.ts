@@ -4,6 +4,14 @@ import { dispatch } from "../logicHelpers"
 import type { Logic } from "../logicHelpers"
 import { appLogic } from "../logic"
 
+type State = {
+    isTextInputFocused: boolean
+}
+
+const defaultState: State = {
+    isTextInputFocused: false,
+}
+
 type Events = {
     keyPressed: { key: string }
 }
@@ -50,5 +58,5 @@ export function setupKeyboardShortcutListener() {
     })
 }
 
-export type KeyboardShortcuts = { Events: Events }
-export const keyboardShortcuts = { logic: logic }
+export type KeyboardShortcuts = { Events: Events; State: State }
+export const keyboardShortcuts = { logic, defaultState }

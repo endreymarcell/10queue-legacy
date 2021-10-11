@@ -8,33 +8,16 @@ import type { KeyboardShortcuts } from "./keyboardShortcuts/logic"
 import { keyboardShortcuts } from "./keyboardShortcuts/logic"
 import { writable } from "svelte/store"
 
-export type AppState = {
-    isTextInputFocused: boolean
-} & TaskList["State"] &
-    Undo["State"]
-
+export type AppState = TaskList["State"] & Undo["State"] & KeyboardShortcuts["State"]
 const defaultAppState: AppState = {
-    isTextInputFocused: false,
     ...taskList.defaultState,
     ...undo.defaultState,
+    ...keyboardShortcuts.defaultState,
 }
-
 export const appState = writable<AppState>(defaultAppState)
 
-export type AppEvents = {
-    textInputFocusChanged: { event: "focus" | "blur" }
-} & TaskList["Events"] &
-    Undo["Events"] &
-    KeyboardShortcuts["Events"]
-
-// It is safe to modify the state in the updaters because these functions are fed to immer
+export type AppEvents = TaskList["Events"] & Undo["Events"] & KeyboardShortcuts["Events"]
 export const appLogic: Logic<AppEvents> = {
-    textInputFocusChanged: {
-        action: createAction("textInputFocusChanged", event => ({ event })),
-        updater: payload => state => {
-            state.isTextInputFocused = payload.event === "focus"
-        },
-    },
     ...taskList.logic,
     ...undo.logic,
     ...keyboardShortcuts.logic,
