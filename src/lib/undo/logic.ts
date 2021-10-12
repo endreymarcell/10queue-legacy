@@ -57,6 +57,7 @@ const logic: Logic<Events> = {
 }
 
 export function createUndoPoint(state: AppState) {
+    logger.debug("Creating undo point")
     const undoableState: UndoableState = pick(clone(state), undoableAttributes)
     state.undoStack.splice(state.undoPointer + 1)
     state.undoStack.push(undoableState)
