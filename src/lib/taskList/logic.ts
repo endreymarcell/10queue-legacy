@@ -52,6 +52,7 @@ const logic: Logic<Events> = {
             if (payload.newTitle !== undefined) {
                 createUndoPoint(state)
                 state.tasks[state.activeTaskIndex].title = payload.newTitle
+                state.isTextInputFocused = false
             }
         },
     },
