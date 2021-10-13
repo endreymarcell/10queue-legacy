@@ -88,6 +88,7 @@ const logic: Logic<Events> = {
         action: createAction("taskStartStopRequested"),
         updater: () => state => {
             state.isRunning = !state.isRunning
+            state.activeTaskIndex = 0
         },
     },
     taskMoveUpRequested: {
