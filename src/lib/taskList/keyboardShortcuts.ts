@@ -9,5 +9,6 @@ export function setupKeyboardShortcuts() {
         { key: "c", action: appLogic.startedEditingTaskTitle.action, isDisabledDuringTextInput: true },
         { key: "J", action: appLogic.taskMoveDownRequested.action, isDisabledDuringTextInput: true },
         { key: "K", action: appLogic.taskMoveUpRequested.action, isDisabledDuringTextInput: true },
+        { key: " ", action: appLogic.taskStartStopRequested.action, isDisabledDuringTextInput: true },
     ])
 }
