@@ -3,7 +3,9 @@ import { createTask, defaultTasks } from "$lib/taskList/tasks"
 import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/undo/logic"
-import { moveArrayElement } from "$lib/utils"
+import { moveArrayElement, pick } from "$lib/utils"
+import type { AppState } from "$lib/logic"
+import clone from "just-clone"
 
 type State = {
     tasks: Task[]
@@ -204,6 +206,13 @@ const logic: Logic<Events> = {
             state.isTextInputFocused = true
         },
     },
+}
+
+const saveabbleAttributes = ["tasks", "activeTaskIndex"] as const
+type SaveableAttributesUnion = typeof saveabbleAttributes[number]
+export type SaveableState = Pick<AppState, SaveableAttributesUnion>
+export function copySaveableState(state: AppState): SaveableState {
+    return clone(pick(state, saveabbleAttributes))
 }
 
 export type TaskList = { State: State; Events: Events }

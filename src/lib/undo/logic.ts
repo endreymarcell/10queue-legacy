@@ -1,16 +1,12 @@
 import type { AppState } from "$lib/logic"
 import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
-import clone from "just-clone"
-import { pick } from "$lib/utils"
 import { logger } from "$lib/logger"
-
-const undoableAttributes = ["tasks", "activeTaskIndex"] as const
-type UndoableAttributesUnion = typeof undoableAttributes[number]
-type UndoableState = Pick<AppState, UndoableAttributesUnion>
+import { copySaveableState } from "$lib/taskList/logic"
+import type { SaveableState } from "$lib/taskList/logic"
 
 type State = {
-    undoStack: UndoableState[]
+    undoStack: SaveableState[]
     // The index of the currently active item in the imaginary array of [...undoStack, currentState]
     undoPointer: number
 }
@@ -58,7 +54,7 @@ const logic: Logic<Events> = {
 
 export function createUndoPoint(state: AppState) {
     logger.debug("Creating undo point")
-    const undoableState: UndoableState = pick(clone(state), undoableAttributes)
+    const undoableState = copySaveableState(state)
     state.undoStack.splice(state.undoPointer + 1)
     state.undoStack.push(undoableState)
     state.undoPointer = state.undoStack.length
