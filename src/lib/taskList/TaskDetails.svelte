@@ -11,12 +11,12 @@
     let isEditing: boolean
     let currentTitle: string
 
-    appState.subscribe(value => {
+    appState.subscribe(state => {
         const wasEditing = isEditing
-        isEditing = value.isEditingTaskTitle && value.activeTaskIndex === index
+        isEditing = state.isEditingTaskTitle && state.activeTaskIndex === index
         const isStartingEditing = !wasEditing && isEditing
         if (isStartingEditing) {
-            currentTitle = value.tasks[value.activeTaskIndex].title
+            currentTitle = state.tasks[state.activeTaskIndex].title
         }
     })
 
