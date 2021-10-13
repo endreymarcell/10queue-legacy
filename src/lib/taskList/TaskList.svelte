@@ -2,8 +2,9 @@
     import TaskRow from "$lib/taskList/TaskRow.svelte"
     import { onMount } from "svelte"
     import { derived } from "svelte/store"
-    import { appState } from "$lib/logic"
+    import { appLogic, appState } from "$lib/logic"
     import { setupKeyboardShortcuts } from "./keyboardShortcuts"
+    import { dispatch } from "$lib/logicHelpers"
 
     const paddedTasksList = derived(appState, $appState =>
         $appState.isRunning ? [$appState.tasks[0]] : [...$appState.tasks, ...new Array(10 - $appState.tasks.length)],
@@ -12,6 +13,8 @@
     onMount(() => setupKeyboardShortcuts())
 </script>
 
+<div on:click={() => dispatch(appLogic.saveRequested.action())}>Save</div>
+<div on:click={() => dispatch(appLogic.loadRequested.action())}>Load</div>
 <div class="task-container">
     {#each $paddedTasksList as task, index}
         <TaskRow {task} {index} />

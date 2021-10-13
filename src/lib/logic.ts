@@ -1,4 +1,3 @@
-import { createAction } from "redux-dry-ts-actions"
 import type { Logic } from "./logicHelpers"
 import type { TaskList } from "$lib/taskList/logic"
 import { taskList } from "$lib/taskList/logic"
@@ -7,6 +6,8 @@ import { undo } from "$lib/undo/logic"
 import type { KeyboardShortcuts } from "./keyboardShortcuts/logic"
 import { keyboardShortcuts } from "./keyboardShortcuts/logic"
 import { writable } from "svelte/store"
+import { persistence } from "$lib/persistence/logic"
+import type { Persistence } from "$lib/persistence/logic"
 
 export type AppState = TaskList["State"] & Undo["State"] & KeyboardShortcuts["State"]
 const defaultAppState: AppState = {
@@ -16,9 +17,10 @@ const defaultAppState: AppState = {
 }
 export const appState = writable<AppState>(defaultAppState)
 
-export type AppEvents = TaskList["Events"] & Undo["Events"] & KeyboardShortcuts["Events"]
+export type AppEvents = TaskList["Events"] & Undo["Events"] & KeyboardShortcuts["Events"] & Persistence["Events"]
 export const appLogic: Logic<AppEvents> = {
     ...taskList.logic,
     ...undo.logic,
     ...keyboardShortcuts.logic,
+    ...persistence.logic,
 }
