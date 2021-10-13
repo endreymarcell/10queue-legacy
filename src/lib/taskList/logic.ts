@@ -10,6 +10,7 @@ type State = {
     activeTaskIndex: number | undefined
     isEditingTaskTitle: boolean
     isRunning: boolean
+    isAddingNewTask: boolean
 }
 
 const defaultState: State = {
@@ -17,6 +18,7 @@ const defaultState: State = {
     activeTaskIndex: 0,
     isEditingTaskTitle: false,
     isRunning: false,
+    isAddingNewTask: false,
 }
 
 type Events = {
@@ -54,10 +56,14 @@ const logic: Logic<Events> = {
         action: createAction("stoppedEditingTaskTitle", newTitle => ({ newTitle })),
         updater: payload => state => {
             state.isEditingTaskTitle = false
+            state.isTextInputFocused = false
             if (payload.newTitle !== undefined) {
-                createUndoPoint(state)
-                state.tasks[state.activeTaskIndex].title = payload.newTitle
-                state.isTextInputFocused = false
+                if (payload.newTitle === "" && state.isAddingNewTask) {
+                    state.tasks.splice(state.activeTaskIndex, 1)
+                } else {
+                    createUndoPoint(state)
+                    state.tasks[state.activeTaskIndex].title = payload.newTitle
+                }
             }
         },
     },
@@ -160,6 +166,7 @@ const logic: Logic<Events> = {
             createUndoPoint(state)
             state.tasks.splice(state.activeTaskIndex + 1, 0, createTask(""))
             state.activeTaskIndex++
+            state.isAddingNewTask = true
             state.isEditingTaskTitle = true
             state.isTextInputFocused = true
         },
@@ -175,6 +182,7 @@ const logic: Logic<Events> = {
             }
             createUndoPoint(state)
             state.tasks.splice(state.activeTaskIndex, 0, createTask(""))
+            state.isAddingNewTask = true
             state.isEditingTaskTitle = true
             state.isTextInputFocused = true
         },
@@ -191,6 +199,7 @@ const logic: Logic<Events> = {
             createUndoPoint(state)
             state.activeTaskIndex = payload.index
             state.tasks.splice(payload.index, 0, createTask(""))
+            state.isAddingNewTask = true
             state.isEditingTaskTitle = true
             state.isTextInputFocused = true
         },
