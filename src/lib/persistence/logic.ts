@@ -1,13 +1,14 @@
-import type { AppState } from "$lib/logic"
 import { logger } from "$lib/logger"
-import { createEffect, schedule } from "$lib/logicHelpers"
+import { createEffect, dispatch, schedule } from "$lib/logicHelpers"
 import type { Logic } from "$lib/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
-import clone from "just-clone"
+import { copySaveableState } from "$lib/taskList/logic"
+import type { SaveableState } from "$lib/taskList/logic"
+import { appLogic } from "$lib/logic"
 
 const KEY = "10queue-state"
 
-export function store(state: AppState) {
+export function store(state: SaveableState) {
     try {
         const serializedState = JSON.stringify(state)
         window.localStorage.setItem(KEY, serializedState)
@@ -16,7 +17,7 @@ export function store(state: AppState) {
     }
 }
 
-export function load(): AppState {
+export function load(): SaveableState {
     try {
         const serializedState = window.localStorage.getItem(KEY)
         const state = JSON.parse(serializedState)
@@ -27,7 +28,7 @@ export function load(): AppState {
 }
 
 const effects = {
-    save: (state: AppState) =>
+    save: (state: SaveableState) =>
         createEffect(
             state =>
                 new Promise<void>(resolve => {
@@ -51,7 +52,7 @@ const effects = {
 type Events = {
     saveRequested: void
     loadRequested: void
-    loadSucceeded: { state: AppState }
+    loadSucceeded: { state: SaveableState }
     loadFailed: void
 }
 
@@ -59,7 +60,7 @@ export const logic: Logic<Events> = {
     saveRequested: {
         action: createAction("saveRequested"),
         updater: () => state => {
-            const stateToSave = clone(state)
+            const stateToSave = copySaveableState(state)
             schedule(effects.save(stateToSave))
         },
     },
@@ -71,12 +72,20 @@ export const logic: Logic<Events> = {
     },
     loadSucceeded: {
         action: createAction("loadSucceeded", state => ({ state })),
-        updater: payload => () => payload.state,
+        updater: payload => state => {
+            for (const key of Object.keys(payload.state)) {
+                state[key] = payload.state[key]
+            }
+        },
     },
     loadFailed: {
         action: createAction("loadFailed"),
         updater: () => () => logger.error("Shit happened:"),
     },
+}
+
+export function setupAutoSave() {
+    window.setInterval(() => dispatch(appLogic.saveRequested.action()), 5000)
 }
 
 export type Persistence = { Events: Events }

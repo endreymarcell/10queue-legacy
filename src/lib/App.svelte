@@ -5,11 +5,16 @@
     import { setupKeyboardShortcutListener } from "./keyboardShortcuts/logic"
     import { logger } from "$lib/logger"
     import { setupKeyboardShortcuts } from "$lib/undo/keyboardShortcuts"
+    import { setupAutoSave } from "$lib/persistence/logic"
+    import { dispatch } from "$lib/logicHelpers"
+    import { appLogic } from "$lib/logic"
 
     onMount(() => {
         setupKeyboardShortcutListener()
         setupKeyboardShortcuts()
+        setupAutoSave()
         logger.autoSetLevel()
+        dispatch(appLogic.loadRequested.action())
     })
 </script>
 

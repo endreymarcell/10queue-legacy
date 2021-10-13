@@ -1,5 +1,5 @@
 import type { Task } from "$lib/taskList/tasks"
-import { createTask, defaultTasks } from "$lib/taskList/tasks"
+import { createTask } from "$lib/taskList/tasks"
 import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/undo/logic"
@@ -16,7 +16,7 @@ type State = {
 }
 
 const defaultState: State = {
-    tasks: defaultTasks,
+    tasks: [],
     activeTaskIndex: 0,
     isEditingTaskTitle: false,
     isRunning: false,
