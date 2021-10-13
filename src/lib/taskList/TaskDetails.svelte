@@ -135,6 +135,10 @@
         margin-right: var(--field-spacing);
     }
 
+    .task-title {
+        cursor: text;
+    }
+
     .task-actions {
         margin-right: 10px;
     }
