@@ -1,7 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/taskList/tasks"
     import TaskDetails from "$lib/taskList/TaskDetails.svelte"
-    import TaskPlaceholder from "$lib/taskList/TaskPlaceholder.svelte"
 
     export let index: number
     export let task: Task
@@ -10,18 +9,21 @@
 <div class="task-row">
     {#if task !== undefined}
         <TaskDetails {index} {task} />
-    {:else}
-        <TaskPlaceholder {index} />
     {/if}
 </div>
 
 <style>
     .task-row {
+        --task-height: 40px;
+        --task-border-radius: 25px;
+
         width: 100%;
+        height: var(--task-height);
         display: flex;
         justify-content: space-between;
-        padding: 10px;
         font-size: 30px;
-        border: 1px solid black;
+        background: mediumaquamarine;
+        margin-bottom: 20px;
+        border-radius: var(--task-border-radius);
     }
 </style>

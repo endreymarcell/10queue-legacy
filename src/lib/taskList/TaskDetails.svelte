@@ -61,7 +61,7 @@
                 autofocus
             />
         {:else}
-            <div on:click={startEditing}>{task.title}</div>
+            <div class="task-title" on:click={startEditing}>{task.title}</div>
         {/if}
     </div>
     {#if !isEditing}
@@ -88,30 +88,52 @@
     }
 
     .task-details {
+        --font-size: 25px;
+        --field-spacing: 20px;
+        --padding: 5px;
+        --shadow-color: darkslateblue;
+
         width: 100%;
+        height: calc(var(--task-height) - 2 * var(--padding));
+        padding: var(--padding);
         display: flex;
         justify-content: space-between;
-        --field-spacing: 20px;
-        font-size: 30px;
+        align-items: center;
+        font-size: var(--font-size);
         cursor: pointer;
+        background-color: dodgerblue;
+        box-shadow: 1px -1px var(--shadow-color), 2px -2px var(--shadow-color), 3px -3px var(--shadow-color),
+            4px -4px var(--shadow-color), 5px -5px var(--shadow-color), 6px -6px var(--shadow-color),
+            7px -7px var(--shadow-color), 8px -8px var(--shadow-color);
+        border-radius: var(--task-border-radius);
     }
 
-    .active {
-        background-color: gold;
+    .task-details.active {
+        color: floralwhite;
+    }
+
+    .task-description {
+        margin-left: 10px;
     }
 
     .task-description > div {
         margin-right: var(--field-spacing);
     }
 
+    .task-actions {
+        margin-right: 10px;
+    }
+
     .task-actions > div {
         margin-left: var(--field-spacing);
         cursor: pointer;
+        font-size: 22px;
     }
 
     input[type="text"] {
-        font-size: 30px;
+        font-size: var(--font-size);
         border: 0;
         outline: none;
+        background: var(--transparent);
     }
 </style>

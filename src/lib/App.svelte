@@ -13,5 +13,9 @@
     })
 </script>
 
+<svelte:head>
+    <title>10queue</title>
+</svelte:head>
+
 <Header />
 <TaskList />

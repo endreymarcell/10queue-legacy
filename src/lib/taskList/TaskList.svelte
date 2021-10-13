@@ -20,10 +20,9 @@
 
 <style>
     .task-container {
-        --padding: 50px;
-        width: calc(100% - 2 * var(--padding));
-        height: calc(100% - 2 * var(--padding) - 100px);
-        padding: var(--padding);
+        --vpadding: 40px;
+        width: calc(100% - 2 * var(--vpadding));
+        padding: 0 var(--vpadding);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
