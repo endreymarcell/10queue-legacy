@@ -31,6 +31,8 @@ type Events = {
     taskActivateNextRequested: void
     taskCreateNewBelowActiveRequested: void
     taskCreateNewAboveActiveRequested: void
+    taskActiveteFirstRequested: void
+    taskActivateLastRequested: void
 }
 
 const logic: Logic<Events> = {
@@ -125,6 +127,24 @@ const logic: Logic<Events> = {
             if (state.activeTaskIndex !== state.tasks.length - 1) {
                 state.activeTaskIndex++
             }
+        },
+    },
+    taskActiveteFirstRequested: {
+        action: createAction("taskActiveteFirstRequested"),
+        updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
+            state.activeTaskIndex = 0
+        },
+    },
+    taskActivateLastRequested: {
+        action: createAction("taskActivateLastRequested"),
+        updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
+            state.activeTaskIndex = state.tasks.length - 1
         },
     },
     taskCreateNewBelowActiveRequested: {

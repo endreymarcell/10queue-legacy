@@ -12,5 +12,7 @@ export function setupKeyboardShortcuts() {
         { key: " ", action: appLogic.taskStartStopRequested.action, isDisabledDuringTextInput: true },
         { key: "o", action: appLogic.taskCreateNewBelowActiveRequested.action, isDisabledDuringTextInput: true },
         { key: "O", action: appLogic.taskCreateNewAboveActiveRequested.action, isDisabledDuringTextInput: true },
+        { key: "g", action: appLogic.taskActiveteFirstRequested.action, isDisabledDuringTextInput: true },
+        { key: "G", action: appLogic.taskActivateLastRequested.action, isDisabledDuringTextInput: true },
     ])
 }
