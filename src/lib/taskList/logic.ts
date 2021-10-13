@@ -31,6 +31,7 @@ type Events = {
     taskActivateNextRequested: void
     taskCreateNewBelowActiveRequested: void
     taskCreateNewAboveActiveRequested: void
+    taskCreateAtIndex: { index: number }
     taskActiveteFirstRequested: void
     taskActivateLastRequested: void
 }
@@ -174,6 +175,22 @@ const logic: Logic<Events> = {
             }
             createUndoPoint(state)
             state.tasks.splice(state.activeTaskIndex, 0, createTask(""))
+            state.isEditingTaskTitle = true
+            state.isTextInputFocused = true
+        },
+    },
+    taskCreateAtIndex: {
+        action: createAction("taskCreateAtIndex", index => ({ index })),
+        updater: payload => state => {
+            if (state.isRunning) {
+                return
+            }
+            if (state.tasks.length === 10) {
+                return
+            }
+            createUndoPoint(state)
+            state.activeTaskIndex = payload.index
+            state.tasks.splice(payload.index, 0, createTask(""))
             state.isEditingTaskTitle = true
             state.isTextInputFocused = true
         },
