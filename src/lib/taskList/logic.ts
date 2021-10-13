@@ -1,5 +1,5 @@
 import type { Task } from "$lib/taskList/tasks"
-import { defaultTasks } from "$lib/taskList/tasks"
+import { createTask, defaultTasks } from "$lib/taskList/tasks"
 import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/undo/logic"
@@ -29,6 +29,8 @@ type Events = {
     taskMoveDownRequested: void
     taskActivatePreviousRequested: void
     taskActivateNextRequested: void
+    taskCreateNewBelowActiveRequested: void
+    taskCreateNewAboveActiveRequested: void
 }
 
 const logic: Logic<Events> = {
@@ -123,6 +125,37 @@ const logic: Logic<Events> = {
             if (state.activeTaskIndex !== state.tasks.length - 1) {
                 state.activeTaskIndex++
             }
+        },
+    },
+    taskCreateNewBelowActiveRequested: {
+        action: createAction("taskCreateNewBelowActiveRequested"),
+        updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
+            if (state.tasks.length === 10) {
+                return
+            }
+            createUndoPoint(state)
+            state.tasks.splice(state.activeTaskIndex + 1, 0, createTask(""))
+            state.activeTaskIndex++
+            state.isEditingTaskTitle = true
+            state.isTextInputFocused = true
+        },
+    },
+    taskCreateNewAboveActiveRequested: {
+        action: createAction("taskCreateNewAboveActiveRequested"),
+        updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
+            if (state.tasks.length === 10) {
+                return
+            }
+            createUndoPoint(state)
+            state.tasks.splice(state.activeTaskIndex, 0, createTask(""))
+            state.isEditingTaskTitle = true
+            state.isTextInputFocused = true
         },
     },
 }

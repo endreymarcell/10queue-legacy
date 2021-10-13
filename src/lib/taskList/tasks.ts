@@ -2,7 +2,7 @@ export type Task = {
     title: string
 }
 
-function createTask(title: string) {
+export function createTask(title: string) {
     return { title }
 }
 
