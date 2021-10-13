@@ -43,6 +43,7 @@
     }
 
     const handleDeleteClicked = () => dispatch(appLogic.taskDeleteRequested.action())
+    const handleFinishClicked = () => dispatch(appLogic.taskFinishRequested.action())
     const handleStartStopClicked = () => dispatch(appLogic.taskStartStopRequested.action())
     const handleMoveUpClicked = () => dispatch(appLogic.taskMoveUpRequested.action())
     const handleMoveDownClicked = () => dispatch(appLogic.taskMoveDownRequested.action())
@@ -77,7 +78,7 @@
                 <div on:click={handleStartStopClicked}>
                     {#if $appState.isRunning}⏸️{:else}▶️{/if}
                 </div>
-                <div>✅️</div>
+                <div on:click={handleFinishClicked}>✅️</div>
             {/if}
             <div on:click={startEditing}>✏️</div>
             {#if !$appState.isRunning}

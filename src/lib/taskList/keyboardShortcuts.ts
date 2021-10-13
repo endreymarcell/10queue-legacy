@@ -14,5 +14,8 @@ export function setupKeyboardShortcuts() {
         { key: "O", action: appLogic.taskCreateNewAboveActiveRequested.action, isDisabledDuringTextInput: true },
         { key: "g", action: appLogic.taskActiveteFirstRequested.action, isDisabledDuringTextInput: true },
         { key: "G", action: appLogic.taskActivateLastRequested.action, isDisabledDuringTextInput: true },
+
+        // TODO When adding a new task, the Enter at the end of editing the title is caught and the task is finished immediately
+        // { key: "Enter", action: appLogic.taskFinishRequested.action, isDisabledDuringTextInput: true },
     ])
 }

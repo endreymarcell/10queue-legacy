@@ -29,6 +29,7 @@ type Events = {
     taskClicked: { index: number }
     taskDeleteRequested: void
     taskStartStopRequested: void
+    taskFinishRequested: void
     taskMoveUpRequested: void
     taskMoveDownRequested: void
     taskActivatePreviousRequested: void
@@ -89,6 +90,16 @@ const logic: Logic<Events> = {
         updater: () => state => {
             state.isRunning = !state.isRunning
             state.activeTaskIndex = 0
+        },
+    },
+    taskFinishRequested: {
+        action: createAction("taskFinishRequested"),
+        updater: () => state => {
+            createUndoPoint(state)
+            state.tasks.splice(state.activeTaskIndex, 1)
+            if (state.tasks.length === 0) {
+                state.activeTaskIndex = undefined
+            }
         },
     },
     taskMoveUpRequested: {
