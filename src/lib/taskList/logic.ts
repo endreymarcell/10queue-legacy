@@ -59,6 +59,9 @@ const logic: Logic<Events> = {
     taskDeleteRequested: {
         action: createAction("taskDeleteRequested"),
         updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
             createUndoPoint(state)
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = undefined
@@ -77,6 +80,9 @@ const logic: Logic<Events> = {
     taskMoveUpRequested: {
         action: createAction("taskMoveUpRequested"),
         updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
             createUndoPoint(state)
             if (state.activeTaskIndex !== 0) {
                 state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex - 1)
@@ -87,6 +93,9 @@ const logic: Logic<Events> = {
     taskMoveDownRequested: {
         action: createAction("taskMoveDownRequested"),
         updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
             createUndoPoint(state)
             if (state.activeTaskIndex !== state.tasks.length - 1) {
                 state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex + 1)
@@ -97,6 +106,9 @@ const logic: Logic<Events> = {
     taskActivatePreviousRequested: {
         action: createAction("taskActivatePreviousRequested"),
         updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
             if (state.activeTaskIndex !== 0) {
                 state.activeTaskIndex--
             }
@@ -105,6 +117,9 @@ const logic: Logic<Events> = {
     taskActivateNextRequested: {
         action: createAction("taskActivateNextRequested"),
         updater: () => state => {
+            if (state.isRunning) {
+                return
+            }
             if (state.activeTaskIndex !== state.tasks.length - 1) {
                 state.activeTaskIndex++
             }

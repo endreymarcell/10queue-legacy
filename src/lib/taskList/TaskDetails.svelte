@@ -57,7 +57,7 @@
 -->
 <div class="task-details" class:active={$appState.activeTaskIndex === index} on:click|capture={handleRowClicked}>
     <div class="task-description">
-        <div>{displayIndex}.</div>
+        <div class="index" class:hidden={$appState.isRunning}>{displayIndex}.</div>
         {#if isEditing}
             <!-- svelte-ignore a11y-autofocus -->
             <input
@@ -80,9 +80,11 @@
                 <div>✅️</div>
             {/if}
             <div on:click={startEditing}>✏️</div>
-            <div on:click={handleMoveUpClicked}>⬆️</div>
-            <div on:click={handleMoveDownClicked}>⬇️️</div>
-            <div on:click={handleDeleteClicked}>❌</div>
+            {#if !$appState.isRunning}
+                <div on:click={handleMoveUpClicked}>⬆️</div>
+                <div on:click={handleMoveDownClicked}>⬇️️</div>
+                <div on:click={handleDeleteClicked}>❌</div>
+            {/if}
         </div>
     {/if}
 </div>
@@ -119,6 +121,10 @@
         --active-color: floralwhite;
         color: var(--active-color);
         border: 3px solid var(--active-color);
+    }
+
+    .index.hidden {
+        opacity: 0;
     }
 
     .task-description {
