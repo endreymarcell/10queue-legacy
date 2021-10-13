@@ -11,7 +11,14 @@
     let isEditing: boolean
     let currentTitle: string
 
-    appState.subscribe(value => (isEditing = value.isEditingTaskTitle && value.activeTaskIndex === index))
+    appState.subscribe(value => {
+        const wasEditing = isEditing
+        isEditing = value.isEditingTaskTitle && value.activeTaskIndex === index
+        const isStartingEditing = !wasEditing && isEditing
+        if (isStartingEditing) {
+            currentTitle = value.tasks[value.activeTaskIndex].title
+        }
+    })
 
     function startEditing() {
         currentTitle = task.title
