@@ -109,7 +109,9 @@
     }
 
     .task-details.active {
-        color: floralwhite;
+        --active-color: floralwhite;
+        color: var(--active-color);
+        border: 3px solid var(--active-color);
     }
 
     .task-description {
@@ -133,6 +135,7 @@
     input[type="text"] {
         font-size: var(--font-size);
         border: 0;
+        color: var(--active-color);
         outline: none;
         background: var(--transparent);
     }

@@ -22,8 +22,8 @@
         display: flex;
         justify-content: space-between;
         font-size: 30px;
-        background: mediumaquamarine;
         margin-bottom: 20px;
+        background: darksalmon;
         border-radius: var(--task-border-radius);
     }
 </style>
