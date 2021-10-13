@@ -100,6 +100,7 @@ const logic: Logic<Events> = {
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = undefined
             }
+            state.isRunning = false
         },
     },
     taskMoveUpRequested: {
