@@ -67,12 +67,12 @@ const logic: Logic<Events> = {
                 return
             }
             createUndoPoint(state)
+            state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = undefined
-            } else if (state.activeTaskIndex === state.tasks.length - 1) {
+            } else if (state.activeTaskIndex === state.tasks.length) {
                 state.activeTaskIndex--
             }
-            state.tasks.splice(state.activeTaskIndex, 1)
         },
     },
     taskStartStopRequested: {
