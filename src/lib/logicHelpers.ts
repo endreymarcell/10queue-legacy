@@ -43,6 +43,8 @@ function handleAction(action: AppAction) {
         return newState
     })
     logger.silly("finished handling action", action.type)
+    logger.silly(`now running ${scheduledEffects.length} scheduledEffects`)
+    executeScheduledEffects()
 }
 
 function reducer(state: AppState, action: AppAction): AppState {
@@ -51,4 +53,33 @@ function reducer(state: AppState, action: AppAction): AppState {
     const updater = event.updater(action.payload)
     const newState = produce(state, updater)
     return newState
+}
+
+type Effect = () => void
+export function createEffect<Args extends unknown[], Return extends unknown>(
+    execute: (...args: Args) => Promise<Return>,
+    args: Args,
+    andThen?: [successAction: AppAction, failureAction: AppAction],
+) {
+    return () => {
+        if (andThen !== undefined) {
+            const [successAction, failureAction] = andThen
+            execute(...args)
+                .then((result: Return) => dispatch(successAction(result)))
+                .catch(() => dispatch(failureAction()))
+        } else {
+            execute(...args)
+        }
+    }
+}
+
+const scheduledEffects: Effect[] = []
+export function schedule(effect: Effect) {
+    scheduledEffects.push(effect)
+}
+export function executeScheduledEffects() {
+    while (scheduledEffects.length > 0) {
+        const effect = scheduledEffects.shift()
+        setTimeout(effect)
+    }
 }

@@ -1,6 +1,6 @@
 import { createAction } from "redux-dry-ts-actions"
 import type { AppAction } from "../logicHelpers"
-import { dispatch } from "../logicHelpers"
+import { createEffect, dispatch, schedule } from "../logicHelpers"
 import type { Logic } from "../logicHelpers"
 import { appLogic } from "../logic"
 
@@ -16,11 +16,24 @@ type Events = {
     keyPressed: { key: string }
 }
 
+const effects = {
+    executeShortcut: (key, isTextInputFocused) =>
+        createEffect(
+            (key: ShortcutKey, isTextInputFocused: boolean) => {
+                return new Promise<void>(resolve => {
+                    executeShortcut(key, isTextInputFocused)
+                    resolve()
+                })
+            },
+            [key, isTextInputFocused],
+        ),
+}
+
 const logic: Logic<Events> = {
     keyPressed: {
         action: createAction("keyPressed", key => ({ key })),
         updater: payload => state => {
-            executeShortcut(payload.key, state.isTextInputFocused)
+            schedule(effects.executeShortcut(payload.key, state.isTextInputFocused))
         },
     },
 }
