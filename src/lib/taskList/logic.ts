@@ -9,7 +9,7 @@ import clone from "just-clone"
 
 type State = {
     tasks: Task[]
-    activeTaskIndex: number | undefined
+    activeTaskIndex: number | null
     isEditingTaskTitle: boolean
     isRunning: boolean
     isAddingNewTask: boolean
@@ -98,7 +98,7 @@ const logic: Logic<Events> = {
             createUndoPoint(state)
             state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {
-                state.activeTaskIndex = undefined
+                state.activeTaskIndex = null
             }
             state.isRunning = false
         },
