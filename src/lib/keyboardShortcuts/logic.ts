@@ -43,7 +43,7 @@ type ShortcutHandling = {
     action: AppAction
     isDisabledDuringTextInput: boolean
 }
-type Shortcut = {
+export type Shortcut = {
     key: ShortcutKey
 } & ShortcutHandling
 

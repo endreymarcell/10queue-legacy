@@ -5,6 +5,8 @@ import { createUndoPoint } from "$lib/undo/logic"
 import { moveArrayElement } from "$lib/utils"
 import { defaultState } from "$lib/taskList/logic/state"
 import type { State } from "$lib/taskList/logic/state"
+import type { ActivationEvents } from "$lib/taskList/logic/activationLogic"
+import { activationLogic } from "$lib/taskList/logic/activationLogic"
 
 type Events = {
     startedEditingTaskTitle: void
@@ -15,14 +17,10 @@ type Events = {
     taskFinishRequested: void
     taskMoveUpRequested: void
     taskMoveDownRequested: void
-    taskActivatePreviousRequested: void
-    taskActivateNextRequested: void
     taskCreateNewBelowActiveRequested: void
     taskCreateNewAboveActiveRequested: void
     taskCreateAtIndex: { index: number }
-    taskActiveteFirstRequested: void
-    taskActivateLastRequested: void
-}
+} & ActivationEvents
 
 const logic: Logic<Events> = {
     taskClicked: {
@@ -112,46 +110,6 @@ const logic: Logic<Events> = {
             }
         },
     },
-    taskActivatePreviousRequested: {
-        action: createAction("taskActivatePreviousRequested"),
-        updater: () => state => {
-            if (state.isRunning) {
-                return
-            }
-            if (state.activeTaskIndex !== 0) {
-                state.activeTaskIndex--
-            }
-        },
-    },
-    taskActivateNextRequested: {
-        action: createAction("taskActivateNextRequested"),
-        updater: () => state => {
-            if (state.isRunning) {
-                return
-            }
-            if (state.activeTaskIndex !== state.tasks.length - 1) {
-                state.activeTaskIndex++
-            }
-        },
-    },
-    taskActiveteFirstRequested: {
-        action: createAction("taskActiveteFirstRequested"),
-        updater: () => state => {
-            if (state.isRunning) {
-                return
-            }
-            state.activeTaskIndex = 0
-        },
-    },
-    taskActivateLastRequested: {
-        action: createAction("taskActivateLastRequested"),
-        updater: () => state => {
-            if (state.isRunning) {
-                return
-            }
-            state.activeTaskIndex = state.tasks.length - 1
-        },
-    },
     taskCreateNewBelowActiveRequested: {
         action: createAction("taskCreateNewBelowActiveRequested"),
         updater: () => state => {
@@ -202,6 +160,7 @@ const logic: Logic<Events> = {
             state.isTextInputFocused = true
         },
     },
+    ...activationLogic,
 }
 
 export type TaskList = { State: State; Events: Events }

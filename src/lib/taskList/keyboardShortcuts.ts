@@ -1,10 +1,9 @@
 import { registerShortcuts } from "$lib/keyboardShortcuts/logic"
 import { appLogic } from "$lib/logic"
+import { activationShortcuts } from "./logic/activationLogic"
 
 export function setupKeyboardShortcuts() {
     registerShortcuts([
-        { key: "j", action: appLogic.taskActivateNextRequested.action, isDisabledDuringTextInput: true },
-        { key: "k", action: appLogic.taskActivatePreviousRequested.action, isDisabledDuringTextInput: true },
         { key: "d", action: appLogic.taskDeleteRequested.action, isDisabledDuringTextInput: true },
         { key: "c", action: appLogic.startedEditingTaskTitle.action, isDisabledDuringTextInput: true },
         { key: "J", action: appLogic.taskMoveDownRequested.action, isDisabledDuringTextInput: true },
@@ -12,8 +11,7 @@ export function setupKeyboardShortcuts() {
         { key: " ", action: appLogic.taskStartStopRequested.action, isDisabledDuringTextInput: true },
         { key: "o", action: appLogic.taskCreateNewBelowActiveRequested.action, isDisabledDuringTextInput: true },
         { key: "O", action: appLogic.taskCreateNewAboveActiveRequested.action, isDisabledDuringTextInput: true },
-        { key: "g", action: appLogic.taskActiveteFirstRequested.action, isDisabledDuringTextInput: true },
-        { key: "G", action: appLogic.taskActivateLastRequested.action, isDisabledDuringTextInput: true },
+        ...activationShortcuts,
 
         // TODO When adding a new task, the Enter at the end of editing the title is caught and the task is finished immediately
         // { key: "Enter", action: appLogic.taskFinishRequested.action, isDisabledDuringTextInput: true },
