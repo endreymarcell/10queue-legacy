@@ -1,27 +1,10 @@
-import type { Task } from "$lib/taskList/tasks"
 import { createTask } from "$lib/taskList/tasks"
 import type { Logic } from "../logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/undo/logic"
-import { moveArrayElement, pick } from "$lib/utils"
-import type { AppState } from "$lib/logic"
-import clone from "just-clone"
-
-type State = {
-    tasks: Task[]
-    activeTaskIndex: number | null
-    isEditingTaskTitle: boolean
-    isRunning: boolean
-    isAddingNewTask: boolean
-}
-
-const defaultState: State = {
-    tasks: [],
-    activeTaskIndex: 0,
-    isEditingTaskTitle: false,
-    isRunning: false,
-    isAddingNewTask: false,
-}
+import { moveArrayElement } from "$lib/utils"
+import { defaultState } from "$lib/taskList/logic/state"
+import type { State } from "$lib/taskList/logic/state"
 
 type Events = {
     startedEditingTaskTitle: void
@@ -219,13 +202,6 @@ const logic: Logic<Events> = {
             state.isTextInputFocused = true
         },
     },
-}
-
-const saveabbleAttributes = ["tasks", "activeTaskIndex"] as const
-type SaveableAttributesUnion = typeof saveabbleAttributes[number]
-export type SaveableState = Pick<AppState, SaveableAttributesUnion>
-export function copySaveableState(state: AppState): SaveableState {
-    return clone(pick(state, saveabbleAttributes))
 }
 
 export type TaskList = { State: State; Events: Events }
