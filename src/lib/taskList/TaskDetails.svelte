@@ -2,6 +2,7 @@
     import type { Task } from "$lib/taskList/tasks"
     import { dispatch } from "../logicHelpers"
     import { appState, appLogic } from "../logic"
+    import { getColorForName } from "$lib/taskList/taskColors"
 
     export let index: number
     let displayIndex: number
@@ -56,7 +57,12 @@
     With moving the row's on:click handler to the capture phase, selection runs before the arrow's on:click handler.
     Dodgy and brittle.
 -->
-<div class="task-details" class:active={$appState.activeTaskIndex === index} on:click|capture={handleRowClicked}>
+<div
+    class="task-details"
+    class:active={$appState.activeTaskIndex === index}
+    on:click|capture={handleRowClicked}
+    style={`background-color: ${getColorForName(task.title)}`}
+>
     <div class="task-description">
         <div class="index" class:hidden={$appState.isRunning}>{displayIndex}.</div>
         {#if isEditing}
@@ -111,11 +117,13 @@
         align-items: center;
         font-size: var(--font-size);
         cursor: pointer;
-        background-color: dodgerblue;
         box-shadow: 1px -1px var(--shadow-color), 2px -2px var(--shadow-color), 3px -3px var(--shadow-color),
             4px -4px var(--shadow-color), 5px -5px var(--shadow-color), 6px -6px var(--shadow-color),
             7px -7px var(--shadow-color), 8px -8px var(--shadow-color);
         border-radius: var(--task-border-radius);
+
+        /* fallback background color in case the calculation fails */
+        background-color: dodgerblue;
     }
 
     .task-details.active {
