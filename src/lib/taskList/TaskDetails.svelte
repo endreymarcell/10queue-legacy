@@ -138,6 +138,7 @@
 
     .task-description {
         margin-left: 10px;
+        width: 100%;
     }
 
     .task-description > div {
@@ -159,6 +160,7 @@
     }
 
     input[type="text"] {
+        width: 100%;
         font-size: var(--font-size);
         border: 0;
         color: var(--active-color);

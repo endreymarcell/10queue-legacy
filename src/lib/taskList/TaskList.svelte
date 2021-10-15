@@ -22,6 +22,7 @@
     .task-container {
         --vpadding: 40px;
         width: calc(100% - 2 * var(--vpadding));
+        max-width: 1000px;
         padding: 0 var(--vpadding);
         display: flex;
         flex-direction: column;
