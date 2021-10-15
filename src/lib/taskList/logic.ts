@@ -7,6 +7,9 @@ import { defaultState } from "$lib/taskList/logic/state"
 import type { State } from "$lib/taskList/logic/state"
 import type { ActivationEvents } from "$lib/taskList/logic/activationLogic"
 import { activationLogic } from "$lib/taskList/logic/activationLogic"
+import { schedule } from "../logicHelpers"
+import { effects } from "$lib/effects"
+import { DEFAULT_PAGE_TITLE } from "$lib/const"
 
 type Events = {
     startedEditingTaskTitle: void
@@ -71,6 +74,8 @@ const logic: Logic<Events> = {
         updater: () => state => {
             state.isRunning = !state.isRunning
             state.activeTaskIndex = 0
+            const newTitle = state.isRunning ? `10Q: ${state.tasks[state.activeTaskIndex].title}` : DEFAULT_PAGE_TITLE
+            schedule(effects.changePageTitle(newTitle))
         },
     },
     taskFinishRequested: {

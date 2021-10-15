@@ -8,6 +8,7 @@
     import { setupAutoSave } from "$lib/persistence/logic"
     import { dispatch } from "$lib/logicHelpers"
     import { appLogic } from "$lib/logic"
+    import { DEFAULT_PAGE_TITLE } from "$lib/const"
 
     onMount(() => {
         setupKeyboardShortcutListener()
@@ -19,7 +20,7 @@
 </script>
 
 <svelte:head>
-    <title>10queue</title>
+    <title>{DEFAULT_PAGE_TITLE}</title>
 </svelte:head>
 
 <Header />
