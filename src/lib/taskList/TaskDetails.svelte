@@ -80,7 +80,7 @@
     </div>
     {#if !isEditing}
         <div class="task-actions">
-            {#if index == 0}
+            {#if index === 0}
                 <div on:click={handleStartStopClicked}>
                     {#if $appState.isRunning}⏸️{:else}▶️{/if}
                 </div>
