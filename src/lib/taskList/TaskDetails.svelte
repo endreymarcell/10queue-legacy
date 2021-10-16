@@ -2,7 +2,7 @@
     import type { Task } from "$lib/taskList/tasks"
     import { dispatch } from "../logicHelpers"
     import { appState, appLogic } from "../logic"
-    import { getColorForName } from "$lib/taskList/taskColors"
+    import { getStyleForName } from "$lib/taskList/taskColors"
 
     export let index: number
     let displayIndex: number
@@ -61,7 +61,7 @@
     class="task-details"
     class:active={$appState.activeTaskIndex === index}
     on:click|capture={handleRowClicked}
-    style={`background-color: ${getColorForName(task.title)}`}
+    style={`--face-color: ${task.style.foregroundColor}; --shadow-color: ${task.style.backgroundColor}`}
 >
     <div class="task-description">
         <div class="index" class:hidden={$appState.isRunning}>{displayIndex}.</div>
@@ -107,7 +107,8 @@
         --font-size: 25px;
         --field-spacing: 20px;
         --padding: 5px;
-        --shadow-color: darkslateblue;
+        --face-color: floralwhite;
+        --shadow-color: lightgrey;
 
         width: 100%;
         height: calc(var(--task-height) - 2 * var(--padding));
@@ -117,19 +118,15 @@
         align-items: center;
         font-size: var(--font-size);
         cursor: pointer;
+        background-color: var(--face-color);
         box-shadow: 1px -1px var(--shadow-color), 2px -2px var(--shadow-color), 3px -3px var(--shadow-color),
             4px -4px var(--shadow-color), 5px -5px var(--shadow-color), 6px -6px var(--shadow-color),
             7px -7px var(--shadow-color), 8px -8px var(--shadow-color);
         border-radius: var(--task-border-radius);
-
-        /* fallback background color in case the calculation fails */
-        background-color: dodgerblue;
     }
 
     .task-details.active {
-        --active-color: floralwhite;
-        color: var(--active-color);
-        border: 3px solid var(--active-color);
+        border: 3px solid floralwhite;
     }
 
     .index.hidden {
@@ -166,7 +163,6 @@
         width: 100%;
         font-size: var(--font-size);
         border: 0;
-        color: var(--active-color);
         outline: none;
         background: var(--transparent);
     }

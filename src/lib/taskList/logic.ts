@@ -10,6 +10,7 @@ import { activationLogic } from "$lib/taskList/logic/activationLogic"
 import { schedule } from "../logicHelpers"
 import { effects } from "$lib/effects"
 import { DEFAULT_PAGE_TITLE } from "$lib/const"
+import { getStyleForName } from "./taskColors"
 
 type Events = {
     startedEditingTaskTitle: void
@@ -49,9 +50,14 @@ const logic: Logic<Events> = {
                     state.tasks.splice(state.activeTaskIndex, 1)
                 } else {
                     createUndoPoint(state)
-                    state.tasks[state.activeTaskIndex].title = payload.newTitle
+                    const task = state.tasks[state.activeTaskIndex]
+                    task.title = payload.newTitle
+                    if (state.isAddingNewTask) {
+                        task.style = getStyleForName(payload.newTitle)
+                    }
                 }
             }
+            state.isAddingNewTask = false
         },
     },
     taskDeleteRequested: {

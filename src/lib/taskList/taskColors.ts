@@ -1,43 +1,26 @@
-export const colors = [
-    "aquamarine",
-    "bisque",
-    "blueviolet",
-    "cadetblue",
-    "chocolate",
-    "coral",
-    "cornflowerblue",
-    "crimson",
-    "darkgoldenrod",
-    "darkolivegreen",
-    "darkorange",
-    "darkorchid",
-    "darkseagreen",
-    "darkslateblue",
-    "darkviolet",
-    "deeppink",
-    "dodgerblue",
-    "firebrick",
-    "goldenrod",
-    "indianred",
-    "indigo",
-    "lightcoral",
-    "lightsalmon",
-    "lightseagreen",
-    "lightsteelblue",
-    "limegreen",
-    "mediumaquamarine",
-    "mediumorchid",
-    "mediumseagreen",
-    "mediumslateblue",
-    "mediumspringgreen",
-    "mediumvioletred",
-    "olivedrab",
-    "tomato",
-]
+export type EntryStyle = { foregroundColor: string; backgroundColor: string }
+export const styles: EntryStyle[] = [
+    ["Aquamarine", "CadetBlue"],
+    ["BurlyWood", "Brown"],
+    ["CadetBlue", "DarkSlateBlue"],
+    ["Coral", "Crimson"],
+    ["Orange", "DarkOrange"],
+    ["DarkTurquoise", "DarkCyan"],
+    ["DeepSkyBlue", "DodgerBlue"],
+    ["Gold", "GoldenRod"],
+    ["DarkViolet", "Indigo"],
+    ["HotPink", "MediumVioletRed"],
+    ["MediumPurple", "Purple"],
+    ["Plum", "RebeccaPurple"],
+    ["Salmon", "SaddleBrown"],
+    ["Tomato", "FireBrick"],
+].map(([foregroundColor, backgroundColor]) => ({
+    foregroundColor,
+    backgroundColor,
+}))
+const cache = new Map<string, EntryStyle>()
 
-const cache = new Map<string, string>()
-
-export function getColorForName(name: string): string {
+export function getStyleForName(name: string): EntryStyle {
     if (cache.has(name)) {
         return cache.get(name)
     }
@@ -46,9 +29,9 @@ export function getColorForName(name: string): string {
         a = (a << 5) - a + b.charCodeAt(0)
         return a & a
     }, 0)
-    const index = Math.abs(hashValue) % colors.length
-    const color = colors[index]
-    cache.set(name, color)
+    const index = Math.abs(hashValue) % styles.length
+    const style = styles[index]
+    cache.set(name, style)
 
-    return color
+    return style
 }
