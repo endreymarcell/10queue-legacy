@@ -147,6 +147,9 @@
 
     .task-title {
         cursor: text;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .task-actions {
