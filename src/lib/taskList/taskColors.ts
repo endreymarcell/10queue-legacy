@@ -8,7 +8,6 @@ export const styles: EntryStyle[] = [
     ["DarkTurquoise", "DarkCyan"],
     ["DeepSkyBlue", "DodgerBlue"],
     ["Gold", "GoldenRod"],
-    ["DarkViolet", "Indigo"],
     ["HotPink", "MediumVioletRed"],
     ["MediumPurple", "Purple"],
     ["Plum", "RebeccaPurple"],

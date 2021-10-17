@@ -7,6 +7,8 @@ import { defaultState } from "$lib/taskList/logic/state"
 import type { State } from "$lib/taskList/logic/state"
 import type { ActivationEvents } from "$lib/taskList/logic/activationLogic"
 import { activationLogic } from "$lib/taskList/logic/activationLogic"
+import type { Counter } from "$lib/taskList/logic/counterLogic"
+import { counter } from "$lib/taskList/logic/counterLogic"
 import { schedule } from "../logicHelpers"
 import { effects } from "$lib/effects"
 import { DEFAULT_PAGE_TITLE } from "$lib/const"
@@ -24,7 +26,8 @@ type Events = {
     taskCreateNewBelowActiveRequested: void
     taskCreateNewAboveActiveRequested: void
     taskCreateAtIndex: { index: number }
-} & ActivationEvents
+} & ActivationEvents &
+    Counter["Events"]
 
 const logic: Logic<Events> = {
     taskClicked: {
@@ -82,6 +85,7 @@ const logic: Logic<Events> = {
             state.activeTaskIndex = 0
             const newTitle = state.isRunning ? `10Q: ${state.tasks[state.activeTaskIndex].title}` : DEFAULT_PAGE_TITLE
             schedule(effects.changePageTitle(newTitle))
+            schedule(counter.effects.scheduleNextTick())
         },
     },
     taskFinishRequested: {
@@ -172,6 +176,7 @@ const logic: Logic<Events> = {
         },
     },
     ...activationLogic,
+    ...counter.logic,
 }
 
 export type TaskList = { State: State; Events: Events }

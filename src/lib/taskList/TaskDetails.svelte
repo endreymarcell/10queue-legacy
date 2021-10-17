@@ -3,6 +3,7 @@
     import { dispatch } from "../logicHelpers"
     import { appState, appLogic } from "../logic"
     import { getStyleForName } from "$lib/taskList/taskColors"
+    import { formatTimeForHumans } from "$lib/utils"
 
     export let index: number
     let displayIndex: number
@@ -79,6 +80,9 @@
         {/if}
     </div>
     {#if !isEditing}
+        <div class="timer">
+            {formatTimeForHumans(task.elapsedSeconds)}
+        </div>
         <div class="task-actions">
             {#if index === 0}
                 <div on:click={handleStartStopClicked}>
@@ -147,6 +151,12 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .timer {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 16px;
+        color: darkslategrey;
     }
 
     .task-actions {
