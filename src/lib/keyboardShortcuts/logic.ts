@@ -18,15 +18,10 @@ type Events = {
 
 const effects = {
     executeShortcut: (key, isTextInputFocused) =>
-        createEffect(
-            (key: ShortcutKey, isTextInputFocused: boolean) => {
-                return new Promise<void>(resolve => {
-                    executeShortcut(key, isTextInputFocused)
-                    resolve()
-                })
-            },
-            [key, isTextInputFocused],
-        ),
+        createEffect((key: ShortcutKey, isTextInputFocused: boolean) => executeShortcut(key, isTextInputFocused), [
+            key,
+            isTextInputFocused,
+        ]),
 }
 
 const logic: Logic<Events> = {

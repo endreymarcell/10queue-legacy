@@ -28,25 +28,8 @@ export function load(): SaveableState {
 }
 
 const effects = {
-    save: (state: SaveableState) =>
-        createEffect(
-            state =>
-                new Promise<void>(resolve => {
-                    store(state)
-                    resolve()
-                }),
-            [state],
-        ),
-    load: () =>
-        createEffect(
-            () =>
-                new Promise(resolve => {
-                    const state = load()
-                    resolve(state)
-                }),
-            [],
-            [logic.loadSucceeded.action, logic.loadFailed.action],
-        ),
+    save: (state: SaveableState) => createEffect(state => store(state), [state]),
+    load: () => createEffect(() => load(), [], [logic.loadSucceeded.action, logic.loadFailed.action]),
 }
 
 type Events = {

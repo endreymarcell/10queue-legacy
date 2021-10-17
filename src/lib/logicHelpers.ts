@@ -57,18 +57,18 @@ function reducer(state: AppState, action: AppAction): AppState {
 
 type Effect = () => void
 export function createEffect<Args extends unknown[], Return extends unknown>(
-    execute: (...args: Args) => Promise<Return>,
+    execute: (...args: Args) => Return,
     args: Args,
     andThen?: [successAction: AppAction, failureAction: AppAction],
 ) {
     return () => {
         if (andThen !== undefined) {
             const [successAction, failureAction] = andThen
-            execute(...args)
+            new Promise(resolve => resolve(execute(...args)))
                 .then((result: Return) => dispatch(successAction(result)))
-                .catch(() => dispatch(failureAction()))
+                .catch(error => dispatch(failureAction(error)))
         } else {
-            execute(...args)
+            new Promise(() => execute(...args))
         }
     }
 }
