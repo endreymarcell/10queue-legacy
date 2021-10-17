@@ -39,8 +39,10 @@ const logic: Logic<Events> = {
     startedEditingTaskTitle: {
         action: createAction("startedEditingTaskTitle"),
         updater: () => state => {
-            state.isEditingTaskTitle = true
-            state.isTextInputFocused = true
+            if (state.tasks.length > 0) {
+                state.isEditingTaskTitle = true
+                state.isTextInputFocused = true
+            }
         },
     },
     stoppedEditingTaskTitle: {
@@ -48,16 +50,16 @@ const logic: Logic<Events> = {
         updater: payload => state => {
             state.isEditingTaskTitle = false
             state.isTextInputFocused = false
-            if (payload.newTitle !== undefined) {
-                if (payload.newTitle === "" && state.isAddingNewTask) {
+            if (payload.newTitle === undefined || payload.newTitle === "") {
+                if (state.isAddingNewTask) {
                     state.tasks.splice(state.activeTaskIndex, 1)
-                } else {
-                    createUndoPoint(state)
-                    const task = state.tasks[state.activeTaskIndex]
-                    task.title = payload.newTitle
-                    if (state.isAddingNewTask) {
-                        task.style = getStyleForName(payload.newTitle)
-                    }
+                }
+            } else {
+                createUndoPoint(state)
+                const task = state.tasks[state.activeTaskIndex]
+                task.title = payload.newTitle
+                if (state.isAddingNewTask) {
+                    task.style = getStyleForName(payload.newTitle)
                 }
             }
             state.isAddingNewTask = false

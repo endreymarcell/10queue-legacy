@@ -68,13 +68,7 @@
         <div class="index" class:hidden={$appState.isRunning}>{displayIndex}.</div>
         {#if isEditing}
             <!-- svelte-ignore a11y-autofocus -->
-            <input
-                on:keydown={onInputKeyDown}
-                on:blur={handleFinishedEditing}
-                type="text"
-                bind:value={currentTitle}
-                autofocus
-            />
+            <input on:keydown={onInputKeyDown} type="text" bind:value={currentTitle} autofocus />
         {:else}
             <div class="task-title" on:click={startEditing}>{task.title}</div>
         {/if}
