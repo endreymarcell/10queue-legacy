@@ -29,10 +29,10 @@ export function formatTimeForHumans(seconds: number): string {
     const hours = (minutes - (minutes % 60)) / 60
     const onlyMinutes = minutes - hours * 60
     const onlySeconds = seconds - minutes * 60
-    const paddedMinutes = hours > 0 && onlyMinutes < 10 ? `0${onlyMinutes}` : onlyMinutes
-    const paddedSeconds = minutes > 0 && onlySeconds < 10 ? `0${onlySeconds}` : onlySeconds
+    const paddedMinutes = onlyMinutes < 10 ? `0${onlyMinutes}` : onlyMinutes
+    const paddedSeconds = onlySeconds < 10 ? `0${onlySeconds}` : onlySeconds
     const hoursString = hours > 0 ? `${hours}:` : ""
-    const minutesString = minutes > 0 ? `${paddedMinutes}:` : ""
+    const minutesString = `${paddedMinutes}:`
     const secondsString = seconds > 0 ? `${paddedSeconds}` : ""
     return hoursString + minutesString + secondsString
 }

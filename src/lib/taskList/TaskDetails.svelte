@@ -80,9 +80,11 @@
         {/if}
     </div>
     {#if !isEditing}
-        <div class="timer">
-            {formatTimeForHumans(task.elapsedSeconds)}
-        </div>
+        {#if task.elapsedSeconds > 0}
+            <div class="timer">
+                {formatTimeForHumans(task.elapsedSeconds)}
+            </div>
+        {/if}
         <div class="task-actions">
             {#if index === 0}
                 <div on:click={handleStartStopClicked}>
@@ -155,8 +157,12 @@
 
     .timer {
         font-family: "Courier New", Courier, monospace;
-        font-size: 16px;
+        font-size: 14px;
         color: darkslategrey;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        padding: 4px 6px 2px;
+        font-weight: bold;
     }
 
     .task-actions {
