@@ -18,6 +18,12 @@ export const styles: EntryStyle[] = [
     foregroundColor,
     backgroundColor,
 }))
+
+const hashFunction = (acc: number, name: string) => {
+    acc = (acc << 5) - acc + name.charCodeAt(0)
+    return acc & acc
+}
+
 const cache = new Map<string, EntryStyle>()
 
 export function getStyleForName(name: string): EntryStyle {
@@ -25,10 +31,7 @@ export function getStyleForName(name: string): EntryStyle {
         return cache.get(name)
     }
 
-    const hashValue = name.split("").reduce((a, b) => {
-        a = (a << 5) - a + b.charCodeAt(0)
-        return a & a
-    }, 0)
+    const hashValue = name.split("").reduce(hashFunction, 0)
     const index = Math.abs(hashValue) % styles.length
     const style = styles[index]
     cache.set(name, style)
