@@ -39,7 +39,6 @@ const cache = new Map<string, string>()
 
 export function getColorForName(name: string): string {
     if (cache.has(name)) {
-        console.log(`Found in cache: ${cache.get(name)}`)
         return cache.get(name)
     }
 
