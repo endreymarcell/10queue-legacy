@@ -9,11 +9,10 @@
 </script>
 
 <div class="task-row">
-    {#if index < $appState.tasks.length + 1 && !$appState.isRunning && !$appState.isEditingTaskTitle}
-        <CreateNewTaskSign {index} />
-    {/if}
     {#if task !== undefined}
         <TaskDetails {index} {task} />
+    {:else if index === $appState.tasks.length && !$appState.isRunning && !$appState.isEditingTaskTitle}
+        <CreateNewTaskSign {index} />
     {/if}
 </div>
 

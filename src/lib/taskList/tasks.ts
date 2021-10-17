@@ -9,7 +9,10 @@ export type Task = {
 export function createTask(title: string) {
     return {
         title,
-        style: { foregroundColor: "floralWhite", backgroundColor: "lightGrey" },
+        style: {
+            foregroundColor: "darkSalmon",
+            backgroundColor: "sienna",
+        },
         elapsedSeconds: 0,
     }
 }
