@@ -20,9 +20,11 @@
 
 <style>
     .container {
-        height: 60px;
+        height: 50px;
         display: flex;
         align-items: center;
+        justify-content: center;
+        padding-bottom: 10px;
     }
 
     .container > div {

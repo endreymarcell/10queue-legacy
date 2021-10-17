@@ -13,9 +13,7 @@
     onMount(() => setupKeyboardShortcuts())
 </script>
 
-<div class="actions-container">
-    <Actions />
-</div>
+<Actions />
 <div class="task-container">
     {#each $paddedTasksList as task, index}
         <TaskRow {task} {index} />
@@ -24,10 +22,6 @@
 
 <style>
     .task-container {
-        --vpadding: 40px;
-        width: calc(100% - 2 * var(--vpadding));
-        max-width: 1000px;
-        padding: 0 var(--vpadding);
         display: flex;
         flex-direction: column;
         justify-content: space-between;

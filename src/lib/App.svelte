@@ -23,5 +23,24 @@
     <title>{DEFAULT_PAGE_TITLE}</title>
 </svelte:head>
 
-<Header />
-<TaskList />
+<div class="outer-container">
+    <div class="inner-container">
+        <Header />
+        <TaskList />
+    </div>
+</div>
+
+<style>
+    .outer-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: gold;
+    }
+
+    .inner-container {
+        width: 100%;
+        max-width: 1000px;
+    }
+</style>
