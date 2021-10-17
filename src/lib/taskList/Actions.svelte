@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { appLogic, appState, appState } from "$lib/logic"
+    import { appLogic, appState } from "$lib/logic"
     import { dispatch } from "$lib/logicHelpers"
 
     let canUndo: boolean = false
