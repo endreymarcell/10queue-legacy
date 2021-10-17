@@ -72,7 +72,7 @@ const logic: Logic<Events> = {
             createUndoPoint(state)
             state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {
-                state.activeTaskIndex = undefined
+                state.activeTaskIndex = null
             } else if (state.activeTaskIndex === state.tasks.length) {
                 state.activeTaskIndex--
             }
@@ -135,8 +135,13 @@ const logic: Logic<Events> = {
                 return
             }
             createUndoPoint(state)
-            state.tasks.splice(state.activeTaskIndex + 1, 0, createTask(""))
-            state.activeTaskIndex++
+            if (state.tasks.length === 0) {
+                state.activeTaskIndex = 0
+                state.tasks = [createTask("")]
+            } else {
+                state.tasks.splice(state.activeTaskIndex + 1, 0, createTask(""))
+                state.activeTaskIndex++
+            }
             state.isAddingNewTask = true
             state.isEditingTaskTitle = true
             state.isTextInputFocused = true
