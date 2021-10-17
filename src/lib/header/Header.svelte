@@ -21,4 +21,16 @@
         text-shadow: 1px -1px var(--shadow-color), 2px -2px var(--shadow-color), 3px -3px var(--shadow-color),
             4px -4px var(--shadow-color);
     }
+
+    @media screen and (max-width: 700px) {
+        .header-container {
+            align-items: flex-start;
+            height: 70px;
+        }
+
+        h1 {
+            font-size: 40px;
+            text-shadow: none;
+        }
+    }
 </style>

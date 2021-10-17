@@ -43,4 +43,10 @@
         width: 100%;
         max-width: 1000px;
     }
+
+    @media screen and (max-width: 700px) {
+        .inner-container {
+            width: calc(100% - 60px);
+        }
+    }
 </style>

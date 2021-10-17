@@ -36,4 +36,10 @@
         opacity: 0.4;
         pointer-events: none;
     }
+
+    @media screen and (max-width: 700px) {
+        .container {
+            justify-content: flex-start;
+        }
+    }
 </style>
