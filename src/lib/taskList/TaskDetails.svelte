@@ -4,6 +4,7 @@
     import { appState, appLogic } from "../logic"
     import { getStyleForName } from "$lib/taskList/taskColors"
     import { formatTimeForHumans } from "$lib/utils"
+    import HamburgerMenu from "$lib/hamburgerMenu/HamburgerMenu.svelte"
 
     export let index: number
     let displayIndex: number
@@ -93,6 +94,22 @@
                 <div on:click={handleDeleteClicked}>❌</div>
             {/if}
         </div>
+        <div class="hamburger-menu">
+            <HamburgerMenu>
+                {#if index === 0}
+                    <div on:click={handleStartStopClicked}>
+                        {#if $appState.isRunning}⏸️{:else}▶️{/if}
+                    </div>
+                    <div on:click={handleFinishClicked}>✅️</div>
+                {/if}
+                <div on:click={startEditing}>✏️</div>
+                {#if !$appState.isRunning}
+                    <div on:click={handleMoveUpClicked}>⬆️</div>
+                    <div on:click={handleMoveDownClicked}>⬇️️</div>
+                    <div on:click={handleDeleteClicked}>❌</div>
+                {/if}
+            </HamburgerMenu>
+        </div>
     {/if}
 </div>
 
@@ -175,5 +192,19 @@
         border: 0;
         outline: none;
         background: var(--transparent);
+    }
+
+    .hamburger-menu {
+        display: none;
+    }
+
+    @media screen and (max-width: 700px) {
+        .task-actions {
+            display: none;
+        }
+
+        .hamburger-menu {
+            display: block;
+        }
     }
 </style>
