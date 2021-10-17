@@ -36,7 +36,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: gold;
+        background: var(--page-background);
     }
 
     .inner-container {

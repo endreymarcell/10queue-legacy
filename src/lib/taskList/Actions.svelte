@@ -1,4 +1,5 @@
 <script lang="ts">
+    import HamburgerMenu from "$lib/hamburgerMenu/HamburgerMenu.svelte"
     import { appLogic, appState } from "$lib/logic"
     import { dispatch } from "$lib/logicHelpers"
 
@@ -16,6 +17,12 @@
 <div class="container">
     <div on:click={handleSaveClicked} class:disabled={!canSave}>💾</div>
     <div on:click={handleUndoClicked} class:disabled={!canUndo}>🔙</div>
+</div>
+<div class="hamburger-menu">
+    <HamburgerMenu>
+        <div on:click={handleSaveClicked} class:disabled={!canSave}>💾</div>
+        <div on:click={handleUndoClicked} class:disabled={!canUndo}>🔙</div>
+    </HamburgerMenu>
 </div>
 
 <style>
@@ -37,9 +44,27 @@
         pointer-events: none;
     }
 
+    .hamburger-menu {
+        width: 100%;
+        text-align: right;
+        height: 50px;
+        margin-top: -20px;
+        position: relative;
+
+        display: none;
+    }
+
     @media screen and (max-width: 700px) {
         .container {
-            justify-content: flex-start;
+            display: none;
+        }
+
+        .hamburger-menu {
+            display: block;
+        }
+
+        .hamburger-menu div:not(:last-child) {
+            margin-bottom: 20px;
         }
     }
 </style>

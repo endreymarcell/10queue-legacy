@@ -1,6 +1,7 @@
 * {
     font-family: sans-serif;
     --transparent: rgba(0, 0, 0, 0);
+    --page-background: gold;
 }
 
 html,
