@@ -64,7 +64,14 @@ export function createEffect<Args extends unknown[], Return extends unknown>(
     return () => {
         if (andThen !== undefined) {
             const [successAction, failureAction] = andThen
-            new Promise(resolve => resolve(execute(...args)))
+            new Promise((resolve, reject) => {
+                try {
+                    const result = execute(...args)
+                    resolve(result)
+                } catch (err) {
+                    reject(err)
+                }
+            })
                 .then((result: Return) => dispatch(successAction(result)))
                 .catch(error => dispatch(failureAction(error)))
         } else {

@@ -9,21 +9,17 @@ import type { SaveableState } from "$lib/taskList/logic/state"
 const KEY = "10queue-state"
 
 export function store(state: SaveableState) {
-    try {
-        const serializedState = JSON.stringify(state)
-        window.localStorage.setItem(KEY, serializedState)
-    } catch (e) {
-        logger.error(e)
-    }
+    const serializedState = JSON.stringify(state)
+    window.localStorage.setItem(KEY, serializedState)
 }
 
 export function load(): SaveableState {
-    try {
-        const serializedState = window.localStorage.getItem(KEY)
-        const state = JSON.parse(serializedState)
+    const serializedState = window.localStorage.getItem(KEY)
+    const state = JSON.parse(serializedState)
+    if (state === null) {
+        throw new Error("No saved state found")
+    } else {
         return state
-    } catch (e) {
-        logger.error(e)
     }
 }
 
