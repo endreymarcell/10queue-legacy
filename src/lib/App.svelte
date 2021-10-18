@@ -9,6 +9,7 @@
     import { dispatch } from "$lib/logicHelpers"
     import { appLogic } from "$lib/logic"
     import { DEFAULT_PAGE_TITLE } from "$lib/const"
+    import HelpModal from "./help/HelpModal.svelte"
 
     onMount(() => {
         setupKeyboardShortcutListener()
@@ -29,6 +30,8 @@
         <TaskList />
     </div>
 </div>
+<!-- TODO isOpen for help modal -->
+<HelpModal isOpen={false} />
 
 <style>
     .outer-container {
