@@ -1,7 +1,6 @@
 import type { Logic } from "../../helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/modules/undo/logic"
-import { moveArrayElement } from "$lib/helpers/utils"
 import { defaultState } from "$lib/modules/taskList/logic/state"
 import type { State } from "$lib/modules/taskList/logic/state"
 import type { Activation } from "$lib/modules/taskList/logic/activationLogic"
@@ -15,6 +14,8 @@ import { getStyleForName } from "./taskColors"
 import type { Module } from "$lib/modules/Modules"
 import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
 import { creation } from "$lib/modules/taskList/logic/creationLogic"
+import type { Moving } from "$lib/modules/taskList/logic/movingLogic"
+import { moving } from "$lib/modules/taskList/logic/movingLogic"
 
 type Events = {
     startedEditingTaskTitle: void
@@ -23,11 +24,10 @@ type Events = {
     taskDeleteRequested: void
     taskStartStopRequested: void
     taskFinishRequested: void
-    taskMoveUpRequested: void
-    taskMoveDownRequested: void
 } & Activation["Events"] &
     Counter["Events"] &
-    Creation["Events"]
+    Creation["Events"] &
+    Moving["Events"]
 
 const logic: Logic<Events> = {
     taskClicked: {
@@ -101,35 +101,10 @@ const logic: Logic<Events> = {
             state.isRunning = false
         },
     },
-    taskMoveUpRequested: {
-        action: createAction("taskMoveUpRequested"),
-        updater: () => state => {
-            if (state.isRunning) {
-                return
-            }
-            createUndoPoint(state)
-            if (state.activeTaskIndex !== 0) {
-                state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex - 1)
-                state.activeTaskIndex--
-            }
-        },
-    },
-    taskMoveDownRequested: {
-        action: createAction("taskMoveDownRequested"),
-        updater: () => state => {
-            if (state.isRunning) {
-                return
-            }
-            createUndoPoint(state)
-            if (state.activeTaskIndex !== state.tasks.length - 1) {
-                state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex + 1)
-                state.activeTaskIndex++
-            }
-        },
-    },
     ...activation.logic,
     ...counter.logic,
     ...creation.logic,
+    ...moving.logic,
 }
 
 export type TaskList = { State: State; Events: Events }
