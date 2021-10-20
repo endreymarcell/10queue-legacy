@@ -5,11 +5,28 @@
 
     export let isOpen: boolean
 
-    const handleClickedOutside = () => dispatch(appLogic.clickedOutside.action())
+    const handleClickedOutside = () => dispatch(appLogic.closeHelpModalRequested.action())
+
+    // TODO this should probably be auto-generated, otherwise it'll keep going out of sync
+    const shortcuts = [
+        ["?", "show this help modal"],
+        ["j", "select next task"],
+        ["k", "select previous task"],
+        ["o", "create new task below"],
+        ["O", "create new task above"],
+        ["c", "change task description"],
+        ["d", "delete task"],
+        ["J", "move task down"],
+        ["K", "move task up"],
+        ["u", "undo"],
+        ["<Space>", "start/stop working"],
+        ["<Enter>", "finish task"],
+    ]
 </script>
 
 {#if isOpen}
     <div class="help-modal-overlay">
+        <!-- Note: TS doesn't know about the on:clickedOutside prop -->
         <div class="help-modal" use:onClickOutside on:clickedOutside={handleClickedOutside}>
             <h1>10queue</h1>
 
@@ -33,7 +50,9 @@
 
             <h2>Keyboard shortcuts</h2>
             <ul>
-                <li><span class="shortcut">j</span>move down</li>
+                {#each shortcuts as [key, name]}
+                    <li><span class="shortcut">{key}</span>{name}</li>
+                {/each}
             </ul>
         </div>
     </div>
@@ -54,11 +73,17 @@
 
     .help-modal {
         width: 50vw;
-        height: 50vh;
-        margin-top: 20vh;
+        margin-top: 5rem;
         background: gold;
         border: 3px solid white;
         border-radius: 30px;
         padding: 30px;
+    }
+
+    span.shortcut {
+        font-family: "Courier New", Courier, monospace;
+        background: lightgrey;
+        margin-right: 1rem;
+        padding: 0.2rem;
     }
 </style>

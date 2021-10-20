@@ -4,7 +4,8 @@
     import TaskList from "./taskList/TaskList.svelte"
     import { setupKeyboardShortcutListener } from "./keyboardShortcuts/logic"
     import { logger } from "$lib/logger"
-    import { setupKeyboardShortcuts } from "$lib/undo/keyboardShortcuts"
+    import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/undo/keyboardShortcuts"
+    import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/help/keyboardShortcuts"
     import { setupAutoSave } from "$lib/persistence/logic"
     import { dispatch } from "$lib/logicHelpers"
     import { appLogic, appState } from "$lib/logic"
@@ -13,7 +14,8 @@
 
     onMount(() => {
         setupKeyboardShortcutListener()
-        setupKeyboardShortcuts()
+        setupUndoKeyboardShortcuts()
+        setupHelpModalKeyboardShortcuts()
         setupAutoSave()
         logger.autoSetLevel()
         dispatch(appLogic.loadRequested.action())

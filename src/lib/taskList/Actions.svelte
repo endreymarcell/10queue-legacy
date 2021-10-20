@@ -12,7 +12,7 @@
 
     const handleSaveClicked = () => dispatch(appLogic.saveRequested.action())
     const handleUndoClicked = () => dispatch(appLogic.undo.action())
-    const handleHelpClicked = () => dispatch(appLogic.helpIconClicked.action())
+    const handleHelpClicked = () => dispatch(appLogic.openHelpModalRequested.action())
 </script>
 
 <div class="container">

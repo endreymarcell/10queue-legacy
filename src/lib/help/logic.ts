@@ -10,19 +10,19 @@ const defaultState: State = {
 }
 
 type Events = {
-    helpIconClicked: void
-    clickedOutside: void
+    openHelpModalRequested: void
+    closeHelpModalRequested: void
 }
 
 const logic: Logic<Events> = {
-    helpIconClicked: {
-        action: createAction("helpIconClicked"),
+    openHelpModalRequested: {
+        action: createAction("openHelpModalRequested"),
         updater: () => state => {
             state.isHelpModalOpen = true
         },
     },
-    clickedOutside: {
-        action: createAction("clickedOutside"),
+    closeHelpModalRequested: {
+        action: createAction("closeHelpModalRequested"),
         updater: () => state => {
             state.isHelpModalOpen = false
         },
