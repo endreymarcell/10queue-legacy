@@ -5,7 +5,7 @@ import { createAction } from "redux-dry-ts-actions"
 export type ActivationEvents = {
     taskActivatePreviousRequested: void
     taskActivateNextRequested: void
-    taskActiveteFirstRequested: void
+    taskActivateFirstRequested: void
     taskActivateLastRequested: void
 }
 
@@ -32,8 +32,8 @@ export const activationLogic: Logic<ActivationEvents> = {
             }
         },
     },
-    taskActiveteFirstRequested: {
-        action: createAction("taskActiveteFirstRequested"),
+    taskActivateFirstRequested: {
+        action: createAction("taskActivateFirstRequested"),
         updater: () => state => {
             if (state.isRunning) {
                 return
@@ -55,6 +55,6 @@ export const activationLogic: Logic<ActivationEvents> = {
 export const activationShortcuts: Shortcut[] = [
     { key: "j", action: activationLogic.taskActivateNextRequested.action, isDisabledDuringTextInput: true },
     { key: "k", action: activationLogic.taskActivatePreviousRequested.action, isDisabledDuringTextInput: true },
-    { key: "g", action: activationLogic.taskActiveteFirstRequested.action, isDisabledDuringTextInput: true },
+    { key: "g", action: activationLogic.taskActivateFirstRequested.action, isDisabledDuringTextInput: true },
     { key: "G", action: activationLogic.taskActivateLastRequested.action, isDisabledDuringTextInput: true },
 ]
