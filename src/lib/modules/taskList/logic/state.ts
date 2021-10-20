@@ -19,10 +19,10 @@ export const defaultState: State = {
     isAddingNewTask: false,
 }
 
-const saveabbleAttributes = ["tasks", "activeTaskIndex"] as const
-type SaveableAttributesUnion = typeof saveabbleAttributes[number]
+const saveableAttributes = ["tasks", "activeTaskIndex"] as const
+type SaveableAttributesUnion = typeof saveableAttributes[number]
 export type SaveableState = Pick<AppState, SaveableAttributesUnion>
 
 export function copySaveableState(state: AppState): SaveableState {
-    return clone(pick(state, saveabbleAttributes))
+    return clone(pick(state, saveableAttributes))
 }
