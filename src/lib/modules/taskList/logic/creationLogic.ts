@@ -68,5 +68,10 @@ const logic: Logic<Events> = {
     },
 }
 
+const shortcuts = [
+    { key: "o", action: logic.taskCreateNewBelowActiveRequested.action, isDisabledDuringTextInput: true },
+    { key: "O", action: logic.taskCreateNewAboveActiveRequested.action, isDisabledDuringTextInput: true },
+]
+
 export type Creation = { Events: Events }
-export const creation: Module<Creation> = { logic }
+export const creation: Module<Creation> = { logic, shortcuts }
