@@ -12,16 +12,19 @@
 
     const handleSaveClicked = () => dispatch(appLogic.saveRequested.action())
     const handleUndoClicked = () => dispatch(appLogic.undo.action())
+    const handleHelpClicked = () => dispatch(appLogic.helpIconClicked.action())
 </script>
 
 <div class="container">
     <div on:click={handleSaveClicked} class:disabled={!canSave}>💾</div>
     <div on:click={handleUndoClicked} class:disabled={!canUndo}>🔙</div>
+    <div on:click={handleHelpClicked}>❓</div>
 </div>
 <div class="hamburger-menu">
     <HamburgerMenu>
         <div on:click={handleSaveClicked} class:disabled={!canSave}>💾</div>
         <div on:click={handleUndoClicked} class:disabled={!canUndo}>🔙</div>
+        <div on:click={handleHelpClicked}>❓</div>
     </HamburgerMenu>
 </div>
 

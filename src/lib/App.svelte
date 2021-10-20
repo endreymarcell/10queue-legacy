@@ -7,7 +7,7 @@
     import { setupKeyboardShortcuts } from "$lib/undo/keyboardShortcuts"
     import { setupAutoSave } from "$lib/persistence/logic"
     import { dispatch } from "$lib/logicHelpers"
-    import { appLogic } from "$lib/logic"
+    import { appLogic, appState } from "$lib/logic"
     import { DEFAULT_PAGE_TITLE } from "$lib/const"
     import HelpModal from "./help/HelpModal.svelte"
 
@@ -30,8 +30,7 @@
         <TaskList />
     </div>
 </div>
-<!-- TODO isOpen for help modal -->
-<HelpModal isOpen={false} />
+<HelpModal isOpen={$appState.isHelpModalOpen} />
 
 <style>
     .outer-container {
