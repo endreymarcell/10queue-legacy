@@ -5,6 +5,7 @@ import { createAction } from "redux-dry-ts-actions"
 import { appLogic } from "$lib/logic"
 import { copySaveableState } from "$lib/modules/taskList/logic/state"
 import type { SaveableState } from "$lib/modules/taskList/logic/state"
+import type { Module } from "$lib/modules/Modules"
 
 const KEY = "10queue-state"
 
@@ -68,4 +69,4 @@ export function setupAutoSave() {
 }
 
 export type Persistence = { Events: Events }
-export const persistence = { logic }
+export const persistence: Module<Persistence> = { logic }

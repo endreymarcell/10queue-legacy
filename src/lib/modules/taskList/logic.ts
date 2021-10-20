@@ -13,6 +13,7 @@ import { schedule } from "../../helpers/logicHelpers"
 import { effects } from "$lib/effects"
 import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
 import { getStyleForName } from "./taskColors"
+import type { Module } from "$lib/modules/Modules"
 
 type Events = {
     startedEditingTaskTitle: void
@@ -187,4 +188,4 @@ const logic: Logic<Events> = {
 }
 
 export type TaskList = { State: State; Events: Events }
-export const taskList = { defaultState, logic }
+export const taskList: Module<TaskList> = { defaultState, logic }

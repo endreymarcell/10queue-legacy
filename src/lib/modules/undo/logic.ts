@@ -4,6 +4,7 @@ import { createAction } from "redux-dry-ts-actions"
 import { logger } from "$lib/helpers/logger"
 import { copySaveableState } from "$lib/modules/taskList/logic/state"
 import type { SaveableState } from "$lib/modules/taskList/logic/state"
+import type { Module } from "../Modules"
 
 type State = {
     undoStack: SaveableState[]
@@ -69,4 +70,4 @@ function restoreState(state: AppState) {
 }
 
 export type Undo = { State: State; Events: Events }
-export const undo = { defaultState, logic }
+export const undo: Module<Undo> = { defaultState, logic }

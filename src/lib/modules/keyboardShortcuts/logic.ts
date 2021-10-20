@@ -3,6 +3,7 @@ import type { AppAction } from "../../helpers/logicHelpers"
 import { createEffect, dispatch, schedule } from "../../helpers/logicHelpers"
 import type { Logic } from "../../helpers/logicHelpers"
 import { appLogic } from "../../logic"
+import type { Module } from "$lib/modules/Modules"
 
 type State = {
     isTextInputFocused: boolean
@@ -67,4 +68,4 @@ export function setupKeyboardShortcutListener() {
 }
 
 export type KeyboardShortcuts = { Events: Events; State: State }
-export const keyboardShortcuts = { logic, defaultState }
+export const keyboardShortcuts: Module<KeyboardShortcuts> = { logic, defaultState }

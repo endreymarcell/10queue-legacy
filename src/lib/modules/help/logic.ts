@@ -1,5 +1,6 @@
 import type { Logic } from "$lib/helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
+import type { Module } from "$lib/modules/Modules"
 
 type State = {
     isHelpModalOpen: boolean
@@ -30,4 +31,4 @@ const logic: Logic<Events> = {
 }
 
 export type HelpModal = { State: State; Events: Events }
-export const helpModal = { logic, defaultState }
+export const helpModal: Module<HelpModal> = { logic, defaultState }
