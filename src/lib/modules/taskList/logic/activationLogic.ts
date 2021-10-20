@@ -1,5 +1,5 @@
-import type { Shortcut } from "$lib/keyboardShortcuts/logic"
-import type { Logic } from "$lib/logicHelpers"
+import type { Shortcut } from "$lib/modules/keyboardShortcuts/logic"
+import type { Logic } from "$lib/helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 
 export type ActivationEvents = {

@@ -1,10 +1,10 @@
-import { logger } from "$lib/logger"
-import { createEffect, dispatch, schedule } from "$lib/logicHelpers"
-import type { Logic } from "$lib/logicHelpers"
+import { logger } from "$lib/helpers/logger"
+import { createEffect, dispatch, schedule } from "$lib/helpers/logicHelpers"
+import type { Logic } from "$lib/helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { appLogic } from "$lib/logic"
-import { copySaveableState } from "$lib/taskList/logic/state"
-import type { SaveableState } from "$lib/taskList/logic/state"
+import { copySaveableState } from "$lib/modules/taskList/logic/state"
+import type { SaveableState } from "$lib/modules/taskList/logic/state"
 
 const KEY = "10queue-state"
 

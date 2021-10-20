@@ -1,16 +1,16 @@
 <script lang="ts">
     import { onMount } from "svelte"
-    import Header from "./header/Header.svelte"
-    import TaskList from "./taskList/TaskList.svelte"
-    import { setupKeyboardShortcutListener } from "./keyboardShortcuts/logic"
-    import { logger } from "$lib/logger"
-    import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/undo/keyboardShortcuts"
-    import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/help/keyboardShortcuts"
-    import { setupAutoSave } from "$lib/persistence/logic"
-    import { dispatch } from "$lib/logicHelpers"
+    import Header from "./modules/header/Header.svelte"
+    import TaskList from "./modules/taskList/TaskList.svelte"
+    import { setupKeyboardShortcutListener } from "./modules/keyboardShortcuts/logic"
+    import { logger } from "$lib/helpers/logger"
+    import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/modules/undo/keyboardShortcuts"
+    import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/modules/help/keyboardShortcuts"
+    import { setupAutoSave } from "$lib/modules/persistence/logic"
+    import { dispatch } from "$lib/helpers/logicHelpers"
     import { appLogic, appState } from "$lib/logic"
-    import { DEFAULT_PAGE_TITLE } from "$lib/const"
-    import HelpModal from "./help/HelpModal.svelte"
+    import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
+    import HelpModal from "./modules/help/HelpModal.svelte"
 
     onMount(() => {
         setupKeyboardShortcutListener()

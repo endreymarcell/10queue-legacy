@@ -1,5 +1,5 @@
 <script lang="ts">
-    import TaskRow from "$lib/taskList/TaskRow.svelte"
+    import TaskRow from "$lib/modules/taskList/TaskRow.svelte"
     import { onMount } from "svelte"
     import { derived } from "svelte/store"
     import { appState } from "$lib/logic"

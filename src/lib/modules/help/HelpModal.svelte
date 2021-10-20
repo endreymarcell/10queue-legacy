@@ -1,7 +1,7 @@
 <script lang="ts">
     import { appLogic } from "$lib/logic"
-    import { dispatch } from "$lib/logicHelpers"
-    import { onClickOutside } from "$lib/onClickOutside"
+    import { dispatch } from "$lib/helpers/logicHelpers"
+    import { onClickOutside } from "$lib/helpers/onClickOutside"
 
     export let isOpen: boolean
 

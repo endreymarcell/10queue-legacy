@@ -1,8 +1,8 @@
 import { createAction } from "redux-dry-ts-actions"
-import type { AppAction } from "../logicHelpers"
-import { createEffect, dispatch, schedule } from "../logicHelpers"
-import type { Logic } from "../logicHelpers"
-import { appLogic } from "../logic"
+import type { AppAction } from "../../helpers/logicHelpers"
+import { createEffect, dispatch, schedule } from "../../helpers/logicHelpers"
+import type { Logic } from "../../helpers/logicHelpers"
+import { appLogic } from "../../logic"
 
 type State = {
     isTextInputFocused: boolean

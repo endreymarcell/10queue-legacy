@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { Task } from "$lib/taskList/tasks"
-    import TaskDetails from "$lib/taskList/TaskDetails.svelte"
-    import CreateNewTaskSign from "$lib/taskList/CreateNewTaskSign.svelte"
+    import type { Task } from "$lib/modules/taskList/tasks"
+    import TaskDetails from "$lib/modules/taskList/TaskDetails.svelte"
+    import CreateNewTaskSign from "$lib/modules/taskList/CreateNewTaskSign.svelte"
     import { appState } from "$lib/logic"
 
     export let index: number

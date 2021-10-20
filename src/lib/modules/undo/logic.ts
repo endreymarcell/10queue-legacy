@@ -1,9 +1,9 @@
 import type { AppState } from "$lib/logic"
-import type { Logic } from "../logicHelpers"
+import type { Logic } from "../../helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
-import { logger } from "$lib/logger"
-import { copySaveableState } from "$lib/taskList/logic/state"
-import type { SaveableState } from "$lib/taskList/logic/state"
+import { logger } from "$lib/helpers/logger"
+import { copySaveableState } from "$lib/modules/taskList/logic/state"
+import type { SaveableState } from "$lib/modules/taskList/logic/state"
 
 type State = {
     undoStack: SaveableState[]

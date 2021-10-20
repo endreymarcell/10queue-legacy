@@ -1,7 +1,7 @@
 <script lang="ts">
-    import HamburgerMenu from "$lib/hamburgerMenu/HamburgerMenu.svelte"
+    import HamburgerMenu from "$lib/modules/hamburgerMenu/HamburgerMenu.svelte"
     import { appLogic, appState } from "$lib/logic"
-    import { dispatch } from "$lib/logicHelpers"
+    import { dispatch } from "$lib/helpers/logicHelpers"
 
     let canUndo: boolean = false
     let canSave: boolean = true

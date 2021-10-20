@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dispatch } from "$lib/logicHelpers"
+    import { dispatch } from "$lib/helpers/logicHelpers"
     import { appLogic } from "$lib/logic"
 
     export let index: number

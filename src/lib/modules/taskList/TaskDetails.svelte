@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { Task } from "$lib/taskList/tasks"
-    import { dispatch } from "../logicHelpers"
-    import { appState, appLogic } from "../logic"
-    import { getStyleForName } from "$lib/taskList/taskColors"
-    import { formatTimeForHumans } from "$lib/utils"
-    import HamburgerMenu from "$lib/hamburgerMenu/HamburgerMenu.svelte"
+    import type { Task } from "$lib/modules/taskList/tasks"
+    import { dispatch } from "../../helpers/logicHelpers"
+    import { appState, appLogic } from "../../logic"
+    import { getStyleForName } from "$lib/modules/taskList/taskColors"
+    import { formatTimeForHumans } from "$lib/helpers/utils"
+    import HamburgerMenu from "$lib/modules/hamburgerMenu/HamburgerMenu.svelte"
 
     export let index: number
     let displayIndex: number
@@ -63,6 +63,7 @@
     class="task-details"
     class:active={$appState.activeTaskIndex === index}
     on:click|capture={handleRowClicked}
+    on:dblclick={startEditing}
     style={`--face-color: ${task.style.foregroundColor}; --shadow-color: ${task.style.backgroundColor}`}
 >
     <div class="task-description">

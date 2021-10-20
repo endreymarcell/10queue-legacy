@@ -1,7 +1,7 @@
 import type { AppState } from "$lib/logic"
 import clone from "just-clone"
-import { pick } from "$lib/utils"
-import type { Task } from "$lib/taskList/tasks"
+import { pick } from "$lib/helpers/utils"
+import type { Task } from "$lib/modules/taskList/tasks"
 
 export type State = {
     tasks: Task[]
