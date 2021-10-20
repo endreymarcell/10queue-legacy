@@ -2,6 +2,7 @@
     import { appLogic } from "$lib/logic"
     import { dispatch } from "$lib/helpers/logicHelpers"
     import { onClickOutside } from "$lib/helpers/onClickOutside"
+    import { fade } from "svelte/transition"
 
     export let isOpen: boolean
 
@@ -25,7 +26,7 @@
 </script>
 
 {#if isOpen}
-    <div class="help-modal-overlay">
+    <div class="help-modal-overlay" transition:fade={{ duration: 30 }}>
         <!-- Note: TS doesn't know about the on:clickedOutside prop -->
         <div class="help-modal" use:onClickOutside on:clickedOutside={handleClickedOutside}>
             <h1>10queue</h1>
