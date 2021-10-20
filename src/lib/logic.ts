@@ -10,6 +10,8 @@ import { persistence } from "$lib/modules/persistence/logic"
 import type { Persistence } from "$lib/modules/persistence/logic"
 import { helpModal } from "./modules/help/logic"
 import type { HelpModal } from "./modules/help/logic"
+import { creation } from "$lib/modules/taskList/logic/creationLogic"
+import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
 
 export type AppState = TaskList["State"] & Undo["State"] & KeyboardShortcuts["State"] & HelpModal["State"]
 const defaultAppState: AppState = {
@@ -24,7 +26,8 @@ export type AppEvents = TaskList["Events"] &
     Undo["Events"] &
     KeyboardShortcuts["Events"] &
     Persistence["Events"] &
-    HelpModal["Events"]
+    HelpModal["Events"] &
+    Creation["Events"]
 
 export const appLogic: Logic<AppEvents> = {
     ...taskList.logic,
@@ -32,4 +35,5 @@ export const appLogic: Logic<AppEvents> = {
     ...keyboardShortcuts.logic,
     ...persistence.logic,
     ...helpModal.logic,
+    ...creation.logic,
 }
