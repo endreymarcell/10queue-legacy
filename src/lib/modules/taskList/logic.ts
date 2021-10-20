@@ -4,8 +4,8 @@ import { createUndoPoint } from "$lib/modules/undo/logic"
 import { moveArrayElement } from "$lib/helpers/utils"
 import { defaultState } from "$lib/modules/taskList/logic/state"
 import type { State } from "$lib/modules/taskList/logic/state"
-import type { ActivationEvents } from "$lib/modules/taskList/logic/activationLogic"
-import { activationLogic } from "$lib/modules/taskList/logic/activationLogic"
+import type { Activation } from "$lib/modules/taskList/logic/activationLogic"
+import { activation } from "$lib/modules/taskList/logic/activationLogic"
 import type { Counter } from "$lib/modules/taskList/logic/counterLogic"
 import { counter } from "$lib/modules/taskList/logic/counterLogic"
 import { schedule } from "../../helpers/logicHelpers"
@@ -25,7 +25,7 @@ type Events = {
     taskFinishRequested: void
     taskMoveUpRequested: void
     taskMoveDownRequested: void
-} & ActivationEvents &
+} & Activation["Events"] &
     Counter["Events"] &
     Creation["Events"]
 
@@ -127,7 +127,7 @@ const logic: Logic<Events> = {
             }
         },
     },
-    ...activationLogic,
+    ...activation.logic,
     ...counter.logic,
     ...creation.logic,
 }

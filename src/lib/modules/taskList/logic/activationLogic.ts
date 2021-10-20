@@ -1,15 +1,16 @@
 import type { Shortcut } from "$lib/modules/keyboardShortcuts/logic"
 import type { Logic } from "$lib/helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
+import type { Module } from "$lib/modules/Modules"
 
-export type ActivationEvents = {
+type Events = {
     taskActivatePreviousRequested: void
     taskActivateNextRequested: void
     taskActivateFirstRequested: void
     taskActivateLastRequested: void
 }
 
-export const activationLogic: Logic<ActivationEvents> = {
+const logic: Logic<Events> = {
     taskActivatePreviousRequested: {
         action: createAction("taskActivatePreviousRequested"),
         updater: () => state => {
@@ -52,9 +53,12 @@ export const activationLogic: Logic<ActivationEvents> = {
     },
 }
 
-export const activationShortcuts: Shortcut[] = [
-    { key: "j", action: activationLogic.taskActivateNextRequested.action, isDisabledDuringTextInput: true },
-    { key: "k", action: activationLogic.taskActivatePreviousRequested.action, isDisabledDuringTextInput: true },
-    { key: "g", action: activationLogic.taskActivateFirstRequested.action, isDisabledDuringTextInput: true },
-    { key: "G", action: activationLogic.taskActivateLastRequested.action, isDisabledDuringTextInput: true },
+const shortcuts: Shortcut[] = [
+    { key: "j", action: logic.taskActivateNextRequested.action, isDisabledDuringTextInput: true },
+    { key: "k", action: logic.taskActivatePreviousRequested.action, isDisabledDuringTextInput: true },
+    { key: "g", action: logic.taskActivateFirstRequested.action, isDisabledDuringTextInput: true },
+    { key: "G", action: logic.taskActivateLastRequested.action, isDisabledDuringTextInput: true },
 ]
+
+export type Activation = { Events: Events }
+export const activation: Module<Activation> = { logic, shortcuts }

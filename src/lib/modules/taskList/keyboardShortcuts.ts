@@ -1,6 +1,6 @@
 import { registerShortcuts } from "$lib/modules/keyboardShortcuts/logic"
 import { appLogic } from "$lib/logic"
-import { activationShortcuts } from "./logic/activationLogic"
+import { activation } from "./logic/activationLogic"
 
 export function setupKeyboardShortcuts() {
     registerShortcuts([
@@ -11,7 +11,7 @@ export function setupKeyboardShortcuts() {
         { key: " ", action: appLogic.taskStartStopRequested.action, isDisabledDuringTextInput: true },
         { key: "o", action: appLogic.taskCreateNewBelowActiveRequested.action, isDisabledDuringTextInput: true },
         { key: "O", action: appLogic.taskCreateNewAboveActiveRequested.action, isDisabledDuringTextInput: true },
-        ...activationShortcuts,
+        ...activation.shortcuts,
 
         // TODO When adding a new task, the Enter at the end of editing the title is caught and the task is finished immediately
         // { key: "Enter", action: appLogic.taskFinishRequested.action, isDisabledDuringTextInput: true },
