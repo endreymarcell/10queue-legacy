@@ -30,6 +30,8 @@
     function onInputKeyDown(event: KeyboardEvent) {
         if (event.key === "Enter") {
             handleFinishedEditing()
+            // Without this, the Enter is caught by the general listener too and it finishes the task immediately
+            event.stopPropagation()
         } else if (event.key === "Escape") {
             handleAbortedEditing()
         }

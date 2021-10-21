@@ -13,7 +13,6 @@ export function setupKeyboardShortcuts() {
         ...activation.shortcuts,
         ...moving.shortcuts,
 
-        // TODO When adding a new task, the Enter at the end of editing the title is caught and the task is finished immediately
-        // { key: "Enter", action: appLogic.taskFinishRequested.action, isDisabledDuringTextInput: true },
+        { key: "Enter", action: appLogic.taskFinishRequested.action, isDisabledDuringTextInput: true },
     ])
 }
