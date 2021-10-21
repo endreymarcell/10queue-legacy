@@ -36,6 +36,6 @@ export function formatTimeForHumans(seconds: number): string {
     const paddedSeconds = onlySeconds < 10 ? `0${onlySeconds}` : onlySeconds
     const hoursString = hours > 0 ? `${hours}:` : ""
     const minutesString = `${paddedMinutes}:`
-    const secondsString = seconds > 0 ? `${paddedSeconds}` : ""
+    const secondsString = paddedSeconds
     return hoursString + minutesString + secondsString
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Task } from "$lib/modules/taskList/tasks"
     import { dispatch } from "../../helpers/logicHelpers"
-    import { appState, appLogic } from "../../logic"
+    import { appState, appLogic, appState } from "../../logic"
     import { formatTimeForHumans } from "$lib/helpers/utils"
     import HamburgerMenu from "$lib/modules/hamburgerMenu/HamburgerMenu.svelte"
 
@@ -77,7 +77,7 @@
         {/if}
     </div>
     {#if !isEditing}
-        {#if task.elapsedSeconds > 0}
+        {#if $appState.isRunning || task.elapsedSeconds > 0}
             <div class="timer">
                 {formatTimeForHumans(task.elapsedSeconds)}
             </div>
