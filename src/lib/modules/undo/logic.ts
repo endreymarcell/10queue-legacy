@@ -7,14 +7,14 @@ import type { SaveableState } from "$lib/modules/taskList/logic/state"
 import type { Module } from "../Modules"
 
 type State = {
-    undoStack: SaveableState[]
-    // The index of the currently active item in the imaginary array of [...undoStack, currentState]
-    undoPointer: number
+    previousStates: SaveableState[]
+    // The index of the currently active item in the imaginary array of [...previousStates, currentState]
+    activeStateIndex: number
 }
 
 const defaultState: State = {
-    undoStack: [],
-    undoPointer: 0,
+    previousStates: [],
+    activeStateIndex: 0,
 }
 
 type Events = {
@@ -31,9 +31,12 @@ const logic: Logic<Events> = {
     undo: {
         action: createAction("undo"),
         updater: () => state => {
-            logger.debug("Undo called with stack length", state.undoStack.length, "and pointer", state.undoPointer)
-            if (state.undoStack.length > 0 && state.undoPointer > 0) {
-                state.undoPointer--
+            if (canUndo(state)) {
+                if (state.activeStateIndex === state.previousStates.length) {
+                    createUndoPoint(state)
+                    state.activeStateIndex--
+                }
+                state.activeStateIndex--
                 restoreState(state)
             } else {
                 logger.debug("Cannot undo")
@@ -44,9 +47,9 @@ const logic: Logic<Events> = {
         action: createAction("redo"),
         updater: () => state => {
             // TODO off-by-one errors are my favorite
-            if (state.undoPointer < state.undoStack.length - 1) {
+            if (canRedo(state)) {
+                state.activeStateIndex++
                 restoreState(state)
-                state.undoPointer++
             } else {
                 logger.debug("Cannot redo")
             }
@@ -54,16 +57,24 @@ const logic: Logic<Events> = {
     },
 }
 
+export function canUndo(state: AppState): boolean {
+    return state.previousStates[state.activeStateIndex - 1] !== undefined
+}
+
+export function canRedo(state: AppState): boolean {
+    return state.activeStateIndex < state.previousStates.length - 1
+}
+
 export function createUndoPoint(state: AppState) {
     const undoableState = copySaveableState(state)
     logger.debug(`Creating undo point: ${JSON.stringify(undoableState)}`)
-    state.undoStack.splice(state.undoPointer + 1)
-    state.undoStack.push(undoableState)
-    state.undoPointer = state.undoStack.length
+    state.previousStates.splice(state.activeStateIndex + 1)
+    state.previousStates.push(undoableState)
+    state.activeStateIndex = state.previousStates.length
 }
 
 function restoreState(state: AppState) {
-    const undoPoint = state.undoStack[state.undoPointer]
+    const undoPoint = state.previousStates[state.activeStateIndex]
     logger.debug("I am restoring this undoPoint:", undoPoint)
     for (const key of Object.keys(undoPoint)) {
         state[key] = undoPoint[key]

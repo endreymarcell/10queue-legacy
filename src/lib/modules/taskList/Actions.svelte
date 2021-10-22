@@ -2,28 +2,34 @@
     import HamburgerMenu from "$lib/modules/hamburgerMenu/HamburgerMenu.svelte"
     import { appLogic, appState } from "$lib/logic"
     import { dispatch } from "$lib/helpers/logicHelpers"
+    import { canUndo as _canUndo, canRedo as _canRedo } from "$lib/modules/undo/logic"
 
     let canUndo = false
+    let canRedo = false
     let canSave = true
     appState.subscribe(state => {
-        canUndo = state.undoStack.length > 0 && state.undoPointer > 0
+        canUndo = _canUndo(state)
+        canRedo = _canRedo(state)
         // TODO canSave = has unsaved changes
     })
 
     const handleSaveClicked = () => dispatch(appLogic.saveRequested.action())
     const handleUndoClicked = () => dispatch(appLogic.undo.action())
+    const handleRedoClicked = () => dispatch(appLogic.redo.action())
     const handleHelpClicked = () => dispatch(appLogic.openHelpModalRequested.action())
 </script>
 
 <div class="container">
     <div on:click={handleSaveClicked} class:disabled={!canSave}>💾</div>
     <div on:click={handleUndoClicked} class:disabled={!canUndo}>🔙</div>
+    <div on:click={handleRedoClicked} class:disabled={!canRedo}>🔜</div>
     <div on:click={handleHelpClicked}>❓</div>
 </div>
 <div class="hamburger-menu">
     <HamburgerMenu>
         <div on:click={handleSaveClicked} class:disabled={!canSave}>💾</div>
         <div on:click={handleUndoClicked} class:disabled={!canUndo}>🔙</div>
+        <div on:click={handleRedoClicked} class:disabled={!canRedo}>🔜</div>
         <div on:click={handleHelpClicked}>❓</div>
     </HamburgerMenu>
 </div>
