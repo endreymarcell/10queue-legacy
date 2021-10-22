@@ -6,6 +6,7 @@
     import { logger } from "$lib/helpers/logger"
     import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/modules/undo/keyboardShortcuts"
     import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/modules/help/keyboardShortcuts"
+    import { setupKeyboardShortcuts as setupPersistenceKeyboardShortcuts } from "$lib/modules/persistence/keyboardShortcuts"
     import { setupAutoSave } from "$lib/modules/persistence/logic"
     import { dispatch } from "$lib/helpers/logicHelpers"
     import { appLogic, appState } from "$lib/logic"
@@ -16,6 +17,7 @@
         setupKeyboardShortcutListener()
         setupUndoKeyboardShortcuts()
         setupHelpModalKeyboardShortcuts()
+        setupPersistenceKeyboardShortcuts()
         setupAutoSave()
         logger.autoSetLevel()
         dispatch(appLogic.loadRequested.action())
