@@ -31,7 +31,8 @@ const logic: Logic<Events> = {
     undo: {
         action: createAction("undo"),
         updater: () => state => {
-            if (state.undoStack.length > 0 && state.undoPointer > -1) {
+            logger.debug("Undo called with stack length", state.undoStack.length, "and pointer", state.undoPointer)
+            if (state.undoStack.length > 0 && state.undoPointer > 0) {
                 state.undoPointer--
                 restoreState(state)
             } else {
@@ -54,8 +55,8 @@ const logic: Logic<Events> = {
 }
 
 export function createUndoPoint(state: AppState) {
-    logger.debug("Creating undo point")
     const undoableState = copySaveableState(state)
+    logger.debug(`Creating undo point: ${JSON.stringify(undoableState)}`)
     state.undoStack.splice(state.undoPointer + 1)
     state.undoStack.push(undoableState)
     state.undoPointer = state.undoStack.length
@@ -63,7 +64,7 @@ export function createUndoPoint(state: AppState) {
 
 function restoreState(state: AppState) {
     const undoPoint = state.undoStack[state.undoPointer]
-    logger.silly("I am restoring this undoPoint:", undoPoint)
+    logger.debug("I am restoring this undoPoint:", undoPoint)
     for (const key of Object.keys(undoPoint)) {
         state[key] = undoPoint[key]
     }

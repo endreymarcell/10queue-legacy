@@ -55,7 +55,9 @@ const logic: Logic<Events> = {
                     state.tasks.splice(state.activeTaskIndex, 1)
                 }
             } else {
-                createUndoPoint(state)
+                if (!state.isAddingNewTask) {
+                    createUndoPoint(state)
+                }
                 const task = state.tasks[state.activeTaskIndex]
                 task.title = payload.newTitle
                 if (state.isAddingNewTask) {
