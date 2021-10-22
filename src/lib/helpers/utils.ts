@@ -39,3 +39,7 @@ export function formatTimeForHumans(seconds: number): string {
     const secondsString = paddedSeconds
     return hoursString + minutesString + secondsString
 }
+
+export function isEmpty(text: string): boolean {
+    return text === "" || text === null || text === undefined
+}

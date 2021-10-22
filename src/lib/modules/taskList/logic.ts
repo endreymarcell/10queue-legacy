@@ -16,10 +16,11 @@ import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
 import { creation } from "$lib/modules/taskList/logic/creationLogic"
 import type { Moving } from "$lib/modules/taskList/logic/movingLogic"
 import { moving } from "$lib/modules/taskList/logic/movingLogic"
+import { isEmpty } from "$lib/helpers/utils"
 
 type Events = {
     startedEditingTaskTitle: void
-    stoppedEditingTaskTitle: { newTitle: string | undefined }
+    stoppedEditingTaskTitle: { newTitle: string }
     taskClicked: { index: number }
     taskDeleteRequested: void
     taskStartStopRequested: void
@@ -50,21 +51,23 @@ const logic: Logic<Events> = {
         updater: payload => state => {
             state.isEditingTaskTitle = false
             state.isTextInputFocused = false
-            if (payload.newTitle === undefined || payload.newTitle === "") {
-                if (state.isAddingNewTask) {
+            if (state.isAddingNewTask) {
+                if (isEmpty(payload.newTitle)) {
                     state.tasks.splice(state.activeTaskIndex, 1)
-                }
-            } else {
-                if (!state.isAddingNewTask) {
-                    createUndoPoint(state)
-                }
-                const task = state.tasks[state.activeTaskIndex]
-                task.title = payload.newTitle
-                if (state.isAddingNewTask) {
+                    state.activeTaskIndex = state.tasks.length > 0 ? state.tasks.length - 1 : null
+                } else {
+                    const task = state.tasks[state.activeTaskIndex]
+                    task.title = payload.newTitle
                     task.style = getStyleForName(payload.newTitle)
                 }
+                state.isAddingNewTask = false
+            } else {
+                if (!isEmpty(payload.newTitle)) {
+                    createUndoPoint(state)
+                    const task = state.tasks[state.activeTaskIndex]
+                    task.title = payload.newTitle
+                }
             }
-            state.isAddingNewTask = false
         },
     },
     taskDeleteRequested: {
