@@ -14,5 +14,6 @@ export function setupKeyboardShortcuts() {
         ...moving.shortcuts,
 
         { key: "Enter", action: appLogic.taskFinishRequested.action, isDisabledDuringTextInput: true },
+        { key: "s", action: appLogic.saveRequested.action, isDisabledDuringTextInput: true },
     ])
 }
