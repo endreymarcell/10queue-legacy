@@ -47,7 +47,6 @@ const logic: Logic<Events> = {
     redo: {
         action: createAction("redo"),
         updater: () => state => {
-            // TODO off-by-one errors are my favorite
             if (canRedo(state)) {
                 state.activeStateIndex++
                 restoreState(state)
