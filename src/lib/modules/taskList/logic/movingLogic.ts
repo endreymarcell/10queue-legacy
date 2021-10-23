@@ -3,6 +3,7 @@ import { createUndoPoint } from "$lib/modules/undo/logic"
 import { moveArrayElement } from "$lib/helpers/utils"
 import type { Logic } from "$lib/helpers/logicHelpers"
 import type { Module } from "$lib/modules/Modules"
+import { registerDocumentChange } from "../logic"
 
 type Events = {
     taskMoveUpRequested: void
@@ -16,7 +17,7 @@ const logic: Logic<Events> = {
             if (state.isRunning) {
                 return
             }
-            createUndoPoint(state)
+            registerDocumentChange(state)
             if (state.activeTaskIndex !== 0) {
                 state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex - 1)
                 state.activeTaskIndex--
@@ -29,7 +30,7 @@ const logic: Logic<Events> = {
             if (state.isRunning) {
                 return
             }
-            createUndoPoint(state)
+            registerDocumentChange(state)
             if (state.activeTaskIndex !== state.tasks.length - 1) {
                 state.tasks = moveArrayElement(state.tasks, state.activeTaskIndex, state.activeTaskIndex + 1)
                 state.activeTaskIndex++

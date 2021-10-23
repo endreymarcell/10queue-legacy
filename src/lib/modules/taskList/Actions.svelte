@@ -10,7 +10,7 @@
     appState.subscribe(state => {
         canUndo = _canUndo(state)
         canRedo = _canRedo(state)
-        // TODO canSave = has unsaved changes
+        canSave = state.isDirty
     })
 
     const handleSaveClicked = () => dispatch(appLogic.saveRequested.action())

@@ -63,7 +63,7 @@ const logic: Logic<Events> = {
                 state.isAddingNewTask = false
             } else {
                 if (!isEmpty(payload.newTitle)) {
-                    createUndoPoint(state)
+                    registerDocumentChange(state)
                     const task = state.tasks[state.activeTaskIndex]
                     task.title = payload.newTitle
                 }
@@ -76,7 +76,7 @@ const logic: Logic<Events> = {
             if (state.isRunning) {
                 return
             }
-            createUndoPoint(state)
+            registerDocumentChange(state)
             state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = null
@@ -98,7 +98,7 @@ const logic: Logic<Events> = {
     taskFinishRequested: {
         action: createAction("taskFinishRequested"),
         updater: () => state => {
-            createUndoPoint(state)
+            registerDocumentChange(state)
             state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = null
@@ -110,6 +110,11 @@ const logic: Logic<Events> = {
     ...counter.logic,
     ...creation.logic,
     ...moving.logic,
+}
+
+export function registerDocumentChange(state) {
+    createUndoPoint(state)
+    state.isDirty = true
 }
 
 export type TaskList = { State: State; Events: Events }

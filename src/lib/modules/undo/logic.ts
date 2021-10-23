@@ -5,6 +5,7 @@ import { logger } from "$lib/helpers/logger"
 import { copySaveableState } from "$lib/modules/taskList/logic/state"
 import type { SaveableState } from "$lib/modules/taskList/logic/state"
 import type { Module } from "../Modules"
+import { registerDocumentChange } from "../taskList/logic"
 
 type State = {
     previousStates: SaveableState[]
@@ -33,7 +34,7 @@ const logic: Logic<Events> = {
         updater: () => state => {
             if (canUndo(state)) {
                 if (state.activeStateIndex === state.previousStates.length) {
-                    createUndoPoint(state)
+                    registerDocumentChange(state)
                     state.activeStateIndex--
                 }
                 state.activeStateIndex--
@@ -79,6 +80,7 @@ function restoreState(state: AppState) {
     for (const key of Object.keys(undoPoint)) {
         state[key] = undoPoint[key]
     }
+    state.isDirty = true
 }
 
 export type Undo = { State: State; Events: Events }

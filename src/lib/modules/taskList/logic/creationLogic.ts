@@ -3,6 +3,7 @@ import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/modules/undo/logic"
 import { createTask } from "$lib/modules/taskList/tasks"
 import type { Module } from "$lib/modules/Modules"
+import { registerDocumentChange } from "../logic"
 
 type Events = {
     taskCreateNewBelowActiveRequested: void
@@ -20,7 +21,7 @@ const logic: Logic<Events> = {
             if (state.tasks.length === 10) {
                 return
             }
-            createUndoPoint(state)
+            registerDocumentChange(state)
             if (state.tasks.length === 0) {
                 state.activeTaskIndex = 0
                 state.tasks = [createTask("")]
@@ -42,7 +43,7 @@ const logic: Logic<Events> = {
             if (state.tasks.length === 10) {
                 return
             }
-            createUndoPoint(state)
+            registerDocumentChange(state)
             state.tasks.splice(state.activeTaskIndex, 0, createTask(""))
             state.isAddingNewTask = true
             state.isEditingTaskTitle = true
@@ -58,7 +59,7 @@ const logic: Logic<Events> = {
             if (state.tasks.length === 10) {
                 return
             }
-            createUndoPoint(state)
+            registerDocumentChange(state)
             state.activeTaskIndex = payload.index
             state.tasks.splice(payload.index, 0, createTask(""))
             state.isAddingNewTask = true
