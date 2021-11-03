@@ -20,6 +20,7 @@
         ["J", "move task down"],
         ["K", "move task up"],
         ["u", "undo"],
+        ["U", "redo"],
         ["<Space>", "start/stop working"],
         ["<Enter>", "finish task"],
     ]
