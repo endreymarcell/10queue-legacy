@@ -3,9 +3,7 @@
     "^.+\\.js$": "babel-jest",
     "^.+\\.svelte$": [
       "./node_modules/svelte-jester/dist/transformer.mjs",
-      {
-        "preprocess": true
-      }
+      { "preprocess": true }
     ],
     "^.+\\.ts$": "ts-jest"
   },
