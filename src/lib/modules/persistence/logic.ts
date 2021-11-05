@@ -6,23 +6,7 @@ import { appLogic } from "$lib/logic"
 import { copySaveableState } from "$lib/modules/taskList/logic/state"
 import type { SaveableState } from "$lib/modules/taskList/logic/state"
 import type { Module } from "$lib/modules/Modules"
-
-const KEY = "10queue-state"
-
-export function store(state: SaveableState) {
-    const serializedState = JSON.stringify(state)
-    window.localStorage.setItem(KEY, serializedState)
-}
-
-export function load(): SaveableState {
-    const serializedState = window.localStorage.getItem(KEY)
-    const state = JSON.parse(serializedState)
-    if (state === null) {
-        throw new Error("No saved state found")
-    } else {
-        return state
-    }
-}
+import { browserStorage } from "$lib/modules/persistence/storages/browserStorage"
 
 type State = {
     isDirty: boolean
@@ -34,8 +18,12 @@ const defaultState: State = {
 
 const effects = {
     save: (state: SaveableState) =>
-        createEffect(state => store(state), [state], [logic.saveSucceeded.action, logic.saveFailed.action]),
-    load: () => createEffect(() => load(), [], [logic.loadSucceeded.action, logic.loadFailed.action]),
+        createEffect(
+            state => browserStorage.save(state),
+            [state],
+            [logic.saveSucceeded.action, logic.saveFailed.action],
+        ),
+    load: () => createEffect(() => browserStorage.load(), [], [logic.loadSucceeded.action, logic.loadFailed.action]),
 }
 
 type Events = {
