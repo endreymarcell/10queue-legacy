@@ -56,7 +56,9 @@ function reducer(state: AppState, action: AppAction): AppState {
 }
 
 type Effect = () => void
-export function createEffect<Args extends unknown[], Return extends unknown>(
+type EffectArg = unknown
+type EffectReturnType = unknown
+export function createEffect<Args extends EffectArg[], Return extends EffectReturnType>(
     execute: (...args: Args) => Return,
     args: Args,
     andThen?: [successAction: AppAction, failureAction: AppAction],
@@ -64,7 +66,7 @@ export function createEffect<Args extends unknown[], Return extends unknown>(
     return () => {
         if (andThen !== undefined) {
             const [successAction, failureAction] = andThen
-            new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 try {
                     const result = execute(...args)
                     resolve(result)
@@ -75,7 +77,7 @@ export function createEffect<Args extends unknown[], Return extends unknown>(
                 .then((result: Return) => dispatch(successAction(result)))
                 .catch(error => dispatch(failureAction(error)))
         } else {
-            new Promise(() => execute(...args))
+            return new Promise(() => execute(...args))
         }
     }
 }
