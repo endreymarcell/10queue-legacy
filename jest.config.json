@@ -14,7 +14,8 @@
     "^\\$app(.*)$": [
       "<rootDir>/.svelte-kit/dev/runtime/app$1",
       "<rootDir>/.svelte-kit/build/runtime/app$1"
-    ]
+    ],
+    "^.+\\.(css|less)$": "<rootDir>/config/jestCssStub.ts"
   },
   "extensionsToTreatAsEsm": [
     ".svelte",
@@ -28,6 +29,7 @@
   "setupFilesAfterEnv": [
     "@testing-library/jest-dom/extend-expect"
   ],
+  "testEnvironment": "jsdom",
   "globals": {
     "ts-jest": {
       "tsconfig": "tsconfig.spec.json",
