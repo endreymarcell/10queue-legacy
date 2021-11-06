@@ -7,7 +7,6 @@ function load() {
 
 function save(state: SaveableState) {
     // TODO implement
-    console.log(state)
     throw new Error("not yet implemented")
 }
 

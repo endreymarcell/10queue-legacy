@@ -44,7 +44,6 @@
     }
 
     function handleAbortedEditing() {
-        console.log({ currentTitle, taskTitle: task.title })
         currentTitle = task.title
         dispatch(appLogic.stoppedEditingTaskTitle.action(""))
     }
