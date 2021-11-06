@@ -89,10 +89,20 @@ const logic: Logic<Events> = {
         action: createAction("taskStartStopRequested"),
         updater: () => state => {
             state.isRunning = !state.isRunning
+            const task = state.tasks[state.activeTaskIndex]
+            let newTitle
+            if (state.isRunning) {
+                newTitle = `10Q: ${task.title}`
+                task.startTimestampOfCurrentRun = Date.now()
+                schedule(counter.effects.scheduleNextTick())
+            } else {
+                newTitle = DEFAULT_PAGE_TITLE
+                task.secondsSpentInPreviousRuns += task.secondsSpentInCurrentRun
+                task.secondsSpentInCurrentRun = 0
+                task.startTimestampOfCurrentRun = null
+            }
             state.activeTaskIndex = 0
-            const newTitle = state.isRunning ? `10Q: ${state.tasks[state.activeTaskIndex].title}` : DEFAULT_PAGE_TITLE
             schedule(effects.changePageTitle(newTitle))
-            schedule(counter.effects.scheduleNextTick())
         },
     },
     taskFinishRequested: {

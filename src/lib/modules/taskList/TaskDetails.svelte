@@ -79,9 +79,9 @@
         {/if}
     </div>
     {#if !isEditing}
-        {#if $appState.isRunning || task.elapsedSeconds > 0}
+        {#if $appState.isRunning || task.secondsSpentInPreviousRuns > 0}
             <div class="timer">
-                {formatTimeForHumans(task.elapsedSeconds)}
+                {formatTimeForHumans(task.secondsSpentInPreviousRuns + task.secondsSpentInCurrentRun)}
             </div>
         {/if}
         <div class="task-actions">
