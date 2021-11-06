@@ -33,6 +33,6 @@
         "src/**/*.svelte"
     ],
     "exclude": [
-        "src/**/*.spec.ts"
+        "src/**/*.test.ts"
     ]
 }
