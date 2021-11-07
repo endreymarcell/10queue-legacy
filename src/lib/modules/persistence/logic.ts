@@ -10,10 +10,12 @@ import { browserStorage } from "$lib/modules/persistence/storages/browserStorage
 
 type State = {
     isDirty: boolean
+    latestLoadOrSaveTimestamp: number
 }
 
 const defaultState: State = {
     isDirty: false,
+    latestLoadOrSaveTimestamp: null,
 }
 
 const effects = {
@@ -49,6 +51,7 @@ export const logic: Logic<Events> = {
         action: createAction("saveSucceeded"),
         updater: () => state => {
             state.isDirty = false
+            state.latestLoadOrSaveTimestamp = Date.now()
         },
     },
     saveFailed: {
@@ -64,15 +67,23 @@ export const logic: Logic<Events> = {
     loadSucceeded: {
         action: createAction("loadSucceeded", state => ({ state })),
         updater: payload => state => {
-            for (const key of Object.keys(payload.state)) {
-                state[key] = payload.state[key]
+            const isFirstLoadToday = !isSameDay(payload.state.latestLoadOrSaveTimestamp, Date.now())
+            if (!isFirstLoadToday) {
+                for (const key of Object.keys(payload.state)) {
+                    state[key] = payload.state[key]
+                }
             }
+            state.latestLoadOrSaveTimestamp = Date.now()
         },
     },
     loadFailed: {
         action: createAction("loadFailed"),
         updater: () => () => logger.error("Shit happened:"),
     },
+}
+
+function isSameDay(timestamp1: number, timestamp2: number) {
+    return new Date(timestamp1).toLocaleDateString() === new Date(timestamp2).toLocaleDateString()
 }
 
 // TODO convert into effect
