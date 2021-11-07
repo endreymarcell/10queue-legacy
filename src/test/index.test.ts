@@ -1,5 +1,5 @@
 import { render, RenderResult } from "@testing-library/svelte"
-import Index from "./index.svelte"
+import Index from "../routes/index.svelte"
 
 describe("Index", () => {
     let renderedComponent: RenderResult
