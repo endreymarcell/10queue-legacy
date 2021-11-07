@@ -2,13 +2,13 @@ import type { AppState } from "$lib/logic"
 import type { Logic } from "../../helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { logger } from "$lib/helpers/logger"
-import { copySaveableState } from "$lib/modules/taskList/logic/state"
-import type { SaveableState } from "$lib/modules/taskList/logic/state"
+import { copySavableState } from "$lib/modules/taskList/logic/state"
+import type { SavableState } from "$lib/modules/taskList/logic/state"
 import type { Module } from "../Modules"
 import { registerDocumentChange } from "../taskList/logic"
 
 type State = {
-    previousStates: SaveableState[]
+    previousStates: SavableState[]
     // The index of the currently active item in the imaginary array of [...previousStates, currentState]
     activeStateIndex: number
 }
@@ -66,7 +66,7 @@ export function canRedo(state: AppState): boolean {
 }
 
 export function createUndoPoint(state: AppState) {
-    const undoableState = copySaveableState(state)
+    const undoableState = copySavableState(state)
     logger.debug(`Creating undo point: ${JSON.stringify(undoableState)}`)
     state.previousStates.splice(state.activeStateIndex + 1)
     state.previousStates.push(undoableState)

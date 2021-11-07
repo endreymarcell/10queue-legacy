@@ -1,6 +1,6 @@
-import type { SaveableState } from "$lib/modules/taskList/logic/state"
+import type { SavableState } from "$lib/modules/taskList/logic/state"
 
 export type StateStorage = {
-    load: () => Promise<SaveableState>
-    save: (state: SaveableState) => Promise<void>
+    load: () => Promise<SavableState>
+    save: (state: SavableState) => Promise<void>
 }

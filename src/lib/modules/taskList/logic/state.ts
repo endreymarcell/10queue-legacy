@@ -22,10 +22,10 @@ export const defaultState: State = {
     ...persistence.defaultState,
 }
 
-const saveableAttributes = ["tasks", "activeTaskIndex"] as const
-type SaveableAttributesUnion = typeof saveableAttributes[number]
-export type SaveableState = Pick<AppState, SaveableAttributesUnion>
+const savableAttributes = ["tasks", "activeTaskIndex"] as const
+type SavableAttributesUnion = typeof savableAttributes[number]
+export type SavableState = Pick<AppState, SavableAttributesUnion>
 
-export function copySaveableState(state: AppState): SaveableState {
-    return clone(pick(state, saveableAttributes))
+export function copySavableState(state: AppState): SavableState {
+    return clone(pick(state, savableAttributes))
 }

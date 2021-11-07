@@ -1,11 +1,11 @@
-import type { SaveableState } from "$lib/modules/taskList/logic/state"
+import type { SavableState } from "$lib/modules/taskList/logic/state"
 
 function load() {
     // TODO implement
     throw new Error("not yet implemented")
 }
 
-function save(state: SaveableState) {
+function save(state: SavableState) {
     // TODO implement
     throw new Error("not yet implemented")
 }

@@ -3,8 +3,8 @@ import { createEffect, dispatch, schedule } from "$lib/helpers/logicHelpers"
 import type { Logic } from "$lib/helpers/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { appLogic } from "$lib/logic"
-import { copySaveableState } from "$lib/modules/taskList/logic/state"
-import type { SaveableState } from "$lib/modules/taskList/logic/state"
+import { copySavableState } from "$lib/modules/taskList/logic/state"
+import type { SavableState } from "$lib/modules/taskList/logic/state"
 import type { Module } from "$lib/modules/Modules"
 import { browserStorage } from "$lib/modules/persistence/storages/browserStorage"
 
@@ -17,7 +17,7 @@ const defaultState: State = {
 }
 
 const effects = {
-    save: (state: SaveableState) =>
+    save: (state: SavableState) =>
         createEffect(
             state => browserStorage.save(state),
             [state],
@@ -31,7 +31,7 @@ type Events = {
     saveSucceeded: void
     saveFailed: void
     loadRequested: void
-    loadSucceeded: { state: SaveableState }
+    loadSucceeded: { state: SavableState }
     loadFailed: void
 }
 
@@ -40,7 +40,7 @@ export const logic: Logic<Events> = {
         action: createAction("saveRequested"),
         updater: () => state => {
             if (state.isDirty) {
-                const stateToSave = copySaveableState(state)
+                const stateToSave = copySavableState(state)
                 schedule(effects.save(stateToSave))
             }
         },
