@@ -8,10 +8,10 @@
     import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/modules/help/keyboardShortcuts"
     import { setupKeyboardShortcuts as setupPersistenceKeyboardShortcuts } from "$lib/modules/persistence/keyboardShortcuts"
     import { setupAutoSave } from "$lib/modules/persistence/logic"
-    import { dispatch } from "$lib/helpers/logicHelpers"
-    import { appLogic, appState } from "$lib/logic"
+    import { appState } from "$lib/logic"
     import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
     import HelpModal from "./modules/help/HelpModal.svelte"
+    import type { SavableState } from "$lib/modules/taskList/logic/state"
 
     onMount(() => {
         setupKeyboardShortcutListener()
@@ -20,8 +20,9 @@
         setupPersistenceKeyboardShortcuts()
         setupAutoSave()
         logger.autoSetLevel()
-        dispatch(appLogic.loadRequested.action())
     })
+
+    export let initialState: SavableState = null
 </script>
 
 <svelte:head>
@@ -31,7 +32,7 @@
 <div class="outer-container">
     <div class="inner-container">
         <Header />
-        <TaskList />
+        <TaskList tasks={initialState.tasks} />
     </div>
 </div>
 <HelpModal isOpen={$appState.isHelpModalOpen} />

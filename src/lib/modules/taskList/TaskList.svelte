@@ -5,9 +5,12 @@
     import { appState } from "$lib/logic"
     import { setupKeyboardShortcuts } from "./keyboardShortcuts"
     import Actions from "./Actions.svelte"
+    import type { Task } from "$lib/modules/taskList/tasks"
+
+    export let tasks: Task[]
 
     const paddedTasksList = derived(appState, $appState =>
-        $appState.isRunning ? [$appState.tasks[0]] : [...$appState.tasks, ...new Array(10 - $appState.tasks.length)],
+        $appState.isRunning ? [tasks[0]] : [...tasks, ...new Array(10 - tasks.length)],
     )
 
     onMount(() => setupKeyboardShortcuts())
