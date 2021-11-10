@@ -60,7 +60,7 @@ type EffectArg = unknown
 type EffectReturnType = unknown
 export function createEffect<Args extends EffectArg[], Return extends EffectReturnType>(
     execute: (...args: Args) => Return,
-    args: Args,
+    args: Args = [] as Args,
     andThen?: [successAction: AppAction, failureAction: AppAction],
 ) {
     return () => {

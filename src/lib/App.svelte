@@ -2,24 +2,14 @@
     import { onMount } from "svelte"
     import Header from "./modules/header/Header.svelte"
     import TaskList from "./modules/taskList/TaskList.svelte"
-    import { setupKeyboardShortcutListener } from "./modules/keyboardShortcuts/logic"
-    import { logger } from "$lib/helpers/logger"
-    import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/modules/undo/keyboardShortcuts"
-    import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/modules/help/keyboardShortcuts"
-    import { setupKeyboardShortcuts as setupPersistenceKeyboardShortcuts } from "$lib/modules/persistence/keyboardShortcuts"
-    import { setupAutoSave } from "$lib/modules/persistence/logic"
-    import { appState } from "$lib/logic"
+    import { appLogic, appState } from "$lib/logic"
     import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
     import HelpModal from "./modules/help/HelpModal.svelte"
     import type { SavableState } from "$lib/modules/taskList/logic/state"
+    import { dispatch } from "$lib/helpers/logicHelpers"
 
     onMount(() => {
-        setupKeyboardShortcutListener()
-        setupUndoKeyboardShortcuts()
-        setupHelpModalKeyboardShortcuts()
-        setupPersistenceKeyboardShortcuts()
-        setupAutoSave()
-        logger.autoSetLevel()
+        dispatch(appLogic.onMount.action())
     })
 
     export let initialState: SavableState = null

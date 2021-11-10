@@ -12,6 +12,9 @@ import { helpModal } from "./modules/help/logic"
 import type { HelpModal } from "./modules/help/logic"
 import { creation } from "$lib/modules/taskList/logic/creationLogic"
 import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
+import { createAction } from "redux-dry-ts-actions"
+import { schedule } from "./helpers/logicHelpers"
+import { effects } from "$lib/effects"
 
 export type AppState = TaskList["State"] & Undo["State"] & KeyboardShortcuts["State"] & HelpModal["State"]
 const defaultAppState: AppState = {
@@ -22,7 +25,9 @@ const defaultAppState: AppState = {
 }
 export const appState = writable<AppState>(defaultAppState)
 
-export type AppEvents = TaskList["Events"] &
+export type AppEvents = {
+    onMount: void
+} & TaskList["Events"] &
     Undo["Events"] &
     KeyboardShortcuts["Events"] &
     Persistence["Events"] &
@@ -30,6 +35,12 @@ export type AppEvents = TaskList["Events"] &
     Creation["Events"]
 
 export const appLogic: Logic<AppEvents> = {
+    onMount: {
+        action: createAction("onMount"),
+        updater: () => () => {
+            schedule(effects.setupListenersAndStuff())
+        },
+    },
     ...taskList.logic,
     ...undo.logic,
     ...keyboardShortcuts.logic,
