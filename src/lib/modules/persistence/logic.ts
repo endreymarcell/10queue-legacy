@@ -5,7 +5,7 @@ import { createAction } from "redux-dry-ts-actions"
 import { appLogic } from "$lib/logic"
 import { copySavableState } from "$lib/modules/taskList/logic/state"
 import type { SavableState } from "$lib/modules/taskList/logic/state"
-import type { Module } from "$lib/modules/Modules"
+import type { Module } from "$lib/logical/Modules"
 import { browserStorage } from "$lib/modules/persistence/storages/browserStorage"
 
 type State = {

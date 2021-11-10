@@ -4,7 +4,7 @@ import { createAction } from "redux-dry-ts-actions"
 import { logger } from "$lib/helpers/logger"
 import { copySavableState } from "$lib/modules/taskList/logic/state"
 import type { SavableState } from "$lib/modules/taskList/logic/state"
-import type { Module } from "../Modules"
+import type { Module } from "../../logical/Modules"
 import { registerDocumentChange } from "../taskList/logic"
 
 type State = {

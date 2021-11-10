@@ -3,7 +3,7 @@ import type { AppAction } from "$lib/logical/logicHelpers"
 import { createEffect, dispatch, schedule } from "$lib/logical/logicHelpers"
 import type { Logic } from "$lib/logical/logicHelpers"
 import { appLogic } from "../../logic"
-import type { Module } from "$lib/modules/Modules"
+import type { Module } from "$lib/logical/Modules"
 
 type State = {
     isTextInputFocused: boolean

@@ -1,6 +1,6 @@
 import type { Logic } from "$lib/logical/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
-import type { Module } from "$lib/modules/Modules"
+import type { Module } from "$lib/logical/Modules"
 
 type State = {
     isHelpModalOpen: boolean
