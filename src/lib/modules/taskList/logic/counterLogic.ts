@@ -1,5 +1,5 @@
-import { createEffect, dispatch, schedule } from "$lib/helpers/logicHelpers"
-import type { Logic } from "$lib/helpers/logicHelpers"
+import { createEffect, dispatch, schedule } from "$lib/logical/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 
 type Events = {

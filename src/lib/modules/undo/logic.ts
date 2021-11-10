@@ -1,5 +1,5 @@
 import type { AppState } from "$lib/logic"
-import type { Logic } from "../../helpers/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { logger } from "$lib/helpers/logger"
 import { copySavableState } from "$lib/modules/taskList/logic/state"

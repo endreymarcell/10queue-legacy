@@ -1,10 +1,10 @@
 import produce from "immer"
 import type { WritableDraft } from "immer/dist/internal"
 import type { ActionCreator, ActionCreatorWithPayload, ActionTypeFromActionCreators } from "redux-dry-ts-actions"
-import { appState, appLogic } from "../logic"
-import type { AppState } from "../logic"
+import { appState, appLogic } from "$lib/logic"
+import type { AppState } from "$lib/logic"
 import type { ObjValueTuple } from "$lib/helpers/utils"
-import { logger } from "./logger"
+import { logger } from "$lib/helpers/logger"
 
 type EventPayloadType = { [key: string]: unknown }
 export type EventListType = { [eventName: string]: EventPayloadType | void }

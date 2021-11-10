@@ -1,4 +1,4 @@
-import type { Logic } from "$lib/helpers/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/modules/undo/logic"
 import { createTask } from "$lib/modules/taskList/tasks"

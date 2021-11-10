@@ -6,7 +6,7 @@
     import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
     import HelpModal from "./modules/help/HelpModal.svelte"
     import type { SavableState } from "$lib/modules/taskList/logic/state"
-    import { dispatch } from "$lib/helpers/logicHelpers"
+    import { dispatch } from "$lib/logical/logicHelpers"
 
     onMount(() => {
         dispatch(appLogic.onMount.action())

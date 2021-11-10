@@ -1,6 +1,6 @@
 <script lang="ts">
     import { appLogic } from "$lib/logic"
-    import { dispatch } from "$lib/helpers/logicHelpers"
+    import { dispatch } from "$lib/logical/logicHelpers"
     import { onClickOutside } from "$lib/helpers/onClickOutside"
     import { fade } from "svelte/transition"
 

@@ -1,4 +1,4 @@
-import type { EventListType, Logic } from "$lib/helpers/logicHelpers"
+import type { EventListType, Logic } from "$lib/logical/logicHelpers"
 import type { Shortcut } from "$lib/modules/keyboardShortcuts/logic"
 
 export type ModuleType = {

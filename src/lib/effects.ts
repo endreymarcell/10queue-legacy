@@ -1,4 +1,4 @@
-import { createEffect } from "$lib/helpers/logicHelpers"
+import { createEffect } from "$lib/logical/logicHelpers"
 import { setupKeyboardShortcutListener } from "$lib/modules/keyboardShortcuts/logic"
 import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/modules/undo/keyboardShortcuts"
 import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/modules/help/keyboardShortcuts"

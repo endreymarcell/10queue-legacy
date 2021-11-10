@@ -1,6 +1,6 @@
 import { logger } from "$lib/helpers/logger"
-import { createEffect, dispatch, schedule } from "$lib/helpers/logicHelpers"
-import type { Logic } from "$lib/helpers/logicHelpers"
+import { createEffect, dispatch, schedule } from "$lib/logical/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import { appLogic } from "$lib/logic"
 import { copySavableState } from "$lib/modules/taskList/logic/state"

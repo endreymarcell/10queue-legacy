@@ -1,7 +1,7 @@
 import { createAction } from "redux-dry-ts-actions"
 import { createUndoPoint } from "$lib/modules/undo/logic"
 import { moveArrayElement } from "$lib/helpers/utils"
-import type { Logic } from "$lib/helpers/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import type { Module } from "$lib/modules/Modules"
 import { registerDocumentChange } from "../logic"
 

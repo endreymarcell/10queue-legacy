@@ -18,6 +18,12 @@
         "allowJs": true,
         "checkJs": true,
         "paths": {
+            "$logical": [
+                "src/logical"
+            ],
+            "$logical/*": [
+                "src/logical/*"
+            ],
             "$lib": [
                 "src/lib"
             ],

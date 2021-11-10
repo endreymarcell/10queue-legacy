@@ -1,7 +1,7 @@
 <script lang="ts">
     import HamburgerMenu from "$lib/modules/hamburgerMenu/HamburgerMenu.svelte"
     import { appLogic, appState } from "$lib/logic"
-    import { dispatch } from "$lib/helpers/logicHelpers"
+    import { dispatch } from "$lib/logical/logicHelpers"
     import { canUndo as _canUndo, canRedo as _canRedo } from "$lib/modules/undo/logic"
 
     let canUndo = false

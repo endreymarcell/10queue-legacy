@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Task } from "$lib/modules/taskList/tasks"
-    import { dispatch } from "../../helpers/logicHelpers"
+    import { dispatch } from "$lib/logical/logicHelpers"
     import { appState, appLogic, appState } from "../../logic"
     import { formatTimeForHumans } from "$lib/helpers/utils"
     import HamburgerMenu from "$lib/modules/hamburgerMenu/HamburgerMenu.svelte"

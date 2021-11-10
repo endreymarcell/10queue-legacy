@@ -1,4 +1,4 @@
-import type { Logic } from "./helpers/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import type { TaskList } from "$lib/modules/taskList/logic"
 import { taskList } from "$lib/modules/taskList/logic"
 import type { Undo } from "$lib/modules/undo/logic"
@@ -13,7 +13,7 @@ import type { HelpModal } from "./modules/help/logic"
 import { creation } from "$lib/modules/taskList/logic/creationLogic"
 import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
 import { createAction } from "redux-dry-ts-actions"
-import { schedule } from "./helpers/logicHelpers"
+import { schedule } from "$lib/logical/logicHelpers"
 import { effects } from "$lib/effects"
 
 export type AppState = TaskList["State"] & Undo["State"] & KeyboardShortcuts["State"] & HelpModal["State"]

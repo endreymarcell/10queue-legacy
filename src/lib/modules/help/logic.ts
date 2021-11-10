@@ -1,4 +1,4 @@
-import type { Logic } from "$lib/helpers/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import { createAction } from "redux-dry-ts-actions"
 import type { Module } from "$lib/modules/Modules"
 

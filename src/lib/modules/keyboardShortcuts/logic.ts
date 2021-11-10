@@ -1,7 +1,7 @@
 import { createAction } from "redux-dry-ts-actions"
-import type { AppAction } from "../../helpers/logicHelpers"
-import { createEffect, dispatch, schedule } from "../../helpers/logicHelpers"
-import type { Logic } from "../../helpers/logicHelpers"
+import type { AppAction } from "$lib/logical/logicHelpers"
+import { createEffect, dispatch, schedule } from "$lib/logical/logicHelpers"
+import type { Logic } from "$lib/logical/logicHelpers"
 import { appLogic } from "../../logic"
 import type { Module } from "$lib/modules/Modules"
 
