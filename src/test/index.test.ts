@@ -5,7 +5,7 @@ describe("Index", () => {
     let renderedComponent: RenderResult
 
     beforeEach(() => {
-        renderedComponent = render(Index)
+        renderedComponent = render(Index, { appProps: { savedState: { tasks: [] } } })
     })
 
     describe("once the component has been rendered", () => {
