@@ -1,10 +1,10 @@
-import { createEffect } from "$lib/logical/logicHelpers"
+import { createEffect, schedule } from "$lib/logical/logicHelpers"
 import { setupKeyboardShortcutListener } from "$lib/modules/keyboardShortcuts/logic"
 import { setupKeyboardShortcuts as setupUndoKeyboardShortcuts } from "$lib/modules/undo/keyboardShortcuts"
 import { setupKeyboardShortcuts as setupHelpModalKeyboardShortcuts } from "$lib/modules/help/keyboardShortcuts"
 import { setupKeyboardShortcuts as setupPersistenceKeyboardShortcuts } from "$lib/modules/persistence/keyboardShortcuts"
-import { setupAutoSave } from "$lib/modules/persistence/logic"
 import { logger } from "$lib/helpers/logger"
+import { persistence } from "./modules/persistence/logic"
 
 export const effects = {
     setupListenersAndStuff: () =>
@@ -13,7 +13,7 @@ export const effects = {
             setupUndoKeyboardShortcuts()
             setupHelpModalKeyboardShortcuts()
             setupPersistenceKeyboardShortcuts()
-            setupAutoSave()
+            schedule(persistence.effects.setupAutoSave())
             logger.autoSetLevel()
         }),
     changePageTitle: (newTitle: string) => createEffect(newTitle => (document.title = newTitle), [newTitle]),

@@ -55,7 +55,7 @@ function reducer(state: AppState, action: AppAction): AppState {
     return newState
 }
 
-type Effect = () => void
+export type Effect = (...args: unknown[]) => void
 type EffectArg = unknown
 type EffectReturnType = unknown
 export function createEffect<Args extends EffectArg[], Return extends EffectReturnType>(

@@ -26,6 +26,7 @@ const effects = {
             [logic.saveSucceeded.action, logic.saveFailed.action],
         ),
     load: () => createEffect(() => browserStorage.load(), [], [logic.loadSucceeded.action, logic.loadFailed.action]),
+    setupAutoSave: () => createEffect(() => window.setInterval(() => dispatch(appLogic.saveRequested.action()), 5000)),
 }
 
 type Events = {
@@ -86,10 +87,5 @@ function isSameDay(timestamp1: number, timestamp2: number) {
     return new Date(timestamp1).toLocaleDateString() === new Date(timestamp2).toLocaleDateString()
 }
 
-// TODO convert into effect
-export function setupAutoSave() {
-    window.setInterval(() => dispatch(appLogic.saveRequested.action()), 5000)
-}
-
-export type Persistence = { Events: Events; State: State }
-export const persistence: Module<Persistence> = { logic, defaultState }
+export type Persistence = { Events: Events; State: State; Effects: typeof effects }
+export const persistence: Module<Persistence> = { logic, defaultState, effects }
