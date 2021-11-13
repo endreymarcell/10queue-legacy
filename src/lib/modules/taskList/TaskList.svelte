@@ -1,9 +1,7 @@
 <script lang="ts">
     import TaskRow from "$lib/modules/taskList/TaskRow.svelte"
-    import { onMount } from "svelte"
     import { derived } from "svelte/store"
     import { appState } from "$lib/logic"
-    import { setupKeyboardShortcuts } from "./keyboardShortcuts"
     import Actions from "./Actions.svelte"
     import type { Task } from "$lib/modules/taskList/tasks"
 
@@ -12,8 +10,6 @@
     const paddedTasksList = derived(appState, $appState =>
         $appState.isRunning ? [tasks[0]] : [...tasks, ...new Array(10 - tasks.length)],
     )
-
-    onMount(() => setupKeyboardShortcuts())
 </script>
 
 <Actions />
