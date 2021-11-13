@@ -9,10 +9,12 @@
     import { dispatch } from "$lib/logical/logicHelpers"
 
     onMount(() => {
-        dispatch(appLogic.onMount.action())
+        dispatch(appLogic.onMount.action(initialState))
     })
 
-    export let initialState: SavableState = null
+    export let initialState: Partial<SavableState> = { tasks: [] }
+    let tasks: TaskList = []
+    $: tasks = $appState.hasMounted ? $appState.tasks : initialState.tasks
 </script>
 
 <svelte:head>
@@ -22,7 +24,7 @@
 <div class="outer-container">
     <div class="inner-container">
         <Header />
-        <TaskList tasks={initialState.tasks} />
+        <TaskList {tasks} />
     </div>
 </div>
 <HelpModal isOpen={$appState.isHelpModalOpen} />

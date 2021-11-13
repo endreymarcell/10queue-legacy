@@ -15,9 +15,15 @@ import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
 import { createAction } from "redux-dry-ts-actions"
 import { schedule } from "$lib/logical/logicHelpers"
 import { effects } from "$lib/effects"
+import clone from "just-clone"
+import type { SavableState } from "$lib/modules/taskList/logic/state"
 
-export type AppState = TaskList["State"] & Undo["State"] & KeyboardShortcuts["State"] & HelpModal["State"]
+export type AppState = { hasMounted: boolean } & TaskList["State"] &
+    Undo["State"] &
+    KeyboardShortcuts["State"] &
+    HelpModal["State"]
 const defaultAppState: AppState = {
+    hasMounted: false,
     ...taskList.defaultState,
     ...undo.defaultState,
     ...keyboardShortcuts.defaultState,
@@ -26,7 +32,7 @@ const defaultAppState: AppState = {
 export const appState = writable<AppState>(defaultAppState)
 
 export type AppEvents = {
-    onMount: void
+    onMount: { state: SavableState }
 } & TaskList["Events"] &
     Undo["Events"] &
     KeyboardShortcuts["Events"] &
@@ -36,8 +42,10 @@ export type AppEvents = {
 
 export const appLogic: Logic<AppEvents> = {
     onMount: {
-        action: createAction("onMount"),
-        handler: () => () => {
+        action: createAction("onMount", state => ({ state })),
+        handler: payload => state => {
+            state.hasMounted = true
+            state.tasks = clone(payload.state.tasks).map(task => ({ ...task, title: task.title.toUpperCase() }))
             schedule(effects.setupListenersAndStuff())
         },
     },
