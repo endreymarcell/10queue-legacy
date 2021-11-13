@@ -28,7 +28,7 @@ const effects = {
 const logic: Logic<Events> = {
     keyPressed: {
         action: createAction("keyPressed", key => ({ key })),
-        updater: payload => state => {
+        handler: payload => state => {
             schedule(effects.executeShortcut(payload.key, state.isTextInputFocused))
         },
     },

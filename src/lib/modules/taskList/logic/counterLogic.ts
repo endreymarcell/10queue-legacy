@@ -13,7 +13,7 @@ const effects = {
 const logic: Logic<Events> = {
     clockTick: {
         action: createAction("clockTick"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 const task = state.tasks[state.activeTaskIndex]
                 task.secondsSpentInCurrentRun = secondElapsedSince(task.startTimestampOfCurrentRun)

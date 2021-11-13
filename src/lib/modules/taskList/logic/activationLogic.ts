@@ -13,7 +13,7 @@ type Events = {
 const logic: Logic<Events> = {
     taskActivatePreviousRequested: {
         action: createAction("taskActivatePreviousRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -24,7 +24,7 @@ const logic: Logic<Events> = {
     },
     taskActivateNextRequested: {
         action: createAction("taskActivateNextRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -35,7 +35,7 @@ const logic: Logic<Events> = {
     },
     taskActivateFirstRequested: {
         action: createAction("taskActivateFirstRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -44,7 +44,7 @@ const logic: Logic<Events> = {
     },
     taskActivateLastRequested: {
         action: createAction("taskActivateLastRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }

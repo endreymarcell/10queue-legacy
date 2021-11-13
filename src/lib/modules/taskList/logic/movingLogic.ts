@@ -13,7 +13,7 @@ type Events = {
 const logic: Logic<Events> = {
     taskMoveUpRequested: {
         action: createAction("taskMoveUpRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -26,7 +26,7 @@ const logic: Logic<Events> = {
     },
     taskMoveDownRequested: {
         action: createAction("taskMoveDownRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }

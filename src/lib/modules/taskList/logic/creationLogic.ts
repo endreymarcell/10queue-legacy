@@ -14,7 +14,7 @@ type Events = {
 const logic: Logic<Events> = {
     taskCreateNewBelowActiveRequested: {
         action: createAction("taskCreateNewBelowActiveRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -36,7 +36,7 @@ const logic: Logic<Events> = {
     },
     taskCreateNewAboveActiveRequested: {
         action: createAction("taskCreateNewAboveActiveRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -52,7 +52,7 @@ const logic: Logic<Events> = {
     },
     taskCreateAtIndex: {
         action: createAction("taskCreateAtIndex", index => ({ index })),
-        updater: payload => state => {
+        handler: payload => state => {
             if (state.isRunning) {
                 return
             }

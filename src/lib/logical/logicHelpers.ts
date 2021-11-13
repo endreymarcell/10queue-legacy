@@ -16,7 +16,7 @@ export type Logic<EventList extends EventListType> = {
         action: EventList[eventName] extends Record<string, unknown>
             ? ActionCreatorWithPayload<eventName, EventList[eventName], ObjValueTuple<EventList[eventName]>>
             : ActionCreator<eventName>
-        updater: (payload: EventList[eventName]) => (draft: WritableDraft<AppState>) => void
+        handler: (payload: EventList[eventName]) => (draft: WritableDraft<AppState>) => void
     }
 }
 

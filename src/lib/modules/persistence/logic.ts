@@ -41,7 +41,7 @@ type Events = {
 export const logic: Logic<Events> = {
     saveRequested: {
         action: createAction("saveRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isDirty) {
                 const stateToSave = copySavableState(state)
                 schedule(effects.save(stateToSave))
@@ -50,24 +50,24 @@ export const logic: Logic<Events> = {
     },
     saveSucceeded: {
         action: createAction("saveSucceeded"),
-        updater: () => state => {
+        handler: () => state => {
             state.isDirty = false
             state.latestLoadOrSaveTimestamp = Date.now()
         },
     },
     saveFailed: {
         action: createAction("saveFailed"),
-        updater: () => state => state,
+        handler: () => state => state,
     },
     loadRequested: {
         action: createAction("loadRequested"),
-        updater: () => () => {
+        handler: () => () => {
             schedule(effects.load())
         },
     },
     loadSucceeded: {
         action: createAction("loadSucceeded", state => ({ state })),
-        updater: payload => state => {
+        handler: payload => state => {
             const isFirstLoadToday = !isSameDay(payload.state.latestLoadOrSaveTimestamp, Date.now())
             if (!isFirstLoadToday) {
                 for (const key of Object.keys(payload.state)) {
@@ -79,7 +79,7 @@ export const logic: Logic<Events> = {
     },
     loadFailed: {
         action: createAction("loadFailed"),
-        updater: () => () => logger.error("Shit happened:"),
+        handler: () => () => logger.error("Shit happened:"),
     },
 }
 

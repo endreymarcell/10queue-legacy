@@ -18,13 +18,13 @@ type Events = {
 const logic: Logic<Events> = {
     openHelpModalRequested: {
         action: createAction("openHelpModalRequested"),
-        updater: () => state => {
+        handler: () => state => {
             state.isHelpModalOpen = true
         },
     },
     closeHelpModalRequested: {
         action: createAction("closeHelpModalRequested"),
-        updater: () => state => {
+        handler: () => state => {
             state.isHelpModalOpen = false
         },
     },

@@ -37,7 +37,7 @@ export type AppEvents = {
 export const appLogic: Logic<AppEvents> = {
     onMount: {
         action: createAction("onMount"),
-        updater: () => () => {
+        handler: () => () => {
             schedule(effects.setupListenersAndStuff())
         },
     },

@@ -33,13 +33,13 @@ type Events = {
 const logic: Logic<Events> = {
     taskClicked: {
         action: createAction("taskClicked", index => ({ index })),
-        updater: payload => state => {
+        handler: payload => state => {
             state.activeTaskIndex = payload.index
         },
     },
     startedEditingTaskTitle: {
         action: createAction("startedEditingTaskTitle"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.tasks.length > 0) {
                 state.isEditingTaskTitle = true
                 state.isTextInputFocused = true
@@ -48,7 +48,7 @@ const logic: Logic<Events> = {
     },
     stoppedEditingTaskTitle: {
         action: createAction("stoppedEditingTaskTitle", newTitle => ({ newTitle })),
-        updater: payload => state => {
+        handler: payload => state => {
             state.isEditingTaskTitle = false
             state.isTextInputFocused = false
             if (state.isAddingNewTask) {
@@ -72,7 +72,7 @@ const logic: Logic<Events> = {
     },
     taskDeleteRequested: {
         action: createAction("taskDeleteRequested"),
-        updater: () => state => {
+        handler: () => state => {
             if (state.isRunning) {
                 return
             }
@@ -87,7 +87,7 @@ const logic: Logic<Events> = {
     },
     taskStartStopRequested: {
         action: createAction("taskStartStopRequested"),
-        updater: () => state => {
+        handler: () => state => {
             state.isRunning = !state.isRunning
             const task = state.tasks[state.activeTaskIndex]
             let newTitle
@@ -107,7 +107,7 @@ const logic: Logic<Events> = {
     },
     taskFinishRequested: {
         action: createAction("taskFinishRequested"),
-        updater: () => state => {
+        handler: () => state => {
             registerDocumentChange(state)
             state.tasks.splice(state.activeTaskIndex, 1)
             if (state.tasks.length === 0) {

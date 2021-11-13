@@ -27,11 +27,11 @@ type Events = {
 const logic: Logic<Events> = {
     createUndoPoint: {
         action: createAction("createUndoPoint"),
-        updater: () => createUndoPoint,
+        handler: () => createUndoPoint,
     },
     undo: {
         action: createAction("undo"),
-        updater: () => state => {
+        handler: () => state => {
             if (canUndo(state)) {
                 if (state.activeStateIndex === state.previousStates.length) {
                     registerDocumentChange(state)
@@ -46,7 +46,7 @@ const logic: Logic<Events> = {
     },
     redo: {
         action: createAction("redo"),
-        updater: () => state => {
+        handler: () => state => {
             if (canRedo(state)) {
                 state.activeStateIndex++
                 restoreState(state)
