@@ -7,7 +7,7 @@
     import Actions from "./Actions.svelte"
     import type { Task } from "$lib/modules/taskList/tasks"
 
-    export let tasks: Task[]
+    export let tasks: Task[] = []
 
     const paddedTasksList = derived(appState, $appState =>
         $appState.isRunning ? [tasks[0]] : [...tasks, ...new Array(10 - tasks.length)],
