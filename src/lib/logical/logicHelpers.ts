@@ -50,8 +50,8 @@ function handleAction(action: AppAction) {
 function reducer(state: AppState, action: AppAction): AppState {
     // this is a testable, pure function
     const event = appLogic[action.type]
-    const updater = event.updater(action.payload)
-    const newState = produce(state, updater)
+    const handler = event.handler(action.payload)
+    const newState = produce(state, handler)
     return newState
 }
 
