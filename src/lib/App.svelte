@@ -6,13 +6,14 @@
     import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
     import HelpModal from "./modules/help/HelpModal.svelte"
     import { dispatch } from "$lib/logical/logicHelpers"
+    import type { Task } from "$lib/modules/taskList/tasks"
 
     onMount(() => {
         dispatch(appLogic.onMount.action(initialState))
     })
 
     export let initialState: null
-    let tasks: TaskList = []
+    let tasks: Task[] = []
     $: tasks = $appState.hasMounted ? $appState.tasks : initialState.tasks
 </script>
 
