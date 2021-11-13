@@ -19,11 +19,18 @@
 </script>
 
 <script lang="ts">
+    import { logger } from "$lib/helpers/logger"
     import App from "$lib/App.svelte"
     import "../global.css"
     import type { SavableState } from "$lib/modules/taskList/logic/state"
+    import { onMount } from "svelte"
 
     export let appProps: { savedState: SavableState } = null
+    onMount(() => {
+        // It would be great to do this in the onMount action
+        // but then the onMount action itself won't be logged
+        logger.autoSetLevel()
+    })
 </script>
 
 <App initialState={appProps.savedState} />
