@@ -23,7 +23,9 @@
 <div class="outer-container">
     <div class="inner-container">
         <Header />
-        <TaskList {tasks} />
+        {#key tasks}
+            <TaskList {tasks} />
+        {/key}
     </div>
 </div>
 <HelpModal isOpen={$appState.isHelpModalOpen} />

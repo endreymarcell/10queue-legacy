@@ -23,7 +23,7 @@ const logic: Logic<Events> = {
         action: createAction("onMount", state => ({ state })),
         handler: payload => state => {
             state.hasMounted = true
-            state.tasks = clone(payload.state.tasks).map(task => ({ ...task, title: task.title.toUpperCase() }))
+            state.tasks = clone(payload.state.tasks)
             schedule(effects.setupListenersAndStuff())
         },
     },
