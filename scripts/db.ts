@@ -45,7 +45,7 @@ function setup(db: Knex) {
     console.log(`> Attempting to setup DB schema in DB called ${DB_NAME}`)
     return db.schema
         .createTable("simple", table => {
-            table.string("appState")
+            table.string("appState", 10_000)
         })
         .then(() => {
             console.log("OK Successfully setup DB schema\n")
