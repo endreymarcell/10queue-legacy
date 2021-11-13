@@ -5,14 +5,13 @@
     import { appLogic, appState } from "$lib/logic"
     import { DEFAULT_PAGE_TITLE } from "$lib/helpers/const"
     import HelpModal from "./modules/help/HelpModal.svelte"
-    import type { SavableState } from "$lib/modules/taskList/logic/state"
     import { dispatch } from "$lib/logical/logicHelpers"
 
     onMount(() => {
         dispatch(appLogic.onMount.action(initialState))
     })
 
-    export let initialState: Partial<SavableState> = { tasks: [] }
+    export let initialState: null
     let tasks: TaskList = []
     $: tasks = $appState.hasMounted ? $appState.tasks : initialState.tasks
 </script>
