@@ -24,6 +24,7 @@
     import "../global.css"
     import type { SavableState } from "$lib/modules/taskList/logic/state"
     import { onMount } from "svelte"
+    import StateInspector from "$lib/modules/debugger/StateInspector.svelte"
 
     export let appProps: { savedState: SavableState } = null
     onMount(() => {
@@ -34,3 +35,4 @@
 </script>
 
 <App initialState={appProps.savedState} />
+<StateInspector />
