@@ -12,18 +12,17 @@ import { helpModal } from "./modules/help/logic"
 import type { HelpModal } from "./modules/help/logic"
 import { creation } from "$lib/modules/taskList/logic/creationLogic"
 import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
-import { createAction } from "redux-dry-ts-actions"
-import { schedule } from "$lib/logical/logicHelpers"
-import { effects } from "$lib/effects"
-import clone from "just-clone"
-import type { SavableState } from "$lib/modules/taskList/logic/state"
+import { init } from "$lib/modules/init/logic"
+import type { Init } from "$lib/modules/init/logic"
 
-export type AppState = { hasMounted: boolean } & TaskList["State"] &
+export type AppState = Init["State"] &
+    TaskList["State"] &
     Undo["State"] &
     KeyboardShortcuts["State"] &
     HelpModal["State"]
+
 const defaultAppState: AppState = {
-    hasMounted: false,
+    ...init.defaultState,
     ...taskList.defaultState,
     ...undo.defaultState,
     ...keyboardShortcuts.defaultState,
@@ -31,9 +30,8 @@ const defaultAppState: AppState = {
 }
 export const appState = writable<AppState>(defaultAppState)
 
-export type AppEvents = {
-    onMount: { state: SavableState }
-} & TaskList["Events"] &
+export type AppEvents = Init["Events"] &
+    TaskList["Events"] &
     Undo["Events"] &
     KeyboardShortcuts["Events"] &
     Persistence["Events"] &
@@ -41,14 +39,7 @@ export type AppEvents = {
     Creation["Events"]
 
 export const appLogic: Logic<AppEvents> = {
-    onMount: {
-        action: createAction("onMount", state => ({ state })),
-        handler: payload => state => {
-            state.hasMounted = true
-            state.tasks = clone(payload.state.tasks).map(task => ({ ...task, title: task.title.toUpperCase() }))
-            schedule(effects.setupListenersAndStuff())
-        },
-    },
+    ...init.logic,
     ...taskList.logic,
     ...undo.logic,
     ...keyboardShortcuts.logic,
