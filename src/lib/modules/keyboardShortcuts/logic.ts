@@ -4,6 +4,7 @@ import { createEffect, dispatch, schedule } from "$lib/logical/logicHelpers"
 import type { Logic } from "$lib/logical/logicHelpers"
 import { appLogic } from "../../logic"
 import type { Module } from "$lib/logical/Modules"
+import { logger } from "$lib/helpers/logger"
 
 type State = {
     isTextInputFocused: boolean
@@ -48,7 +49,9 @@ const shortcutMap: Map<ShortcutKey, ShortcutHandling> = new Map()
 export function registerShortcuts(shortcutsToRegister: Shortcut[]): void {
     shortcutsToRegister.forEach(shortcut => {
         if (shortcutMap.has(shortcut.key)) {
-            throw new Error(`Cannot register shortcut for key ${shortcut.key}, as it is already taken`)
+            logger.warn(
+                `Attempting to register shortcut for key '${shortcut.key}' but it is already taken - normal during hot reload`,
+            )
         }
         shortcutMap.set(shortcut.key, shortcut)
     })
