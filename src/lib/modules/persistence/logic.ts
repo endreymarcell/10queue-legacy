@@ -7,25 +7,32 @@ import { copySavableState } from "$lib/modules/taskList/logic/state"
 import type { SavableState } from "$lib/modules/taskList/logic/state"
 import type { Module } from "$lib/logical/Modules"
 import { browserStorage } from "$lib/modules/persistence/storages/browserStorage"
+import { databaseStorage } from "$lib/modules/persistence/storages/databaseStorage"
+import type { StateStorage } from "./storages/Storage"
 
 type State = {
     isDirty: boolean
     latestLoadOrSaveTimestamp: number
+    hasDatabaseAccess: boolean
 }
 
 const defaultState: State = {
     isDirty: false,
     latestLoadOrSaveTimestamp: null,
+    hasDatabaseAccess: false,
 }
 
 const effects = {
-    save: (state: SavableState) =>
-        createEffect(
-            state => browserStorage.save(state),
+    save: (state: SavableState, storage: StateStorage) => {
+        return createEffect(
+            state => storage.save(state),
             [state],
             [logic.saveSucceeded.action, logic.saveFailed.action],
-        ),
-    load: () => createEffect(() => browserStorage.load(), [], [logic.loadSucceeded.action, logic.loadFailed.action]),
+        )
+    },
+    load: (storage: StateStorage) => {
+        return createEffect(() => storage.load(), [], [logic.loadSucceeded.action, logic.loadFailed.action])
+    },
     setupAutoSave: () => createEffect(() => window.setInterval(() => dispatch(appLogic.saveRequested.action()), 5000)),
 }
 
@@ -44,7 +51,8 @@ export const logic: Logic<Events> = {
         handler: () => state => {
             if (state.isDirty) {
                 const stateToSave = copySavableState(state)
-                schedule(effects.save(stateToSave))
+                const storage = state.hasDatabaseAccess ? databaseStorage : browserStorage
+                schedule(effects.save(stateToSave, storage))
             }
         },
     },
@@ -61,8 +69,9 @@ export const logic: Logic<Events> = {
     },
     loadRequested: {
         action: createAction("loadRequested"),
-        handler: () => () => {
-            schedule(effects.load())
+        handler: () => state => {
+            const storage = state.hasDatabaseAccess ? databaseStorage : browserStorage
+            schedule(effects.load(storage))
         },
     },
     loadSucceeded: {

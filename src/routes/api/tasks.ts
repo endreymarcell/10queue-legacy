@@ -1,5 +1,8 @@
 import knex from "knex"
+import type { Knex } from "knex"
 import type { SavableState } from "$lib/modules/taskList/logic/state"
+import { logger } from "$lib/helpers/logger"
+import type { RequestHandler } from "@sveltejs/kit"
 
 const DB_CONFIG = {
     host: process.env["10Q_DB_HOSTNAME"],
@@ -9,17 +12,38 @@ const DB_CONFIG = {
     database: process.env["10Q_DB_DBNAME"],
 }
 
+function getDB(): Knex {
+    return knex({
+        client: "mysql",
+        connection: DB_CONFIG,
+        log: { ...logger },
+    })
+}
+
 async function getSavedState(): Promise<SavableState> {
-    const db = knex({ client: "mysql", connection: DB_CONFIG })
+    logger.debug("Reading saved state from simple DB")
+    const db = getDB()
     const result = await db.select("*").from("simple").limit(1)
     const state = JSON.parse(result[0].state)
+    logger.silly("Saved state as read from the DB:", state)
     await db.destroy()
     return state
 }
 
-export async function get() {
+export const get: RequestHandler = async () => {
     const savedState = await getSavedState()
     return {
         body: { savedState },
+    }
+}
+
+export const post: RequestHandler = async payload => {
+    logger.debug("Saving state to simple DB")
+    const db = getDB()
+    const value = payload.body as string
+    await db("simple").update("state", value)
+    await db.destroy()
+    return {
+        status: 200,
     }
 }
