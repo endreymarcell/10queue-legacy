@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte"
+    import compare from "just-compare"
     import Header from "./modules/header/Header.svelte"
     import TaskList from "./modules/taskList/TaskList.svelte"
     import { appLogic, appState } from "$lib/logic"
@@ -14,7 +15,14 @@
 
     export let initialState: null
     let tasks: Task[] = []
-    $: tasks = $appState.hasMounted ? $appState.tasks : initialState.tasks
+    $: {
+        // This horrible workaround clearly shows that I'm using Svelte wrong.
+        const currentTasks = $appState.hasMounted ? $appState.tasks : initialState.tasks
+        const haveTasksChanged = !compare(currentTasks, tasks)
+        if (haveTasksChanged) {
+            tasks = currentTasks
+        }
+    }
 </script>
 
 <svelte:head>
@@ -24,6 +32,8 @@
 <div class="outer-container">
     <div class="inner-container">
         <Header />
+        <!-- Without the #key block, changes get stuck and are only applied on the next render. -->
+        <!-- I'm clearly doing something wrong. -->
         {#key tasks}
             <TaskList {tasks} />
         {/key}
