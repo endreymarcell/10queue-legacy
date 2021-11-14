@@ -26,13 +26,17 @@
     import { onMount } from "svelte"
     import StateInspector from "$lib/modules/debugger/StateInspector.svelte"
 
+    let shouldShowDebug = false
     export let appProps: { savedState: SavableState } = null
     onMount(() => {
         // It would be great to do this in the onMount action
         // but then the onMount action itself won't be logged
         logger.autoSetLevel()
+        shouldShowDebug = location.href.includes("debugger")
     })
 </script>
 
 <App initialState={appProps.savedState} />
-<StateInspector />
+{#if shouldShowDebug}
+    <StateInspector />
+{/if}

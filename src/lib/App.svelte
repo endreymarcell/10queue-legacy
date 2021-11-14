@@ -19,6 +19,7 @@
         // This horrible workaround clearly shows that I'm using Svelte wrong.
         const currentTasks = $appState.hasMounted ? $appState.tasks : initialState.tasks
         const haveTasksChanged = !compare(currentTasks, tasks)
+
         if (haveTasksChanged) {
             tasks = currentTasks
         }
