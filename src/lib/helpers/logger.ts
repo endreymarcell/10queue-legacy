@@ -49,7 +49,7 @@ function detectLevel() {
         case "silly":
             return LogLevel.SILLY
         default:
-            return LogLevel.INFO
+            return LogLevel.DEBUG
     }
 }
 
