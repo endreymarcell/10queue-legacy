@@ -1,5 +1,3 @@
-import { browser as isRunningInBrowser } from "$app/env"
-
 /* eslint-disable no-console */
 enum LogLevel {
     SILENT = 5,
@@ -35,13 +33,8 @@ function consoleLog(level: LogLevel, messageParts: Array<unknown>) {
 }
 
 function detectLevel() {
-    let requestedLevel
-    if (isRunningInBrowser) {
-        const urlParams = new URLSearchParams(window.location.search)
-        requestedLevel = urlParams.get("loglevel")
-    } else {
-        requestedLevel = import.meta.env.VITE_10Q_LOG_LEVEL
-    }
+    const urlParams = new URLSearchParams(window.location.search)
+    const requestedLevel = urlParams.get("loglevel")
     switch (requestedLevel) {
         case "silent":
             return LogLevel.SILENT
