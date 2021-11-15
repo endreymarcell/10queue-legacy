@@ -17,6 +17,7 @@ const logic: Logic<Events> = {
             if (state.isRunning) {
                 const task = state.tasks[state.activeTaskIndex]
                 task.secondsSpentInCurrentRun = secondElapsedSince(task.startTimestampOfCurrentRun)
+                state.isDirty = true
                 schedule(effects.scheduleNextTick())
             }
         },
