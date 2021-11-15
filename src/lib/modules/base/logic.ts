@@ -30,5 +30,5 @@ const logic: Logic<Events> = {
     },
 }
 
-export type Init = { State: State; Events: Events }
-export const init: Module<Init> = { defaultState, logic }
+export type Base = { State: State; Events: Events }
+export const base: Module<Base> = { defaultState, logic }

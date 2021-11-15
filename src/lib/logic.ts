@@ -12,17 +12,17 @@ import { helpModal } from "./modules/help/logic"
 import type { HelpModal } from "./modules/help/logic"
 import { creation } from "$lib/modules/taskList/logic/creationLogic"
 import type { Creation } from "$lib/modules/taskList/logic/creationLogic"
-import { init } from "$lib/modules/init/logic"
-import type { Init } from "$lib/modules/init/logic"
+import { base } from "$lib/modules/base/logic"
+import type { Base } from "$lib/modules/base/logic"
 
-export type AppState = Init["State"] &
+export type AppState = Base["State"] &
     TaskList["State"] &
     Undo["State"] &
     KeyboardShortcuts["State"] &
     HelpModal["State"]
 
 const defaultAppState: AppState = {
-    ...init.defaultState,
+    ...base.defaultState,
     ...taskList.defaultState,
     ...undo.defaultState,
     ...keyboardShortcuts.defaultState,
@@ -30,7 +30,7 @@ const defaultAppState: AppState = {
 }
 export const appState = writable<AppState>(defaultAppState)
 
-export type AppEvents = Init["Events"] &
+export type AppEvents = Base["Events"] &
     TaskList["Events"] &
     Undo["Events"] &
     KeyboardShortcuts["Events"] &
@@ -39,7 +39,7 @@ export type AppEvents = Init["Events"] &
     Creation["Events"]
 
 export const appLogic: Logic<AppEvents> = {
-    ...init.logic,
+    ...base.logic,
     ...taskList.logic,
     ...undo.logic,
     ...keyboardShortcuts.logic,
