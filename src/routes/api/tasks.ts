@@ -22,7 +22,14 @@ function getDB(): Knex {
 
 async function getSavedState(): Promise<SavableState> {
     logger.debug("Reading saved state from simple DB")
+    const LOG_CONFIG = {
+        host: process.env["10Q_DB_HOSTNAME"],
+        port: process.env["10Q_DB_PORT"],
+        user: process.env["10Q_DB_USERNAME"],
+        database: process.env["10Q_DB_DBNAME"],
+    }
     console.log("connecting to DB")
+    console.log(JSON.stringify(LOG_CONFIG, null, 2))
     const db = getDB()
     console.log("running query")
     const result = await db.select("*").from("simple").limit(1)
