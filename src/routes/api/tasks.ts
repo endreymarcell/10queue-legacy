@@ -25,26 +25,15 @@ function getDB(): Knex {
 
 async function getSavedState(): Promise<SavableState> {
     logger.debug("Reading saved state from simple DB")
-    const LOG_CONFIG = {
-        host: import.meta.env.VITE_10Q_DB_HOSTNAME,
-        port: import.meta.env.VITE_10Q_DB_PORT,
-        user: import.meta.env.VITE_10Q_DB_USERNAME,
-        database: import.meta.env.VITE_10Q_DB_DBNAME,
-    }
-    console.log("connecting to DB")
-    console.log(JSON.stringify(LOG_CONFIG, null, 2))
     const db = getDB()
-    console.log("running query")
     const result = await db.select("*").from("simple").limit(1)
     const state = JSON.parse(result[0].state)
     logger.silly("Saved state as read from the DB:", state)
-    console.log("closing connection")
     await db.destroy()
     return state
 }
 
 export const get: RequestHandler = async () => {
-    console.log("tasks::get called")
     const savedState = await getSavedState()
     return {
         body: { savedState },

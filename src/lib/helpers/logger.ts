@@ -26,7 +26,7 @@ function consoleLog(level: LogLevel, messageParts: Array<unknown>) {
     } else if (level === LogLevel.WARNING) {
         console.warn(...messageParts)
     } else if (level === LogLevel.INFO) {
-        console.info(...messageParts)
+        console.log(...messageParts)
     } else {
         console.log(...messageParts)
     }
@@ -49,7 +49,7 @@ function detectLevel() {
         case "silly":
             return LogLevel.SILLY
         default:
-            return LogLevel.DEBUG
+            return LogLevel.INFO
     }
 }
 
