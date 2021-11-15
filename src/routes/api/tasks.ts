@@ -22,15 +22,19 @@ function getDB(): Knex {
 
 async function getSavedState(): Promise<SavableState> {
     logger.debug("Reading saved state from simple DB")
+    console.log("connecting to DB")
     const db = getDB()
+    console.log("running query")
     const result = await db.select("*").from("simple").limit(1)
     const state = JSON.parse(result[0].state)
     logger.silly("Saved state as read from the DB:", state)
+    console.log("closing connection")
     await db.destroy()
     return state
 }
 
 export const get: RequestHandler = async () => {
+    console.log("tasks::get called")
     const savedState = await getSavedState()
     return {
         body: { savedState },

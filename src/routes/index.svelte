@@ -1,6 +1,7 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit"
     export const load: Load = async ({ fetch }) => {
+        console.log("index::Load called -- can I see the logs please?")
         const response = await fetch("/api/tasks")
         if (response.ok) {
             const body = await response.json()
