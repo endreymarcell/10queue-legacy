@@ -60,9 +60,22 @@ function detectLevel() {
     }
 }
 
+function assertLogLevel() {
+    console.log("10Q log level set to:", logLevelThreshold, "resulting in the following messages:\n---")
+    logger.error("10Q sample error message")
+    logger.warn("10Q sample warning message")
+    logger.info("10Q sample info message")
+    logger.debug("10Q sample debug message")
+    logger.silly("10Q sample silly message")
+    console.log("---\n10Q end of sample log messages.")
+}
+
 export const logger = {
     setLevel: (level: LogLevel) => (logLevelThreshold = level),
-    autoSetLevel: () => (logLevelThreshold = detectLevel()),
+    autoSetLevel: () => {
+        logLevelThreshold = detectLevel()
+        assertLogLevel()
+    },
     error: (...messageParts: Array<unknown>) => log(LogLevel.ERROR, messageParts),
     warn: (...messageParts: Array<unknown>) => log(LogLevel.WARNING, messageParts),
     info: (...messageParts: Array<unknown>) => log(LogLevel.INFO, messageParts),
