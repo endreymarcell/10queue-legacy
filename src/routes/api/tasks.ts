@@ -5,12 +5,15 @@ import { logger } from "$lib/helpers/logger"
 import type { RequestHandler } from "@sveltejs/kit"
 
 const DB_CONFIG = {
-    host: process.env["10Q_DB_HOSTNAME"],
-    port: process.env["10Q_DB_PORT"],
-    user: process.env["10Q_DB_USERNAME"],
-    password: process.env["10Q_DB_PASSWORD"],
-    database: process.env["10Q_DB_DBNAME"],
-}
+    // The production build only has access to the env vars
+    // if they are read by Vite during the build process.
+    // https://vitejs.dev/guide/env-and-mode.html
+    host: import.meta.env.VITE_10Q_DB_HOSTNAME,
+    port: import.meta.env.VITE_10Q_DB_PORT,
+    user: import.meta.env.VITE_10Q_DB_USERNAME,
+    password: import.meta.env.VITE_10Q_DB_PASSWORD,
+    database: import.meta.env.VITE_10Q_DB_DBNAME,
+} as Knex.StaticConnectionConfig
 
 function getDB(): Knex {
     return knex({
@@ -23,10 +26,10 @@ function getDB(): Knex {
 async function getSavedState(): Promise<SavableState> {
     logger.debug("Reading saved state from simple DB")
     const LOG_CONFIG = {
-        host: process.env["10Q_DB_HOSTNAME"],
-        port: process.env["10Q_DB_PORT"],
-        user: process.env["10Q_DB_USERNAME"],
-        database: process.env["10Q_DB_DBNAME"],
+        host: import.meta.env.VITE_10Q_DB_HOSTNAME,
+        port: import.meta.env.VITE_10Q_DB_PORT,
+        user: import.meta.env.VITE_10Q_DB_USERNAME,
+        database: import.meta.env.VITE_10Q_DB_DBNAME,
     }
     console.log("connecting to DB")
     console.log(JSON.stringify(LOG_CONFIG, null, 2))
