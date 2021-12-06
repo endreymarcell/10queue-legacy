@@ -12,13 +12,13 @@ import type { StateStorage } from "./storages/Storage"
 
 type State = {
     isDirty: boolean
-    latestLoadOrSaveTimestamp: number
+    latestSuccessfulSaveTimestamp: number
     hasDatabaseAccess: boolean
 }
 
 const defaultState: State = {
     isDirty: false,
-    latestLoadOrSaveTimestamp: null,
+    latestSuccessfulSaveTimestamp: null,
     hasDatabaseAccess: false,
 }
 
@@ -60,7 +60,7 @@ export const logic: Logic<Events> = {
         action: createAction("saveSucceeded"),
         handler: () => state => {
             state.isDirty = false
-            state.latestLoadOrSaveTimestamp = Date.now()
+            state.latestSuccessfulSaveTimestamp = Date.now()
         },
     },
     saveFailed: {
@@ -77,13 +77,13 @@ export const logic: Logic<Events> = {
     loadSucceeded: {
         action: createAction("loadSucceeded", state => ({ state })),
         handler: payload => state => {
-            const isFirstLoadToday = !isSameDay(payload.state.latestLoadOrSaveTimestamp, Date.now())
+            const isFirstLoadToday = !isSameDay(payload.state.latestSuccessfulSaveTimestamp, Date.now())
             if (!isFirstLoadToday) {
                 for (const key of Object.keys(payload.state)) {
                     state[key] = payload.state[key]
                 }
             }
-            state.latestLoadOrSaveTimestamp = Date.now()
+            state.latestSuccessfulSaveTimestamp = Date.now()
         },
     },
     loadFailed: {

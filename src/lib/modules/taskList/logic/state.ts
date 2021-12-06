@@ -22,7 +22,7 @@ export const defaultState: State = {
     ...persistence.defaultState,
 }
 
-const savableAttributes = ["tasks", "activeTaskIndex", "latestLoadOrSaveTimestamp"] as const
+const savableAttributes = ["tasks", "activeTaskIndex", "latestSuccessfulSaveTimestamp"] as const
 type SavableAttributesUnion = typeof savableAttributes[number]
 export type SavableState = Pick<AppState, SavableAttributesUnion>
 
