@@ -10,6 +10,17 @@ It is also a minimal task management app that reflects my personal needs:
 
 10queue is not a backlog or even a to-do list. It's like the throw-away post-it that you use to jot down your immediate tasks - those that you are guaranteed to finish in that stint of work.
 
-Try it in action: [tenqueue.herokuapp.com](https://tenqueue.herokuapp.com) (data is saved in the browser's local storage).
+### Try it online
+[tenqueue.herokuapp.com](https://tenqueue.herokuapp.com) (data is saved in the browser's local storage).
 
-Planned features: see https://github.com/endreymarcell/10queue/projects/1
+### Try it locally
+```bash
+git clone https://github.com/endreymarcell/10queue.git
+cd 10queue
+npm i
+npm run start
+```
+Then open localhost:3000 in your browser.
+
+### Roadmap
+See https://github.com/endreymarcell/10queue/projects/1
