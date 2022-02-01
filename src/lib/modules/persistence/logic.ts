@@ -12,12 +12,14 @@ import type { StateStorage } from "./storages/Storage"
 
 type State = {
     isDirty: boolean
+    latestAttemptedSaveTimestamp: number
     latestSuccessfulSaveTimestamp: number
     hasDatabaseAccess: boolean
 }
 
 const defaultState: State = {
     isDirty: false,
+    latestAttemptedSaveTimestamp: null,
     latestSuccessfulSaveTimestamp: null,
     hasDatabaseAccess: false,
 }
@@ -50,6 +52,7 @@ export const logic: Logic<Events> = {
         action: createAction("saveRequested"),
         handler: () => state => {
             if (state.isDirty) {
+                state.latestAttemptedSaveTimestamp = Date.now()
                 const stateToSave = copySavableState(state)
                 const storage = state.hasDatabaseAccess ? databaseStorage : browserStorage
                 schedule(effects.save(stateToSave, storage))
