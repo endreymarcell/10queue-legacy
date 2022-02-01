@@ -10,6 +10,6 @@ It is also a minimal task management app that reflects my personal needs:
 
 10queue is not a backlog or even a to-do list. It's like the throw-away post-it that you use to jot down your immediate tasks - those that you are guaranteed to finish in that stint of work.
 
-Try it in action: 10queue.vercel.app (data is saved in the browser's local storage).
+Try it in action: [tenqueue.herokuapp.com](https://tenqueue.herokuapp.com) (data is saved in the browser's local storage).
 
 Planned features: see https://github.com/endreymarcell/10queue/projects/1
