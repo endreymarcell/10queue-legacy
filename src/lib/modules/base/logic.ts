@@ -24,7 +24,7 @@ const logic: Logic<Events> = {
         handler: payload => state => {
             state.hasMounted = true
             state.tasks = clone(payload.state.tasks)
-            state.hasDatabaseAccess = true // TODO detect logged-in status
+            state.hasDatabaseAccess = false // TODO finish the half-baked DB solution
             schedule(effects.setupListenersAndStuff())
         },
     },
